@@ -9,11 +9,12 @@ public:
 	~Time();
 
 	double getDeltaTime();
-	Uint64 getCurrentTime();
+	double getCurrentTime();
 private:
 	void calculateDeltaTime();
 	Uint64 currentTime;
 	Uint64 lastTime;
+	Uint64 startTime;
 	double deltaTime;
 };
 

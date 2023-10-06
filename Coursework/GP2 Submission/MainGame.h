@@ -73,6 +73,7 @@ private:
 	Texture texture3;
 	Texture texture4;
 	Texture bumpTexture;
+
 	Shader environmentMapping;
 	Shader shader;
 	Shader fogShader;

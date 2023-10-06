@@ -48,6 +48,9 @@
     <ClCompile Include="SkyBox.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="GameObject.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="MainGame.h">
@@ -86,14 +89,17 @@
     <ClInclude Include="SkyBox.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="GameObject.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\Resources\Shaders\FogFragmentShader.frag" />
     <None Include="..\Resources\Shaders\FogVertexShader.vert" />
     <None Include="..\Resources\Shaders\ToonFragmentShader.frag" />
     <None Include="..\Resources\Shaders\ToonVertexShader.vert" />
-    <None Include="..\Resources\Shaders\FragmentShader.frag" />
-    <None Include="..\Resources\Shaders\VertexShader.vert" />
+    <None Include="..\Resources\Shaders\DefaultShader.frag" />
+    <None Include="..\Resources\Shaders\DefaultShader.vert" />
     <None Include="..\Resources\Shaders\RimLightingFragment.frag" />
     <None Include="..\Resources\Shaders\RimLightingVertex.vert" />
     <None Include="..\Resources\Shaders\TRimLightingFragment.frag" />

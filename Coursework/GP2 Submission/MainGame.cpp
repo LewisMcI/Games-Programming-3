@@ -46,7 +46,7 @@ void MainGame::initSystems()
 	quad.loadVertexs(vertices, sizeof(vertices) / sizeof(vertices[0]));
 
 	// Load Shaders
-	shader.initShader("..\\Resources\\Shaders\\VertexShader.vert", "..\\Resources\\Shaders\\FragmentShader.frag");
+	shader.initShader("..\\Resources\\Shaders\\DefaultShader.vert", "..\\Resources\\Shaders\\DefaultShader.frag");
 	fogShader.initShader("..\\Resources\\Shaders\\FogVertexShader.vert", "..\\Resources\\Shaders\\FogFragmentShader.frag");
 	toonShader.initShader("..\\Resources\\Shaders\\ToonVertexShader.vert", "..\\Resources\\Shaders\\ToonFragmentShader.frag");
 	rimShader.initShader("..\\Resources\\Shaders\\RimLightingVertex.vert", "..\\Resources\\Shaders\\RimLightingFragment.frag");
@@ -66,7 +66,7 @@ void MainGame::initSystems()
 	texture1.initTexture("..\\Resources\\Textures\\Bricks\\BrickAlbedo.png");
 	texture2.initTexture("..\\Resources\\Textures\\DogTexture.png");
 	texture3.initTexture("..\\Resources\\Textures\\Destructor.jpeg");
-	texture4.initTexture("..\\Resources\\Textures\\testTexture6.jpg");
+	texture4.initTexture("..\\Resources\\Textures\\testTexture1.jpg");
 	bumpTexture.loadNormals("..\\Resources\\Textures\\NormalMap.jpg");
 
 	vector<std::string> faces
@@ -86,9 +86,6 @@ void MainGame::initSystems()
 	//audioSource.addSFX("..\\Resources\\Audio\\retroSFX.wav");
 	//audioSource.addTrack("..\\Resources\\Audio\\Background.wav");
 	//audioSource.playTrack();
-
-	// Initialize Delta Time - Time since first frame will be at the start of initalization which could take a while.
-	time.UpdateTime();
 }
 
 void MainGame::linkGeoShader()
@@ -111,9 +108,9 @@ void MainGame::linktRimExplodeShader()
 void MainGame::linkChromaticAbberation() 
 {
 	chromaticAbberationShader.setMat4("transform", transform.GetModel());
-	chromaticAbberationShader.setFloat("RED_OFFSET", sinf(time.getCurrentTime()) / 100.0f);
-	chromaticAbberationShader.setFloat("BLUE_OFFSET", sinf(time.getCurrentTime()) / 100.0f);
-	chromaticAbberationShader.setFloat("GREEN_OFFSET", sinf(time.getCurrentTime()) / 100.0f);
+	chromaticAbberationShader.setFloat("RED_OFFSET", sinf(time.getCurrentTime()));
+	chromaticAbberationShader.setFloat("BLUE_OFFSET", sinf(time.getCurrentTime()));
+	chromaticAbberationShader.setFloat("GREEN_OFFSET", sinf(time.getCurrentTime()));
 }
 
 void MainGame::linkEnvironmentMapping(float reflectiveness) {
@@ -163,7 +160,6 @@ void MainGame::gameLoop()
 	// While game is still playing. Processes inputs and draws the game.
 	while (gameState != GameState::EXIT) 
 	{
-		time.UpdateTime();
 		processInput();
 		drawGame(); 
 		//checkCollisions();
@@ -416,6 +412,7 @@ void MainGame::drawObjects() {
 // Draws game
 void MainGame::drawGame()
 {	
+	cout << "\n "<< time.getCurrentTime();
 	// Clear display to blue background.
 	display.clearDisplay(0.46f, 0.57f, 0.71f, 1.0f);
 

@@ -73,6 +73,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Display.cpp" />
+    <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="MainGame.cpp" />
     <ClCompile Include="Mesh.cpp" />
@@ -87,6 +88,7 @@
   <ItemGroup>
     <ClInclude Include="Camera.h" />
     <ClInclude Include="Display.h" />
+    <ClInclude Include="GameObject.h" />
     <ClInclude Include="MainGame.h" />
     <ClInclude Include="Mesh.h" />
     <ClInclude Include="ObjectLoader.h" />
@@ -111,7 +113,7 @@
     <None Include="..\Resources\Shaders\EnvironmentMapping.vert" />
     <None Include="..\Resources\Shaders\FogFragmentShader.frag" />
     <None Include="..\Resources\Shaders\FogVertexShader.vert" />
-    <None Include="..\Resources\Shaders\FragmentShader.frag" />
+    <None Include="..\Resources\Shaders\DefaultShader.frag" />
     <None Include="..\Resources\Shaders\GaussianBlur.frag" />
     <None Include="..\Resources\Shaders\GaussianBlur.vert" />
     <None Include="..\Resources\Shaders\Kuwahara.frag" />
@@ -136,7 +138,7 @@
     <None Include="..\Resources\Shaders\RimLightingVertex.vert" />
     <None Include="..\Resources\Shaders\ToonFragmentShader.frag" />
     <None Include="..\Resources\Shaders\ToonVertexShader.vert" />
-    <None Include="..\Resources\Shaders\VertexShader.vert" />
+    <None Include="..\Resources\Shaders\DefaultShader.vert" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

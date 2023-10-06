@@ -5,19 +5,21 @@ Time::Time() {
 	currentTime = 0;
 	lastTime = 0;
 	deltaTime = 0;
+	startTime = SDL_GetPerformanceCounter();
 }
 
 Time::~Time() {
 	SDL_Quit();
 }
 
-// Returns deltaTime
 double Time::getDeltaTime()
 {
 	return deltaTime;
 }
-Uint64 Time::getCurrentTime() {
-	return SDL_GetTicks() / 1000.0;
+double Time::getCurrentTime() {
+	// Gets currentTime
+	currentTime = SDL_GetPerformanceCounter();
+	return (double)((currentTime - startTime) / (double)SDL_GetPerformanceFrequency());
 }
 
 // Calculated deltaTime using last and current time.

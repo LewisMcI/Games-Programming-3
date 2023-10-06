@@ -79,4 +79,3 @@ private:
 	glm::vec3 up;
 };
 
-

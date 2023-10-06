@@ -1,0 +1,144 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{D246FDDF-B30E-4F14-80F8-095FA4E04ECF}</ProjectGuid>
+    <RootNamespace>Lab1</RootNamespace>
+    <ProjectName>GP2 Submission</ProjectName>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <CharacterSet>MultiByte</CharacterSet>
+    <PlatformToolset>v143</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v143</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <IncludePath>$(SolutionDir)deps/include/;$(IncludePath)</IncludePath>
+    <LibraryPath>$(SolutionDir)deps/lib/;$(LibraryPath)</LibraryPath>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>_MBCS;%(PreprocessorDefinitions);_CRT_SECURE_NO_WARNINGS</PreprocessorDefinitions>
+    </ClCompile>
+    <Link>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <SubSystem>Console</SubSystem>
+      <AdditionalDependencies>SDL2.lib;SDL2main.lib;opengl32.lib;glew32.lib;SDL2_mixer.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>"C:\Program Files (x86)\OpenAL 1.1 SDK\libs\Win32";%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <SDLCheck>true</SDLCheck>
+    </ClCompile>
+    <Link>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClCompile Include="Display.cpp" />
+    <ClCompile Include="main.cpp" />
+    <ClCompile Include="MainGame.cpp" />
+    <ClCompile Include="Mesh.cpp" />
+    <ClCompile Include="ObjectLoader.cpp" />
+    <ClCompile Include="Audio.cpp" />
+    <ClCompile Include="Shader.cpp" />
+    <ClCompile Include="SkyBox.cpp" />
+    <ClCompile Include="stb_image.c" />
+    <ClCompile Include="Texture.cpp" />
+    <ClCompile Include="Time.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Camera.h" />
+    <ClInclude Include="Display.h" />
+    <ClInclude Include="MainGame.h" />
+    <ClInclude Include="Mesh.h" />
+    <ClInclude Include="ObjectLoader.h" />
+    <ClInclude Include="Audio.h" />
+    <ClInclude Include="Shader.h" />
+    <ClInclude Include="SkyBox.h" />
+    <ClInclude Include="stb_image.h" />
+    <ClInclude Include="Texture.h" />
+    <ClInclude Include="Time.h" />
+    <ClInclude Include="transform.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\Resources\Shaders\BoxBlur.frag" />
+    <None Include="..\Resources\Shaders\BoxBlur.vert" />
+    <None Include="..\Resources\Shaders\BumpFragmentShader.frag" />
+    <None Include="..\Resources\Shaders\BumpVertexShader.vert" />
+    <None Include="..\Resources\Shaders\ChromaticAbberation.frag" />
+    <None Include="..\Resources\Shaders\ChromaticAbberation.vert" />
+    <None Include="..\Resources\Shaders\CubeMaps.frag" />
+    <None Include="..\Resources\Shaders\CubeMaps.vert" />
+    <None Include="..\Resources\Shaders\EnvironmentMapping.frag" />
+    <None Include="..\Resources\Shaders\EnvironmentMapping.vert" />
+    <None Include="..\Resources\Shaders\FogFragmentShader.frag" />
+    <None Include="..\Resources\Shaders\FogVertexShader.vert" />
+    <None Include="..\Resources\Shaders\FragmentShader.frag" />
+    <None Include="..\Resources\Shaders\GaussianBlur.frag" />
+    <None Include="..\Resources\Shaders\GaussianBlur.vert" />
+    <None Include="..\Resources\Shaders\Kuwahara.frag" />
+    <None Include="..\Resources\Shaders\Kuwahara.vert" />
+    <None Include="..\Resources\Shaders\RimAndToonAndExplodeShaders\TRimLightingExplode.frag" />
+    <None Include="..\Resources\Shaders\RimAndToonAndExplodeShaders\TRimLightingExplode.geom" />
+    <None Include="..\Resources\Shaders\RimAndToonAndExplodeShaders\TRimLightingExplode.vert" />
+    <None Include="..\Resources\Shaders\shaderGeoText.frag" />
+    <None Include="..\Resources\Shaders\shaderGeoText.geom" />
+    <None Include="..\Resources\Shaders\shaderGeoText.vert" />
+    <None Include="..\Resources\Shaders\SpecularLighting.frag" />
+    <None Include="..\Resources\Shaders\SpecularLighting.vert" />
+    <None Include="..\Resources\Shaders\Strips.frag" />
+    <None Include="..\Resources\Shaders\Strips.vert" />
+    <None Include="..\Resources\Shaders\ToffeeFragment.frag" />
+    <None Include="..\Resources\Shaders\ToffeeVertex.vert" />
+    <None Include="..\Resources\Shaders\ToonSpecularLighting.frag" />
+    <None Include="..\Resources\Shaders\ToonSpecularLighting.vert" />
+    <None Include="..\Resources\Shaders\TRimLightingFragment.frag" />
+    <None Include="..\Resources\Shaders\TRimLightingVertex.vert" />
+    <None Include="..\Resources\Shaders\RimLightingFragment.frag" />
+    <None Include="..\Resources\Shaders\RimLightingVertex.vert" />
+    <None Include="..\Resources\Shaders\ToonFragmentShader.frag" />
+    <None Include="..\Resources\Shaders\ToonVertexShader.vert" />
+    <None Include="..\Resources\Shaders\VertexShader.vert" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

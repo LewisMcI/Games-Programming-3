@@ -1,0 +1,20 @@
+﻿C:\Program Files\Microsoft Visual Studio\2022\Community\MSBuild\Microsoft\VC\v170\Microsoft.CppBuild.targets(531,5): warning MSB8028: The intermediate directory (Debug\) contains files shared from another project (Labs.vcxproj).  This can lead to incorrect clean and rebuild behavior.
+  Display.cpp
+  main.cpp
+C:\Users\lmcint218\Documents\GitHub\Games-Programming-3\Coursework\GP2 Submission\MainGame.h(111,22): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+  MainGame.cpp
+C:\Users\lmcint218\Documents\GitHub\Games-Programming-3\Coursework\GP2 Submission\MainGame.h(111,22): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+C:\Users\lmcint218\Documents\GitHub\Games-Programming-3\Coursework\GP2 Submission\MainGame.cpp(12,11): warning C4101: 'display': unreferenced local variable
+C:\Users\lmcint218\Documents\GitHub\Games-Programming-3\Coursework\GP2 Submission\MainGame.cpp(427,20): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+  Mesh.cpp
+C:\Users\lmcint218\Documents\GitHub\Games-Programming-3\Coursework\GP2 Submission\Mesh.cpp(24,20): warning C4018: '<': signed/unsigned mismatch
+  ObjectLoader.cpp
+  Audio.cpp
+C:\Users\lmcint218\Documents\GitHub\Games-Programming-3\Coursework\GP2 Submission\Audio.cpp(54,13): warning C4018: '>=': signed/unsigned mismatch
+  Shader.cpp
+  SkyBox.cpp
+  Texture.cpp
+  Time.cpp
+  Generating Code...
+  stb_image.c
+  GP2 Submission.vcxproj -> C:\Users\lmcint218\Documents\GitHub\Games-Programming-3\Coursework\Debug\GP2 Submission.exe

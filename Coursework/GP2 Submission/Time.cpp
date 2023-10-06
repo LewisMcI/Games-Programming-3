@@ -6,6 +6,7 @@ Time::Time() {
 	lastTime = 0;
 	deltaTime = 0;
 }
+
 Time::~Time() {
 	SDL_Quit();
 }
@@ -14,6 +15,9 @@ Time::~Time() {
 double Time::getDeltaTime()
 {
 	return deltaTime;
+}
+Uint64 Time::getCurrentTime() {
+	return SDL_GetTicks() / 1000.0;
 }
 
 // Calculated deltaTime using last and current time.

@@ -102,8 +102,6 @@ private:
 	Audio audioSource;
 
 	Time time;
-	double currentTime = 0;
-	float counter = 1;
 
 	bool colliding1 = false;
 	bool colliding2 = false;

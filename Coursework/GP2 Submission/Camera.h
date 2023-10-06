@@ -35,6 +35,11 @@ public:
 		return projection * glm::lookAt(cameraPos, cameraPos + forward, up);
 	}
 
+	void LookAt(glm::vec3 target) {
+		glm::vec3 dir = target - cameraPos;
+		forward = glm::normalize(dir);
+	}
+
 	void MoveX(float moveAmount)
 	{
 		cameraPos += forward * moveAmount;

@@ -88,7 +88,7 @@ void MainGame::initSystems()
 	//audioSource.playTrack();
 
 	// Initialize Delta Time - Time since first frame will be at the start of initalization which could take a while.
-	time.calculateDeltaTime();
+	time.UpdateTime();
 }
 
 void MainGame::linkGeoShader()
@@ -96,7 +96,7 @@ void MainGame::linkGeoShader()
 	geoShader.setFloat("randColourX", randX);
 	geoShader.setFloat("randColourY", randY);
 	geoShader.setFloat("randColourZ", randZ);
-	geoShader.setFloat("time", (float)counter + 2.5f);
+	geoShader.setFloat("time", (float)time.getCurrentTime() + 2.5f);
 }
 void MainGame::linktRimExplodeShader()
 {
@@ -106,14 +106,14 @@ void MainGame::linktRimExplodeShader()
 	tRimExplodeShader.setVec3("rimColor", glm::vec3(1.0f, 0.0f, 0.0f));
 	tRimExplodeShader.setVec3("camPos", myCamera.getPos());
 
-	tRimExplodeShader.setFloat("time", (float)counter);
+	tRimExplodeShader.setFloat("time", (float)time.getCurrentTime());
 }
 void MainGame::linkChromaticAbberation() 
 {
 	chromaticAbberationShader.setMat4("transform", transform.GetModel());
-	chromaticAbberationShader.setFloat("RED_OFFSET", sinf(counter) / 100.0f);
-	chromaticAbberationShader.setFloat("BLUE_OFFSET", sinf(counter) / 100.0f);
-	chromaticAbberationShader.setFloat("GREEN_OFFSET", sinf(counter) / 100.0f);
+	chromaticAbberationShader.setFloat("RED_OFFSET", sinf(time.getCurrentTime()) / 100.0f);
+	chromaticAbberationShader.setFloat("BLUE_OFFSET", sinf(time.getCurrentTime()) / 100.0f);
+	chromaticAbberationShader.setFloat("GREEN_OFFSET", sinf(time.getCurrentTime()) / 100.0f);
 }
 
 void MainGame::linkEnvironmentMapping(float reflectiveness) {
@@ -163,8 +163,7 @@ void MainGame::gameLoop()
 	// While game is still playing. Processes inputs and draws the game.
 	while (gameState != GameState::EXIT) 
 	{
-		time.calculateDeltaTime();
-		currentTime = currentTime + time.getDeltaTime();
+		time.UpdateTime();
 		processInput();
 		drawGame(); 
 		//checkCollisions();
@@ -251,7 +250,7 @@ void MainGame::processInput()
 void MainGame::drawExplodeObj()
 {
 	transform.SetPos(glm::vec3(0.0f, 0.0f, 5.0f));
-	transform.SetRot(glm::vec3(0.0f, counter * rotationSpeed * 0.01f, 0.0f));
+	transform.SetRot(glm::vec3(0.0f, time.getCurrentTime() * rotationSpeed * 0.01f, 0.0f));
 	transform.SetScale(glm::vec3(1.0f, 1.0f, 1.0f));
 	texture1.Bind(0);
 	geoShader.Bind();
@@ -265,7 +264,7 @@ void MainGame::drawEnvironmentMappingObjs()
 {
 	// Obj 1 (Fully Reflective)
 	transform.SetPos(glm::vec3(-3.0f, -3.0f, 5.0f));
-	transform.SetRot(glm::vec3(0.0f, counter * rotationSpeed * 0.01f, 0.0f));
+	transform.SetRot(glm::vec3(0.0f, time.getCurrentTime() * rotationSpeed * 0.01f, 0.0f));
 	transform.SetScale(glm::vec3(1.0f, 1.0f, 1.0f));
 
 	environmentMapping.Bind();
@@ -276,7 +275,7 @@ void MainGame::drawEnvironmentMappingObjs()
 
 	// Obj 2 (Half Reflective)
 	transform.SetPos(glm::vec3(0.0f, -3.0f, 5.0f));
-	transform.SetRot(glm::vec3(0.0f, counter * rotationSpeed * 0.01f, 0.0f));
+	transform.SetRot(glm::vec3(0.0f, time.getCurrentTime() * rotationSpeed * 0.01f, 0.0f));
 	transform.SetScale(glm::vec3(1.0f, 1.0f, 1.0f));
 
 	environmentMapping.Bind();
@@ -287,7 +286,7 @@ void MainGame::drawEnvironmentMappingObjs()
 
 	// Obj 3 (Not Reflective)
 	transform.SetPos(glm::vec3(3.0f, -3.0f, 5.0f));
-	transform.SetRot(glm::vec3(0.0f, counter * rotationSpeed * 0.01f, 0.0f));
+	transform.SetRot(glm::vec3(0.0f, time.getCurrentTime() * rotationSpeed * 0.01f, 0.0f));
 	transform.SetScale(glm::vec3(1.0f, 1.0f, 1.0f));
 
 	environmentMapping.Bind();
@@ -348,7 +347,7 @@ void MainGame::drawKuwaharaFilterPlane()
 void MainGame::drawTRimExplodeObj()
 {
 	transform.SetPos(glm::vec3(-1.5f, 0.0f, -10.0f));
-	transform.SetRot(glm::vec3(0.0f, counter * rotationSpeed * 0.01f, 0.0f));
+	transform.SetRot(glm::vec3(0.0f, time.getCurrentTime() * rotationSpeed * 0.01f, 0.0f));
 	transform.SetScale(glm::vec3(1.0f, 1.0f, 1.0f));
 
 	tRimExplodeShader.Bind();
@@ -424,8 +423,6 @@ void MainGame::drawGame()
 
 	skybox.draw(&myCamera);
 
-	counter = counter + (time.getDeltaTime());
-
 	display.swapBuffer();
 }
 #pragma region NotInUse
@@ -491,7 +488,7 @@ void MainGame::linkToffeeShader()
 	toffeeShader.setMat3("normalMatrix", glm::transpose(glm::inverse(glm::mat3(modelView))));
 	toffeeShader.setMat4("projectionMatrix", myCamera.getProjection());
 	toffeeShader.setMat4("modelViewMatrix", modelView);
-	toffeeShader.setFloat("time", counter * 0.01f);
+	toffeeShader.setFloat("time", time.getCurrentTime() * 0.01f);
 }
 void MainGame::linkSpecularShader(glm::vec3 colour)
 {	// Define the model matrix (transforms from model space to world space)

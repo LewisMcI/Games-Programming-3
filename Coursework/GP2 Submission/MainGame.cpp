@@ -3,7 +3,6 @@
 #include <iostream>
 #include <string>
 
-
 // Constructor
 MainGame::MainGame()
 {
@@ -27,6 +26,8 @@ void MainGame::initSystems()
 {
 	// Initialize Display
 	display.initDisplay();
+
+
 	randX = (float)rand() / RAND_MAX;
 	randY = (float)rand() / RAND_MAX;
 	randZ = (float)rand() / RAND_MAX;
@@ -86,6 +87,7 @@ void MainGame::initSystems()
 	//audioSource.addSFX("..\\Resources\\Audio\\retroSFX.wav");
 	//audioSource.addTrack("..\\Resources\\Audio\\Background.wav");
 	//audioSource.playTrack();
+	createGameObject();
 }
 
 void MainGame::linkGeoShader()
@@ -364,13 +366,24 @@ void MainGame::drawChromaticAbberationPlane()
 	texture4.Bind(0);
 	quad.drawVertexes();
 }
+
+void MainGame::createGameObject()
+{
+	GameObject gameObject(myCamera);
+	gameObject.init("..\\Resources\\Models\\Cube.obj", shader, "..\\Resources\\Textures\\DogTexture.png");
+	gameObjects.push_back(gameObject);
+}
+
+void MainGame::drawGameObjects() {
+	gameObjects.front().Draw();
+}
+
 void MainGame::drawObjects() {
 	/*1st Geometry Shader
 	* Texture + Explode Shader
 	*/
 
 	drawExplodeObj();
-
 
 	/* Environment Mapping
 	* 	
@@ -412,11 +425,12 @@ void MainGame::drawObjects() {
 // Draws game
 void MainGame::drawGame()
 {	
-	cout << "\n "<< time.getCurrentTime();
 	// Clear display to blue background.
 	display.clearDisplay(0.46f, 0.57f, 0.71f, 1.0f);
 
 	drawObjects();
+
+	//drawGameObjects();
 
 	skybox.draw(&myCamera);
 
@@ -436,7 +450,6 @@ void MainGame::linkRimShader()
 	rimShader.setFloat("rimPower", 5.0f);
 	rimShader.setVec3("rimColor", glm::vec3(0.8f, 0.0f, 0.0f));
 	rimShader.setVec3("camPos", myCamera.getPos());
-
 }
 
 void MainGame::linkToonAndRimShader()

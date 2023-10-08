@@ -1,18 +1,28 @@
 ﻿C:\Program Files\Microsoft Visual Studio\2022\Community\MSBuild\Microsoft\VC\v170\Microsoft.CppBuild.targets(531,5): warning MSB8028: The intermediate directory (Debug\) contains files shared from another project (Lab2.vcxproj).  This can lead to incorrect clean and rebuild behavior.
-  MainGame.cpp
-C:\Users\lmcint218\Downloads\GP3Lab1(1)\GP3Lab1\Lab7Solution\Lab1\MainGame.cpp(15,9): warning C4930: 'Shader rimShader(void)': prototyped function not called (was a variable definition intended?)
-C:\Users\lmcint218\Downloads\GP3Lab1(1)\GP3Lab1\Lab7Solution\Lab1\MainGame.cpp(16,9): warning C4930: 'Shader geoShader(void)': prototyped function not called (was a variable definition intended?)
-C:\Users\lmcint218\Downloads\GP3Lab1(1)\GP3Lab1\Lab7Solution\Lab1\MainGame.cpp(14,9): warning C4930: 'Shader toonShader(void)': prototyped function not called (was a variable definition intended?)
-C:\Users\lmcint218\Downloads\GP3Lab1(1)\GP3Lab1\Lab7Solution\Lab1\MainGame.cpp(13,9): warning C4930: 'Shader fogShader(void)': prototyped function not called (was a variable definition intended?)
-C:\Users\lmcint218\Downloads\GP3Lab1(1)\GP3Lab1\Lab7Solution\Lab1\MainGame.cpp(104,27): warning C4305: 'argument': truncation from 'double' to 'float'
-C:\Users\lmcint218\Downloads\GP3Lab1(1)\GP3Lab1\Lab7Solution\Lab1\MainGame.cpp(111,28): warning C4305: 'argument': truncation from 'double' to 'float'
-C:\Users\lmcint218\Downloads\GP3Lab1(1)\GP3Lab1\Lab7Solution\Lab1\MainGame.cpp(118,26): warning C4305: 'argument': truncation from 'double' to 'float'
-C:\Users\lmcint218\Downloads\GP3Lab1(1)\GP3Lab1\Lab7Solution\Lab1\MainGame.cpp(125,27): warning C4305: 'argument': truncation from 'double' to 'float'
-C:\Users\lmcint218\Downloads\GP3Lab1(1)\GP3Lab1\Lab7Solution\Lab1\MainGame.cpp(129,15): warning C4129: 'Z': unrecognized character escape sequence
-C:\Users\lmcint218\Downloads\GP3Lab1(1)\GP3Lab1\Lab7Solution\Lab1\MainGame.cpp(134,15): warning C4129: 'X': unrecognized character escape sequence
-C:\Users\lmcint218\Downloads\GP3Lab1(1)\GP3Lab1\Lab7Solution\Lab1\MainGame.cpp(139,15): warning C4129: 'C': unrecognized character escape sequence
-C:\Users\lmcint218\Downloads\GP3Lab1(1)\GP3Lab1\Lab7Solution\Lab1\MainGame.cpp(164,27): warning C4305: 'argument': truncation from 'double' to 'float'
-C:\Users\lmcint218\Downloads\GP3Lab1(1)\GP3Lab1\Lab7Solution\Lab1\MainGame.cpp(170,28): warning C4305: 'argument': truncation from 'double' to 'float'
+  Audio.cpp
+  Display.cpp
   main.cpp
+  MainGame.cpp
+C:\Users\lewis\Desktop\WIP\Games-Programming-3\Lab 1\Lab1\MainGame.cpp(15,9): warning C4930: 'Shader rimShader(void)': prototyped function not called (was a variable definition intended?)
+C:\Users\lewis\Desktop\WIP\Games-Programming-3\Lab 1\Lab1\MainGame.cpp(16,9): warning C4930: 'Shader geoShader(void)': prototyped function not called (was a variable definition intended?)
+C:\Users\lewis\Desktop\WIP\Games-Programming-3\Lab 1\Lab1\MainGame.cpp(14,9): warning C4930: 'Shader toonShader(void)': prototyped function not called (was a variable definition intended?)
+C:\Users\lewis\Desktop\WIP\Games-Programming-3\Lab 1\Lab1\MainGame.cpp(13,9): warning C4930: 'Shader fogShader(void)': prototyped function not called (was a variable definition intended?)
+C:\Users\lewis\Desktop\WIP\Games-Programming-3\Lab 1\Lab1\MainGame.cpp(104,27): warning C4305: 'argument': truncation from 'double' to 'float'
+C:\Users\lewis\Desktop\WIP\Games-Programming-3\Lab 1\Lab1\MainGame.cpp(111,28): warning C4305: 'argument': truncation from 'double' to 'float'
+C:\Users\lewis\Desktop\WIP\Games-Programming-3\Lab 1\Lab1\MainGame.cpp(118,26): warning C4305: 'argument': truncation from 'double' to 'float'
+C:\Users\lewis\Desktop\WIP\Games-Programming-3\Lab 1\Lab1\MainGame.cpp(125,27): warning C4305: 'argument': truncation from 'double' to 'float'
+C:\Users\lewis\Desktop\WIP\Games-Programming-3\Lab 1\Lab1\MainGame.cpp(129,15): warning C4129: 'Z': unrecognized character escape sequence
+C:\Users\lewis\Desktop\WIP\Games-Programming-3\Lab 1\Lab1\MainGame.cpp(134,15): warning C4129: 'X': unrecognized character escape sequence
+C:\Users\lewis\Desktop\WIP\Games-Programming-3\Lab 1\Lab1\MainGame.cpp(139,15): warning C4129: 'C': unrecognized character escape sequence
+C:\Users\lewis\Desktop\WIP\Games-Programming-3\Lab 1\Lab1\MainGame.cpp(164,27): warning C4305: 'argument': truncation from 'double' to 'float'
+C:\Users\lewis\Desktop\WIP\Games-Programming-3\Lab 1\Lab1\MainGame.cpp(170,28): warning C4305: 'argument': truncation from 'double' to 'float'
+  Mesh.cpp
+C:\Users\lewis\Desktop\WIP\Games-Programming-3\Lab 1\Lab1\Mesh.cpp(62,9): warning C4930: 'Sphere meshSphere(void)': prototyped function not called (was a variable definition intended?)
+  obj_loader.cpp
+C:\Users\lewis\Desktop\WIP\Games-Programming-3\Lab 1\Lab1\obj_loader.cpp(378,16): warning C4244: 'return': conversion from 'double' to 'float', possible loss of data
+  Shader.cpp
+  SkyBox.cpp
+  Texture.cpp
   Generating Code...
-  Lab1.vcxproj -> C:\Users\lmcint218\Downloads\GP3Lab1(1)\GP3Lab1\Lab7Solution\Debug\Lab1.exe
+  stb_image.c
+  Lab1.vcxproj -> C:\Users\lewis\Desktop\WIP\Games-Programming-3\Lab 1\Debug\Lab1.exe

@@ -10,6 +10,8 @@
 #include "Audio.h"
 #include "Time.h"
 #include "SkyBox.h"
+#include <list>
+#include "GameObject.h"
 
 
 enum class GameState{PLAY, EXIT};
@@ -59,6 +61,9 @@ private:
 	void processKeyboardInput(SDL_Keysym keySym);
 	void processMouseInput(SDL_MouseMotionEvent event);
 
+	void createGameObject();
+	void drawGameObjects();
+
 	Display display;
 	GameState gameState;
 
@@ -103,6 +108,8 @@ private:
 	Audio audioSource;
 
 	Time time;
+
+	std::vector<GameObject> gameObjects;
 
 	bool colliding1 = false;
 	bool colliding2 = false;

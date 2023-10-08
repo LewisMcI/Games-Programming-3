@@ -1,23 +1,20 @@
 #include "GameObject.h"
 
-
-GameObject::GameObject(const std::string& meshPath)
+void GameObject::init(std::string meshName, Shader objectShader, std::string textureName)
 {
-	// Mesh
-	mesh.loadModel(meshPath);
-	// Transform
-	transform.SetPos(glm::vec3(0.0f, 0.0f, 0.0f));
-	transform.SetRot(glm::vec3(0.0f, 0.0f, 0.0f));
-	transform.SetScale(glm::vec3(1.0f, 1.0f, 1.0f));
-	// Shader
-	shader.initShader("..\\Resources\\Shaders\\DefaultShader.vert", "..\\Resources\\Shaders\\DefaultShader.frag");
-	// Texture
-	texture.initTexture("..\\Resources\\Textures\\Bricks\\DefaultTexture.png");
+	mesh.loadModel(meshName);
+	texture.initTexture(textureName);
+	shader = objectShader;
 }
 
-GameObject::~GameObject()
-{
-	mesh.~Mesh();
-	shader.~Shader();
-	texture.~Texture();
+void GameObject::Draw(){
+	transform.SetPos(glm::vec3(0.0f, 0.0f, 5.0f));
+	transform.SetRot(glm::vec3(0.0f, 0.0f, 0.0f));
+	transform.SetScale(glm::vec3(1.0f, 1.0f, 1.0f));
+
+	shader.Bind();
+	shader.Update(transform, camera);
+	texture.Bind(0);
+
+	mesh.Draw();
 }

@@ -168,5 +168,3 @@ void Shader::CheckShaderError(GLuint shader, GLuint flag, bool isProgram, const 
 		std::cerr << errorMessage << ": '" << error << "'" << std::endl;
 	}
 }
-
-

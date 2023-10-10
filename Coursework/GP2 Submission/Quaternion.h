@@ -1,38 +1,40 @@
+#pragma once
+
+#include <cmath>
+#include <iostream>
+#include <glm/detail/type_vec.hpp>
+#include <glm/detail/type_mat.hpp>
 #include <glm/glm.hpp>
-#include <glm/gtc/quaternion.hpp>
 
 class Quaternion {
 public:
     // Constructors
-    Quaternion() : quat(1.0f, 0.0f, 0.0f, 0.0f) {}
-    Quaternion(float w, float x, float y, float z) : quat(w, x, y, z) {}
-    Quaternion(glm::quat newQuat) : quat(quat.w, quat.x, quat.y, quat.z) {}
+    Quaternion();
+    Quaternion(float w, float x, float y, float z);
+    Quaternion(float angle, const glm::vec3& axis);
 
-    // Set the quaternion values
-    void Set(float w, float x, float y, float z) {
-        quat = glm::quat(w, x, y, z);
-    }
+    // Quaternion operations
+    float magnitude() const;
+    void normalize();
+    Quaternion conjugate() const;
 
-    // Normalize the quaternion
-    void Normalize() {
-        quat = glm::normalize(quat);
-    }
+    // Quaternion arithmetic
+    Quaternion operator*(const Quaternion& other) const;
+    Quaternion operator*(float scalar) const;
 
-    // Quaternion multiplication
-    Quaternion operator*(const Quaternion& other) const {
-        return Quaternion(glm::cross(quat, other.quat));
-    }
+    // Interpolation
+    static Quaternion slerp(const Quaternion& q1, const Quaternion& q2, float t);
 
-    // Convert the quaternion to a rotation matrix
-    glm::mat4 ToRotationMatrix() const {
-        return glm::mat4_cast(quat);
-    }
+    // Conversion to rotation matrix
+    glm::mat4 toMatrix() const;
 
-    // Get the underlying glm::quat
-    glm::quat GetQuaternion() const {
-        return quat;
-    }
+    // Rotation
+    void rotate(float angle, const glm::vec3& axis);
 
-private:
-    glm::quat quat;
+    // Debug
+    void print() const;
+
+    // Member variables
+    float w, x, y, z;
 };
+

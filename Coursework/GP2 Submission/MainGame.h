@@ -102,6 +102,8 @@ private:
 	Shader kuwaharaShader;
 
 	Camera myCamera;
+	
+	GameObject gameObject;
 
 	Transform transform;
 
@@ -109,7 +111,6 @@ private:
 
 	Time time;
 
-	std::vector<GameObject> gameObjects;
 
 	bool colliding1 = false;
 	bool colliding2 = false;

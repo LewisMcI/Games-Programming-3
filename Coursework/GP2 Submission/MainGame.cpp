@@ -369,13 +369,11 @@ void MainGame::drawChromaticAbberationPlane()
 
 void MainGame::createGameObject()
 {
-	GameObject gameObject(myCamera);
-	gameObject.init("..\\Resources\\Models\\Cube.obj", shader, "..\\Resources\\Textures\\DogTexture.png");
-	gameObjects.push_back(gameObject);
+	gameObject.init("..\\Resources\\Models\\Cube.obj", "..\\Resources\\Shaders\\DefaultShader.vert", "..\\Resources\\Shaders\\DefaultShader.frag", "..\\Resources\\Textures\\DefaultTexture.jpg");
 }
 
 void MainGame::drawGameObjects() {
-	gameObjects.front().Draw();
+	gameObject.Draw(myCamera);
 }
 
 void MainGame::drawObjects() {
@@ -428,9 +426,9 @@ void MainGame::drawGame()
 	// Clear display to blue background.
 	display.clearDisplay(0.46f, 0.57f, 0.71f, 1.0f);
 
-	drawObjects();
+	//drawObjects();
 
-	//drawGameObjects();
+	drawGameObjects();
 
 	skybox.draw(&myCamera);
 

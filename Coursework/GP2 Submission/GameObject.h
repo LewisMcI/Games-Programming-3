@@ -7,13 +7,9 @@
 class GameObject
 {
 public:
-	GameObject(Camera& camera) : camera(camera){
+	void init(std::string meshName, std::string fragShader, std::string vertexShader, std::string textureName);
 
-	}
-
-	void init(std::string meshName, Shader objectShader, std::string textureName);
-
-	void Draw();
+	void Draw(Camera& camera);
 private:
 	Transform transform;
 
@@ -21,6 +17,5 @@ private:
 	Shader shader;
 	Texture texture;
 
-	Camera& camera;
 };
 

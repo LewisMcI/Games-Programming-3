@@ -6,58 +6,30 @@
 #include <glm/detail/type_mat.hpp>
 #include <glm/glm.hpp>
 
-class Quaternion {
-public:
+#define PI 3.14159265358979323846
 
-    // Rotate with Vector3
-
-
-
-
-
-    float getMagnitude() {
-
-    }
-
-    void normalize(){
-        float mag = getMagnitude();
-        if (mag > 0) {
-            w /= mag;
-            x /= mag;
-            y /= mag;
-            z /= mag;
-        }
-    }
-
-    glm::mat4 toMatrix() const {
-        glm::mat4 rotationMatrix = glm::mat4(1.0f);
-
-        float xx = x * x;
-        float xy = x * y;
-        float xz = x * z;
-        float xw = x * w;
-        float yy = y * y;
-        float yz = y * z;
-        float yw = y * w;
-        float zz = z * z;
-        float zw = z * w;
-
-        rotationMatrix[0][0] = 1 - 2 * (yy + zz);
-        rotationMatrix[0][1] = 2 * (xy - zw);
-        rotationMatrix[0][2] = 2 * (xz + yw);
-
-        rotationMatrix[1][0] = 2 * (xy + zw);
-        rotationMatrix[1][1] = 1 - 2 * (xx + zz);
-        rotationMatrix[1][2] = 2 * (yz - xw);
-
-        rotationMatrix[2][0] = 2 * (xz - yw);
-        rotationMatrix[2][1] = 2 * (yz + xw);
-        rotationMatrix[2][2] = 1 - 2 * (xx + yy);
-
-        return rotationMatrix;
-    }
-    // Member variables
-    float w, x, y, z;
-    float mag;
+struct Quaternion {
+    double x, y, z, w;
 };
+
+Quaternion axisAngleToQuaternion(double angle, double axisX, double axisY, double axisZ) {
+    Quaternion q;
+    double halfAngle = angle / 2.0;
+    double sinHalfAngle = sin(halfAngle);
+    q.w = cos(halfAngle);
+    q.x = axisX * sinHalfAngle / axisX;
+    q.y = axisY * sinHalfAngle / axisY;
+    q.z = axisZ * sinHalfAngle / axisZ;
+    return q;
+}
+
+glm::vec3 quaternionToAxisAxis(Quaternion& quat) {
+    float angle_rad = acos(quat.w) * 2;
+
+    float x = quat.x / sin(angle_rad / 2);
+    float y = quat.y / sin(angle_rad / 2);
+    float z = quat.z / sin(angle_rad / 2);
+    
+    return glm::vec3(x, y, z);
+}
 

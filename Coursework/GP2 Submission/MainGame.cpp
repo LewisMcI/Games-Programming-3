@@ -426,9 +426,9 @@ void MainGame::drawGame()
 	// Clear display to blue background.
 	display.clearDisplay(0.46f, 0.57f, 0.71f, 1.0f);
 
-	//drawObjects();
+	drawObjects();
 
-	drawGameObjects();
+	//drawGameObjects();
 
 	skybox.draw(&myCamera);
 

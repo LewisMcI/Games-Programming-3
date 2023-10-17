@@ -113,7 +113,7 @@ void Mesh::initModel(const IndexedModel& model)
 
 void Mesh::loadModel(const std::string& filename)
 {
-	IndexedModel model = OBJModel(filename).ToIndexedModel();
+	IndexedModel model = OBJModel(filename).toIndexedModel();
 	initModel(model);
 }
 

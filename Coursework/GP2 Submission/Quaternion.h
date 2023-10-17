@@ -12,14 +12,15 @@ struct Quaternion {
     double x, y, z, w;
 };
 
+// This assumes the axis magnitude is 1
 Quaternion axisAngleToQuaternion(double angle, double axisX, double axisY, double axisZ) {
     Quaternion q;
-    double halfAngle = angle / 2.0;
-    double sinHalfAngle = sin(halfAngle);
+    float halfAngle = angle / 2.0f;
+    float sinHalfAngle = sin(halfAngle);
     q.w = cos(halfAngle);
-    q.x = axisX * sinHalfAngle / axisX;
-    q.y = axisY * sinHalfAngle / axisY;
-    q.z = axisZ * sinHalfAngle / axisZ;
+    q.x = axisX * sinHalfAngle;
+    q.y = axisY * sinHalfAngle;
+    q.z = axisZ * sinHalfAngle;
     return q;
 }
 

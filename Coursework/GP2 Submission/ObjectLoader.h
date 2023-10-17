@@ -1,5 +1,5 @@
-#ifndef OBJ_LOADER_H_INCLUDED
-#define OBJ_LOADER_H_INCLUDED
+#ifndef OBJ_LOADER_H
+#define OBJ_LOADER_H
 
 #include <glm/glm.hpp>
 #include <vector>
@@ -22,29 +22,31 @@ public:
     std::vector<glm::vec3> normals;
     std::vector<unsigned int> indices;
 
-    void CalcNormals();
+    void calcNormals();
 };
 
 class OBJModel
 {
 public:
+
+
+    OBJModel(const std::string& fileName);
+
+    IndexedModel toIndexedModel();
+private:
     std::vector<OBJIndex> OBJIndices;
     std::vector<glm::vec3> vertices;
     std::vector<glm::vec2> uvs;
     std::vector<glm::vec3> normals;
+
     bool hasUVs;
     bool hasNormals;
+    unsigned int findLastVertexIndex(const std::vector<OBJIndex*>& indexLookup, const OBJIndex* currentIndex, const IndexedModel& result);
+    void createOBJFace(const std::string& line);
 
-    OBJModel(const std::string& fileName);
-
-    IndexedModel ToIndexedModel();
-private:
-    unsigned int FindLastVertexIndex(const std::vector<OBJIndex*>& indexLookup, const OBJIndex* currentIndex, const IndexedModel& result);
-    void CreateOBJFace(const std::string& line);
-
-    glm::vec2 ParseOBJVec2(const std::string& line);
-    glm::vec3 ParseOBJVec3(const std::string& line);
-    OBJIndex ParseOBJIndex(const std::string& token, bool* hasUVs, bool* hasNormals);
+    glm::vec2 parseOBJVec2(const std::string& line);
+    glm::vec3 parseOBJVec3(const std::string& line);
+    OBJIndex parseOBJIndex(const std::string& token, bool* hasUVs, bool* hasNormals);
 };
 
-#endif // OBJ_LOADER_H_INCLUDED
+#endif

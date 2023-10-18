@@ -13,48 +13,33 @@ static inline std::vector<std::string> SplitString(const std::string& s, char de
 OBJModel::OBJModel(const std::string& fileName)
 {
     hasUVs = false;
-    hasNormals = false;
+    hasNormals = false; 
     std::ifstream file;
-    file.open(fileName.c_str());
+    FILE* newFile = fopen(fileName.c_str(), "r");
 
-    std::string line;
-    if (file.is_open())
-    {
-        while (file.good())
-        {
-            getline(file, line);
+    char line[1024];
+    while (fgets(line, sizeof(line), newFile)) {
 
-            unsigned int lineLength = line.length();
-
-            if (lineLength < 2)
-                continue;
-
-            const char* lineCStr = line.c_str();
-
-            switch (lineCStr[0])
+            switch (line[0])
             {
-            case 'v':
-                if (lineCStr[1] == 't')
-                    this->uvs.push_back(ParseOBJVec2(line));
-                else if (lineCStr[1] == 'n')
-                    this->normals.push_back(ParseOBJVec3(line));
-                else if (lineCStr[1] == ' ' || lineCStr[1] == '\t')
-                    this->vertices.push_back(ParseOBJVec3(line));
-                break;
-            case 'f':
-                CreateOBJFace(line);
-                break;
-            default: break;
+                case 'v':
+                    if (line[1] == 't')
+                        this->uvs.push_back(parseOBJVec2(line));
+                    else if (line[1] == 'n')
+                        this->normals.push_back(parseOBJVec3(line));
+                    else if (line[1] == ' ' || line[1] == '\t')
+                        this->vertices.push_back(parseOBJVec3(line));
+                    break;
+                case 'f':
+                    createOBJFace(line);
+                    break;
+                default: 
+                    break;
             };
-        }
-    }
-    else
-    {
-        std::cerr << "Unable to load mesh: " << fileName << std::endl;
     }
 }
 
-void IndexedModel::CalcNormals()
+void IndexedModel::calcNormals()
 {
     for (unsigned int i = 0; i < indices.size(); i += 3)
     {
@@ -76,7 +61,7 @@ void IndexedModel::CalcNormals()
         normals[i] = glm::normalize(normals[i]);
 }
 
-IndexedModel OBJModel::ToIndexedModel()
+IndexedModel OBJModel::toIndexedModel()
 {
     IndexedModel result;
     IndexedModel normalModel;
@@ -129,7 +114,7 @@ IndexedModel OBJModel::ToIndexedModel()
             normalModelIndex = it->second;
 
         //Create model which properly separates texture coordinates
-        unsigned int previousVertexLocation = FindLastVertexIndex(indexLookup, currentIndex, result);
+        unsigned int previousVertexLocation = findLastVertexIndex(indexLookup, currentIndex, result);
 
         if (previousVertexLocation == (unsigned int)-1)
         {
@@ -149,7 +134,7 @@ IndexedModel OBJModel::ToIndexedModel()
 
     if (!hasNormals)
     {
-        normalModel.CalcNormals();
+        normalModel.calcNormals();
 
         for (unsigned int i = 0; i < result.positions.size(); i++)
             result.normals[i] = normalModel.normals[indexMap[i]];
@@ -158,7 +143,7 @@ IndexedModel OBJModel::ToIndexedModel()
     return result;
 };
 
-unsigned int OBJModel::FindLastVertexIndex(const std::vector<OBJIndex*>& indexLookup, const OBJIndex* currentIndex, const IndexedModel& result)
+unsigned int OBJModel::findLastVertexIndex(const std::vector<OBJIndex*>& indexLookup, const OBJIndex* currentIndex, const IndexedModel& result)
 {
     unsigned int start = 0;
     unsigned int end = indexLookup.size();
@@ -241,23 +226,23 @@ unsigned int OBJModel::FindLastVertexIndex(const std::vector<OBJIndex*>& indexLo
     return -1;
 }
 
-void OBJModel::CreateOBJFace(const std::string& line)
+void OBJModel::createOBJFace(const std::string& line)
 {
     std::vector<std::string> tokens = SplitString(line, ' ');
 
-    this->OBJIndices.push_back(ParseOBJIndex(tokens[1], &this->hasUVs, &this->hasNormals));
-    this->OBJIndices.push_back(ParseOBJIndex(tokens[2], &this->hasUVs, &this->hasNormals));
-    this->OBJIndices.push_back(ParseOBJIndex(tokens[3], &this->hasUVs, &this->hasNormals));
+    this->OBJIndices.push_back(parseOBJIndex(tokens[1], &this->hasUVs, &this->hasNormals));
+    this->OBJIndices.push_back(parseOBJIndex(tokens[2], &this->hasUVs, &this->hasNormals));
+    this->OBJIndices.push_back(parseOBJIndex(tokens[3], &this->hasUVs, &this->hasNormals));
 
     if ((int)tokens.size() > 4)
     {
-        this->OBJIndices.push_back(ParseOBJIndex(tokens[1], &this->hasUVs, &this->hasNormals));
-        this->OBJIndices.push_back(ParseOBJIndex(tokens[3], &this->hasUVs, &this->hasNormals));
-        this->OBJIndices.push_back(ParseOBJIndex(tokens[4], &this->hasUVs, &this->hasNormals));
+        this->OBJIndices.push_back(parseOBJIndex(tokens[1], &this->hasUVs, &this->hasNormals));
+        this->OBJIndices.push_back(parseOBJIndex(tokens[3], &this->hasUVs, &this->hasNormals));
+        this->OBJIndices.push_back(parseOBJIndex(tokens[4], &this->hasUVs, &this->hasNormals));
     }
 }
 
-OBJIndex OBJModel::ParseOBJIndex(const std::string& token, bool* hasUVs, bool* hasNormals)
+OBJIndex OBJModel::parseOBJIndex(const std::string& token, bool* hasUVs, bool* hasNormals)
 {
     unsigned int tokenLength = token.length();
     const char* tokenString = token.c_str();
@@ -291,7 +276,7 @@ OBJIndex OBJModel::ParseOBJIndex(const std::string& token, bool* hasUVs, bool* h
     return result;
 }
 
-glm::vec3 OBJModel::ParseOBJVec3(const std::string& line)
+glm::vec3 OBJModel::parseOBJVec3(const std::string& line)
 {
     unsigned int tokenLength = line.length();
     const char* tokenString = line.c_str();
@@ -324,7 +309,7 @@ glm::vec3 OBJModel::ParseOBJVec3(const std::string& line)
     //glm::vec3(atof(tokens[1].c_str()), atof(tokens[2].c_str()), atof(tokens[3].c_str()))
 }
 
-glm::vec2 OBJModel::ParseOBJVec2(const std::string& line)
+glm::vec2 OBJModel::parseOBJVec2(const std::string& line)
 {
     unsigned int tokenLength = line.length();
     const char* tokenString = line.c_str();

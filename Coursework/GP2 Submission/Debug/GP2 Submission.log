@@ -1,3 +1,17 @@
 ﻿C:\Program Files\Microsoft Visual Studio\2022\Community\MSBuild\Microsoft\VC\v170\Microsoft.CppBuild.targets(531,5): warning MSB8028: The intermediate directory (Debug\) contains files shared from another project (Labs.vcxproj).  This can lead to incorrect clean and rebuild behavior.
+  GameObject.cpp
+  MainGame.cpp
+C:\Users\lewis\Desktop\WIP\Games-Programming-3\Coursework\GP2 Submission\MainGame.h(118,22): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+C:\Users\lewis\Desktop\WIP\Games-Programming-3\Coursework\GP2 Submission\MainGame.cpp(11,11): warning C4101: 'display': unreferenced local variable
+C:\Users\lewis\Desktop\WIP\Games-Programming-3\Coursework\GP2 Submission\MainGame.cpp(120,75): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+C:\Users\lewis\Desktop\WIP\Games-Programming-3\Coursework\GP2 Submission\MainGame.cpp(121,76): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+C:\Users\lewis\Desktop\WIP\Games-Programming-3\Coursework\GP2 Submission\MainGame.cpp(122,77): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+C:\Users\lewis\Desktop\WIP\Games-Programming-3\Coursework\GP2 Submission\MainGame.cpp(506,54): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+  Mesh.cpp
+C:\Users\lewis\Desktop\WIP\Games-Programming-3\Coursework\GP2 Submission\Mesh.cpp(24,20): warning C4018: '<': signed/unsigned mismatch
   ObjectLoader.cpp
+  main.cpp
+C:\Users\lewis\Desktop\WIP\Games-Programming-3\Coursework\GP2 Submission\MainGame.h(118,22): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+  Generating Code...
+  LINK : C:\Users\lewis\Desktop\WIP\Games-Programming-3\Coursework\Debug\GP2 Submission.exe not found or not built by the last incremental link; performing full link
   GP2 Submission.vcxproj -> C:\Users\lewis\Desktop\WIP\Games-Programming-3\Coursework\Debug\GP2 Submission.exe

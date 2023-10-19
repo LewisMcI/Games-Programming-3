@@ -9,7 +9,7 @@
 class Skybox
 {
 public:
-	void init(std::vector<std::string> faces);
+	void init();
 	void draw(Camera* camera);
 
 	unsigned int textureID;

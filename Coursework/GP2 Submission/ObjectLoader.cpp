@@ -225,16 +225,34 @@ unsigned int OBJModel::findLastVertexIndex(const std::vector<OBJIndex*>& indexLo
 
     return -1;
 }
+#include <sstream>
+
+static inline std::vector<std::string> NewSplitString(const std::string& s, char delim)
+{
+    std::vector<std::string> elems;
+    std::size_t start = 0;
+    std::size_t end = s.find(delim);
+
+    while (end != std::string::npos)
+    {
+        elems.emplace_back(s.c_str() + start, end - start);
+        start = end + 1;
+        end = s.find(delim, start);
+    }
+
+    elems.emplace_back(s.c_str() + start);
+    return elems;
+}
 
 void OBJModel::createOBJFace(const std::string& line)
 {
-    std::vector<std::string> tokens = SplitString(line, ' ');
+    std::vector<std::string> tokens = NewSplitString(line, ' ');
 
     this->OBJIndices.push_back(parseOBJIndex(tokens[1], &this->hasUVs, &this->hasNormals));
     this->OBJIndices.push_back(parseOBJIndex(tokens[2], &this->hasUVs, &this->hasNormals));
     this->OBJIndices.push_back(parseOBJIndex(tokens[3], &this->hasUVs, &this->hasNormals));
 
-    if ((int)tokens.size() > 4)
+    if (tokens.size() > 4)
     {
         this->OBJIndices.push_back(parseOBJIndex(tokens[1], &this->hasUVs, &this->hasNormals));
         this->OBJIndices.push_back(parseOBJIndex(tokens[3], &this->hasUVs, &this->hasNormals));
@@ -242,39 +260,53 @@ void OBJModel::createOBJFace(const std::string& line)
     }
 }
 
+
+
+
+
+// Function to parse an OBJ index from a given token
+// Also updates whether UVs and normals are present
 OBJIndex OBJModel::parseOBJIndex(const std::string& token, bool* hasUVs, bool* hasNormals)
 {
+    // Get the length of the token and convert it to a character array
     unsigned int tokenLength = token.length();
     const char* tokenString = token.c_str();
 
+    // Define the start and end of the vertex index
     unsigned int vertIndexStart = 0;
     unsigned int vertIndexEnd = FindNextChar(vertIndexStart, tokenString, tokenLength, '/');
 
+    // Initialize the result structure to store vertex, UV, and normal indices
     OBJIndex result;
     result.vertexIndex = ParseOBJIndexValue(token, vertIndexStart, vertIndexEnd);
-    result.uvIndex = 0;
-    result.normalIndex = 0;
+    result.uvIndex = 0;       // Initialize UV index to 0
+    result.normalIndex = 0;   // Initialize normal index to 0
 
+    // If there are no more characters in the token, return the result
     if (vertIndexEnd >= tokenLength)
         return result;
-
+    // Move to the next part (UV) and extract the UV index
     vertIndexStart = vertIndexEnd + 1;
     vertIndexEnd = FindNextChar(vertIndexStart, tokenString, tokenLength, '/');
 
     result.uvIndex = ParseOBJIndexValue(token, vertIndexStart, vertIndexEnd);
-    *hasUVs = true;
+    *hasUVs = true;  // Indicate that UVs are present by updating the boolean pointer
 
+    // If there are no more characters in the token, return the result
     if (vertIndexEnd >= tokenLength)
         return result;
 
+    // Move to the next part (normal) and extract the normal index
     vertIndexStart = vertIndexEnd + 1;
     vertIndexEnd = FindNextChar(vertIndexStart, tokenString, tokenLength, '/');
 
     result.normalIndex = ParseOBJIndexValue(token, vertIndexStart, vertIndexEnd);
-    *hasNormals = true;
+    *hasNormals = true;  // Indicate that normals are present by updating the boolean pointer
 
+    // Return the final result containing vertex, UV, and normal indices
     return result;
 }
+
 
 glm::vec3 OBJModel::parseOBJVec3(const std::string& line)
 {

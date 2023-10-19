@@ -9,9 +9,7 @@ C:\Users\lewis\Desktop\WIP\Games-Programming-3\Coursework\GP2 Submission\MainGam
 C:\Users\lewis\Desktop\WIP\Games-Programming-3\Coursework\GP2 Submission\MainGame.cpp(506,54): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
   Mesh.cpp
 C:\Users\lewis\Desktop\WIP\Games-Programming-3\Coursework\GP2 Submission\Mesh.cpp(24,20): warning C4018: '<': signed/unsigned mismatch
-  ObjectLoader.cpp
   main.cpp
 C:\Users\lewis\Desktop\WIP\Games-Programming-3\Coursework\GP2 Submission\MainGame.h(118,22): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
   Generating Code...
-  LINK : C:\Users\lewis\Desktop\WIP\Games-Programming-3\Coursework\Debug\GP2 Submission.exe not found or not built by the last incremental link; performing full link
   GP2 Submission.vcxproj -> C:\Users\lewis\Desktop\WIP\Games-Programming-3\Coursework\Debug\GP2 Submission.exe

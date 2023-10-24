@@ -14,7 +14,6 @@ OBJModel::OBJModel(const std::string& fileName)
 {
     hasUVs = false;
     hasNormals = false; 
-    std::ifstream file;
     FILE* newFile = fopen(fileName.c_str(), "r");
 
     char line[1024];
@@ -258,7 +257,6 @@ void OBJModel::createOBJFace(const std::string& line)
         this->OBJIndices.push_back(parseOBJIndex(tokens[4], &this->hasUVs, &this->hasNormals));
     }
 }
-
 
 
 

@@ -3,6 +3,7 @@
 #include <GL\glew.h>
 #include <iostream>
 #include <string>
+#include "Shader.h"
 using namespace std;
 
 
@@ -18,6 +19,11 @@ public:
 	float getWidth();
 	float getHeight();
 
+	void initFBO();
+	void bindFBO();
+	void unbindFBO();
+	void renderFBO();
+
 private:
 
 	void returnError(std::string errorString);
@@ -27,5 +33,12 @@ private:
 	SDL_Window* sdlWindow;
 	float screenWidth;
 	float screenHeight;
+
+	GLuint FBO;
+	GLuint RBO;
+	GLuint CBO;
+	GLuint quadVAO;
+	GLuint quadVBO;
+	Shader FBOShader;
 };
 

@@ -28,6 +28,8 @@ void MainGame::initSystems()
 
 	display.initDisplay();
 
+	display.initFBO();
+
 	skybox.init();
 
 	player.init(display);
@@ -38,7 +40,6 @@ void MainGame::initSystems()
 
 	std::cout << "Initialization Time = " << std::chrono::duration_cast<std::chrono::milliseconds>(end - begin).count() << "[ms]" << std::endl;
 }
-
 
 void MainGame::gameLoop()
 {
@@ -71,9 +72,15 @@ void MainGame::drawGame()
 	// Create Blue Background
 	display.clearDisplay(0.46f, 0.57f, 0.71f, 1.0f);
 
-	drawGameObjects();
+	display.bindFBO();
 
+	drawGameObjects();
+	
 	skybox.draw(&player.getCamera());
+
+	display.unbindFBO();
+
+	display.renderFBO();
 
 	display.swapBuffer();
 }

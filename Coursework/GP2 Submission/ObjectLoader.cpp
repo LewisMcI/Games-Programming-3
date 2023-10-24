@@ -258,9 +258,6 @@ void OBJModel::createOBJFace(const std::string& line)
     }
 }
 
-
-
-
 // Function to parse an OBJ index from a given token
 // Also updates whether UVs and normals are present
 OBJIndex OBJModel::parseOBJIndex(const std::string& token, bool* hasUVs, bool* hasNormals)

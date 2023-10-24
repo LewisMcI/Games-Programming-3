@@ -247,7 +247,6 @@ static inline std::vector<std::string> NewSplitString(const std::string& s, char
 void OBJModel::createOBJFace(const std::string& line)
 {
     std::vector<std::string> tokens = NewSplitString(line, ' ');
-
     this->OBJIndices.push_back(parseOBJIndex(tokens[1], &this->hasUVs, &this->hasNormals));
     this->OBJIndices.push_back(parseOBJIndex(tokens[2], &this->hasUVs, &this->hasNormals));
     this->OBJIndices.push_back(parseOBJIndex(tokens[3], &this->hasUVs, &this->hasNormals));

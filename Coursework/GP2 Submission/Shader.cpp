@@ -83,7 +83,7 @@ void Shader::Bind()
 	glUseProgram(shaderID);
 }
 
-void Shader::Update(const Transform& transform, const Camera& camera)
+void Shader::Update(const TransformComponent& transform, const Camera& camera)
 {
 	// Get view projection matrix and update shader.
 	glm::mat4 mvp = camera.GetViewProjection() * transform.GetModel();

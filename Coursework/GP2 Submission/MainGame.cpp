@@ -22,6 +22,8 @@ void MainGame::run()
 }
 
 #include <chrono>
+#include "TransformComponent.h"
+#include "MeshComponent.h"
 void MainGame::initSystems()
 {
 	std::chrono::steady_clock::time_point begin = std::chrono::steady_clock::now();
@@ -34,7 +36,15 @@ void MainGame::initSystems()
 
 	player.init(display);
 
-	createGameObject();
+	//createGameObject();
+
+	auto newEntity = activeScene.CreateEntity();
+
+	activeScene.Reg().emplace<TransformComponent>(newEntity, glm::vec3(0.0f, 0.0f, 5.0f));
+	
+	activeScene.Reg().emplace<MaterialComponent>(newEntity, ShaderType::Default, TextureType::Brick);
+	
+	activeScene.Reg().emplace<MeshComponent>(newEntity);
 
 	std::chrono::steady_clock::time_point end = std::chrono::steady_clock::now();
 
@@ -47,24 +57,11 @@ void MainGame::gameLoop()
 	while (gameState != GameState::EXIT) 
 	{
 		player.Update();
+		// Update Scene
 		drawGame(); 
 	}
 }
 
-void MainGame::createGameObject()
-{
-	GameObject* newObj = new GameObject();
-	newObj->init(MeshType::Cube, ShaderType::Default, TextureType::Brick);
-	gameObjects.push_back(newObj);
-}
-
-void MainGame::drawGameObjects() {
-	int size = gameObjects.size();
-	for (size_t i = 0; i < size; i++)
-	{
-		gameObjects.at(i)->Draw(player.getCamera());
-	}
-}
 
 // Draws game
 void MainGame::drawGame()
@@ -74,7 +71,7 @@ void MainGame::drawGame()
 
 	display.bindFBO();
 
-	drawGameObjects();
+	activeScene.onUpdate(player.getCamera());
 	
 	skybox.draw(&player.getCamera());
 

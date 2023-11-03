@@ -1,14 +1,24 @@
-#include "Mesh.h"
+#include "MeshComponent.h"
 #include <vector>
 
 
-Mesh::Mesh() 
+MeshComponent::MeshComponent(MeshType meshType)
 {
 	drawCount = 0;
 	GLuint vertexArrayObject();
 	GLuint vertexArrayBuffers[NUM_BUFFERS]{};
+	std::string fileName;
+	switch (meshType) {
+		case MeshType::Cube:
+			fileName = "..\\Resources\\Models\\Cube.obj";
+			break;
+		case MeshType::Draven:
+			fileName = "..\\Resources\\Models\\draven.obj";
+			break;
+	}
+	loadModel(fileName);
 }
-void Mesh::loadVertexs(Vertex* vertices, unsigned int numVertices)
+void MeshComponent::loadVertexs(Vertex* vertices, unsigned int numVertices)
 {
 	drawCount = numVertices;
 
@@ -43,7 +53,7 @@ void Mesh::loadVertexs(Vertex* vertices, unsigned int numVertices)
 	glBindVertexArray(0); // unbind our VAO
 }
 
-void Mesh::init(Vertex* vertices, unsigned int numVertices, unsigned int* indices, unsigned int numIndices)
+void MeshComponent::init(Vertex* vertices, unsigned int numVertices, unsigned int* indices, unsigned int numIndices)
 {
 	IndexedModel model;
 
@@ -60,7 +70,7 @@ void Mesh::init(Vertex* vertices, unsigned int numVertices, unsigned int* indice
 	initModel(model);
 }
 
-void Mesh::initModel(const IndexedModel& model)
+void MeshComponent::initModel(const IndexedModel& model)
 {
 	drawCount = model.indices.size();
 
@@ -111,25 +121,25 @@ void Mesh::initModel(const IndexedModel& model)
 	glDisableVertexAttribArray(1);
 }
 
-void Mesh::loadModel(const std::string& filename)
+void MeshComponent::loadModel(const std::string& fileName)
 {
-	IndexedModel model = OBJModel(filename).toIndexedModel();
+	IndexedModel model = OBJModel(fileName).toIndexedModel();
 	initModel(model);
 }
 
-Mesh::~Mesh()
+MeshComponent::~MeshComponent()
 {
 	glDeleteVertexArrays(1, &vertexArrayObject); // delete arrays
 }
 
-void Mesh::drawVertexes()
+void MeshComponent::drawVertexes()
 {
 	glBindVertexArray(vertexArrayObject);
 	glDrawArrays(GL_TRIANGLES, 0, drawCount);
 	glBindVertexArray(0);
 }
 
-void Mesh::Draw()
+void MeshComponent::Draw()
 {
 	// Bind VAO
 	glBindVertexArray(vertexArrayObject);
@@ -140,7 +150,7 @@ void Mesh::Draw()
 	// Unbind
 	glBindVertexArray(0);
 }
-void Mesh::updateSphere(glm::vec3 pos, float radius)
+void MeshComponent::updateSphere(glm::vec3 pos, float radius)
 {
 	// Set new position and radius
 	collisionSphere.SetPos(pos);

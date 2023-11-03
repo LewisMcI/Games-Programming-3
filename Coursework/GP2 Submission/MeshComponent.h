@@ -3,7 +3,7 @@
 #include <GL\glew.h>
 #include <string>
 #include "ObjectLoader.h"
-
+enum class MeshType { Cube, Draven };
 struct Sphere
 {
 public:
@@ -51,23 +51,27 @@ private:
 
 };
 
-class Mesh
+class MeshComponent
 {
 public:
-	Mesh();
+	MeshComponent(MeshType meshType = MeshType::Cube);
 	void loadVertexs(Vertex* vertices, unsigned int numVertices);
 	void init(Vertex* vertices, unsigned int numVertices, unsigned int* indices, unsigned int numIndices);
-	~Mesh();
+	~MeshComponent();
 
 	void drawVertexes();
 
 	void Draw();
-	void loadModel(const std::string& filename);
+	void loadModel(const std::string& fileName);
 	void initModel(const IndexedModel& model);
 
 	void updateSphere(glm::vec3 pos, float radius);
 	glm::vec3 getSpherePos() { return collisionSphere.GetPos(); }
 	float getSphereRadius() { return collisionSphere.GetRadius(); }
+
+	void OnMeshComponentConstruct() {
+
+	}
 private:
 
 	enum

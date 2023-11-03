@@ -7,6 +7,7 @@
 #include "SkyBox.h"
 #include "GameObject.h"
 #include "Player.h"
+#include "Scene/Scene.h"
 
 enum class GameState{PLAY, EXIT};
 
@@ -36,10 +37,10 @@ private:
 	Shader shaderSkybox;
 	Skybox skybox;
 
-	vector<GameObject*> gameObjects;
-
 	Player player;
 
 	Time time;
+
+	Scene activeScene;
 };
 

@@ -1,7 +1,7 @@
 #pragma once
 #include <string>
 #include <GL\glew.h>
-#include "transform.h"
+#include "TransformComponent.h"
 #include "Camera.h"
 #include <iostream>
 #include <fstream>
@@ -17,7 +17,7 @@ public:
 
 	// Set GPU to use our shaders
 	void Bind();
-	void Update(const Transform& transform, const Camera& camera);
+	void Update(const TransformComponent& transform, const Camera& camera);
 
 	std::string Shader::LoadShader(const std::string& fileName);
 	void Shader::CheckShaderError(GLuint shader, GLuint flag, bool isProgram, const std::string& errorMessage);

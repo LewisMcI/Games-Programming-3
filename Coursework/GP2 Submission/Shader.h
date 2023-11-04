@@ -1,10 +1,10 @@
 #pragma once
-#include <string>
 #include <GL\glew.h>
-#include "TransformComponent.h"
-#include "Camera.h"
 #include <iostream>
 #include <fstream>
+#include "Camera.h"
+#include "Components/TransformComponent.h"
+#include <string>
 
 class Shader
 {

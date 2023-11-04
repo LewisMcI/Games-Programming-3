@@ -1,6 +1,7 @@
 #pragma once
 #include "PlayerController.h"
 #include <iostream>
+#include "Time.h"
 
 PlayerController::PlayerController()
 {
@@ -29,10 +30,6 @@ void PlayerController::processInput()
 		case SDL_QUIT:
 			//gameState = GameState::EXIT;
 			break;
-			// OnKeyDown - Handles keyboard input to control camera.
-		case SDL_KEYDOWN:
-			processKeyboardInput(&event.key.keysym);
-			break;
 			// OnMouseMove - Handles mouse movement to control camera.
 		case SDL_MOUSEMOTION:
 			processMouseInput(&event.motion);
@@ -41,48 +38,31 @@ void PlayerController::processInput()
 			break;
 		}
 	}
+	const Uint8* keys = SDL_GetKeyboardState(NULL);
+	processKeyboardInput(keys);
 }
 
-void PlayerController::processKeyboardInput(SDL_Keysym* keySym)
+void PlayerController::processKeyboardInput(const Uint8* keys)
 {
-	float distance = 2.0f;
-	// Modifiers
-	switch (keySym->mod) {
-		// Move Faster Key
-	case KMOD_LSHIFT:
-		distance *= 2.0f;
-		break;
-		// Move Slower Key
-	case KMOD_LCTRL:
-		distance *= 0.25f;
-		break;
-	}
-	// Movement Keys
-	switch (keySym->sym) {
-		// Forward Key
-	case SDLK_UP:
-	case SDLK_w:
+	float distance = 20.0f * Time::getInstance().getDeltaTime();
+
+	if (keys[SDL_SCANCODE_W]) { // Move forward
 		playerCamera->MoveX(distance);
-		break;
-		// Backward Key
-	case SDLK_DOWN:
-	case SDLK_s:
+	}
+	if (keys[SDL_SCANCODE_S]) { // Move backward
 		playerCamera->MoveX(-distance);
-		break;
-		// Left Key
-	case SDLK_LEFT:
-	case SDLK_a:
+	}
+	if (keys[SDL_SCANCODE_A]) { // Move left
 		playerCamera->MoveZ(distance);
-		break;
-		// Right Key
-	case SDLK_RIGHT:
-	case SDLK_d:
+	}
+	if (keys[SDL_SCANCODE_D]) { // Move right
 		playerCamera->MoveZ(-distance);
-		break;
-		// Up Key
-	case SDLK_SPACE:
+	}
+	if (keys[SDL_SCANCODE_SPACE]) {
 		playerCamera->MoveY(distance);
-		break;
+	}
+	if (keys[SDL_SCANCODE_LSHIFT]) {
+		playerCamera->MoveY(-distance);
 	}
 }
 

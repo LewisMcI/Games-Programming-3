@@ -5,13 +5,20 @@
 class Time
 {
 public:
-	Time();
-	~Time();
+	static Time& getInstance()
+	{
+		static Time instance; // Guaranteed to be destroyed.
+		// Instantiated on first use.
+		return instance;
+	}
 
 	double getDeltaTime();
 	double getCurrentTime();
+	void Update();
+
 private:
-	void calculateDeltaTime();
+	Time();
+
 	Uint64 currentTime;
 	Uint64 lastTime;
 	Uint64 startTime;

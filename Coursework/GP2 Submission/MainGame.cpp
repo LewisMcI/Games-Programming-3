@@ -21,30 +21,34 @@ void MainGame::run()
 	gameLoop();
 }
 
-#include <chrono>
-#include "TransformComponent.h"
-#include "MeshComponent.h"
 void MainGame::initSystems()
 {
 	std::chrono::steady_clock::time_point begin = std::chrono::steady_clock::now();
 
 	display.initDisplay();
 
-	display.initFBO();
-
 	skybox.init();
 
 	player.init(display);
 
-	//createGameObject();
+	for (size_t i = 0; i < 5; i++)
+	{
+		for (size_t j = 0; j < 5; j++)
+		{
+			for (size_t k = 0; k < 5; k++) {
 
-	auto newEntity = activeScene.CreateEntity();
+				auto newEntity = activeScene.CreateEntity();
 
-	activeScene.Reg().emplace<TransformComponent>(newEntity, glm::vec3(0.0f, 0.0f, 5.0f));
+				TransformComponent& transform = newEntity.GetComponent<TransformComponent>();
+				transform.SetPos(glm::vec3(i, j, k));
+
+				newEntity.AddComponent<MaterialComponent>(ShaderType::EnviromentMapping, TextureType::Default, textureLoader);
+
+				newEntity.AddComponent<MeshComponent>(MeshType::Ship, meshloader);
+			}
+		}
+	}
 	
-	activeScene.Reg().emplace<MaterialComponent>(newEntity, ShaderType::Default, TextureType::Brick);
-	
-	activeScene.Reg().emplace<MeshComponent>(newEntity);
 
 	std::chrono::steady_clock::time_point end = std::chrono::steady_clock::now();
 
@@ -56,6 +60,7 @@ void MainGame::gameLoop()
 	// While game is still playing. Processes inputs and draws the game.
 	while (gameState != GameState::EXIT) 
 	{
+		Time::getInstance().Update();
 		player.Update();
 		// Update Scene
 		drawGame(); 

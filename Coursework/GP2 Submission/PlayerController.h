@@ -12,7 +12,7 @@ public:
 
 	void processInput();
 
-	void processKeyboardInput(SDL_Keysym* keySym);
+	void processKeyboardInput(const Uint8* keys);
 
 	void processMouseInput(SDL_MouseMotionEvent* event);
 

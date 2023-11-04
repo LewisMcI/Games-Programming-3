@@ -1,8 +1,8 @@
 #pragma once
 #include "entt\entt.hpp"
-#include "../MaterialComponent.h"
-#include "../TransformComponent.h"
-#include "../MeshComponent.h"
+#include <glm\glm.hpp>
+#include "..\Camera.h"
+class Entity;
 
 class Scene
 {
@@ -10,14 +10,13 @@ public:
 	Scene();
 	~Scene();
 
-	entt::entity CreateEntity();
-
-	// TEMP
-	entt::registry& Reg() { return m_Registry; }
+	Entity CreateEntity(const std::string& name = "");
 
 	void onUpdate(Camera& activeCamera);
 	
 private:
-	entt::registry m_Registry;
+	entt::registry registry;
+
+	friend class Entity;
 };
 

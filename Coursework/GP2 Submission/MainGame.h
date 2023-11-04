@@ -7,7 +7,11 @@
 #include "SkyBox.h"
 #include "GameObject.h"
 #include "Player.h"
-#include "Scene/Scene.h"
+#include "Scene/Scene.h"]
+#include <chrono>
+#include "Components/MeshComponent.h"
+#include "Scene/Entity.h";
+#include "Components/MaterialComponent.h"
 
 enum class GameState{PLAY, EXIT};
 
@@ -35,12 +39,16 @@ private:
 	Display display;
 
 	Shader shaderSkybox;
+
 	Skybox skybox;
 
 	Player player;
 
-	Time time;
-
 	Scene activeScene;
+
+	TextureLoader textureLoader;
+
+	MeshLoader meshloader;
+
 };
 

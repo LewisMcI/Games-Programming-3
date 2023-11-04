@@ -74,42 +74,46 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Components\MaterialComponent.cpp" />
     <ClCompile Include="Display.cpp" />
     <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="MainGame.cpp" />
-    <ClCompile Include="MaterialComponent.cpp" />
-    <ClCompile Include="MeshComponent.cpp" />
+    <ClCompile Include="MeshLoader.cpp" />
     <ClCompile Include="ObjectLoader.cpp" />
     <ClCompile Include="Audio.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="PlayerController.cpp" />
+    <ClCompile Include="Scene\Entity.cpp" />
     <ClCompile Include="Scene\Scene.cpp" />
     <ClCompile Include="Shader.cpp" />
     <ClCompile Include="SkyBox.cpp" />
     <ClCompile Include="stb_image.c" />
-    <ClCompile Include="Texture.cpp" />
+    <ClCompile Include="TextureLoader.cpp" />
     <ClCompile Include="Time.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Camera.h" />
+    <ClInclude Include="Components\MeshComponent.h" />
+    <ClInclude Include="Components\TagComponent.h" />
     <ClInclude Include="Display.h" />
     <ClInclude Include="GameObject.h" />
     <ClInclude Include="MainGame.h" />
-    <ClInclude Include="MaterialComponent.h" />
-    <ClInclude Include="MeshComponent.h" />
+    <ClInclude Include="Components\MaterialComponent.h" />
+    <ClInclude Include="MeshLoader.h" />
     <ClInclude Include="ObjectLoader.h" />
     <ClInclude Include="Audio.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="PlayerController.h" />
     <ClInclude Include="Quaternion.h" />
+    <ClInclude Include="Scene\Entity.h" />
     <ClInclude Include="Scene\Scene.h" />
     <ClInclude Include="Shader.h" />
     <ClInclude Include="SkyBox.h" />
     <ClInclude Include="stb_image.h" />
-    <ClInclude Include="Texture.h" />
+    <ClInclude Include="TextureLoader.h" />
     <ClInclude Include="Time.h" />
-    <ClInclude Include="TransformComponent.h" />
+    <ClInclude Include="Components\TransformComponent.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\Resources\Shaders\BoxBlur.frag" />

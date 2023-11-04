@@ -8,14 +8,11 @@ Time::Time() {
 	startTime = SDL_GetPerformanceCounter();
 }
 
-Time::~Time() {
-	SDL_Quit();
-}
-
 double Time::getDeltaTime()
 {
 	return deltaTime;
 }
+
 double Time::getCurrentTime() {
 	// Gets currentTime
 	currentTime = SDL_GetPerformanceCounter();
@@ -23,7 +20,7 @@ double Time::getCurrentTime() {
 }
 
 // Calculated deltaTime using last and current time.
-void Time::calculateDeltaTime() {
+void Time::Update() {
 	// Sets lastTime to now
 	lastTime = currentTime;
 

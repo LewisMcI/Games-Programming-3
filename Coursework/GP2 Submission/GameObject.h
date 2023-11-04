@@ -1,7 +1,6 @@
 #pragma once
-#include "MeshComponent.h"
+#include "Components/MeshComponent.h"
 #include "Shader.h"
-#include "Texture.h"
 
 //enum class ShaderType { Default, EnviromentMapping };
 //enum class MeshType { Cube, Draven };

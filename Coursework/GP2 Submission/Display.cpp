@@ -160,4 +160,5 @@ void Display::initDisplay()
 
 	// Hide Cursor and keep within SDL window
 	SDL_SetRelativeMouseMode(SDL_TRUE);
+	initFBO();
 }

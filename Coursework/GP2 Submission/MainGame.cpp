@@ -31,11 +31,11 @@ void MainGame::initSystems()
 
 	player.init(display);
 
-	for (size_t i = 0; i < 5; i++)
+	for (size_t i = 0; i < 1; i++)
 	{
-		for (size_t j = 0; j < 5; j++)
+		for (size_t j = 0; j < 1; j++)
 		{
-			for (size_t k = 0; k < 5; k++) {
+			for (size_t k = 0; k < 1; k++) {
 
 				auto newEntity = activeScene.CreateEntity();
 
@@ -44,7 +44,7 @@ void MainGame::initSystems()
 
 				newEntity.AddComponent<MaterialComponent>(ShaderType::EnviromentMapping, TextureType::Default, textureLoader);
 
-				newEntity.AddComponent<MeshComponent>(MeshType::Ship, meshloader);
+				newEntity.AddComponent<MeshComponent>(MeshType::Cube, meshloader);
 			}
 		}
 	}

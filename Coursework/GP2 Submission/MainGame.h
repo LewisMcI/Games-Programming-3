@@ -19,7 +19,7 @@ class MainGame
 {
 public:
 
-	MainGame();
+	MainGame() = default;
 	~MainGame();
 
 	void run();
@@ -28,11 +28,9 @@ protected:
 private:
 
 	void initSystems();
+	void createNumOfCubes(int amount, glm::vec3& centerPoint);
 	void gameLoop();
 	void drawGame();
-
-	void createGameObject();
-	void drawGameObjects();
 
 	GameState gameState;
 

@@ -13,8 +13,12 @@ public:
 	Entity CreateEntity(const std::string& name = "");
 
 	void onUpdate(Camera& activeCamera);
+
+
 	
 private:
+	void drawAllMeshComponents(Camera& activeCamera);
+
 	entt::registry registry;
 
 	friend class Entity;

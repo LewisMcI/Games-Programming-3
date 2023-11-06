@@ -1,15 +1,6 @@
 #pragma once
 #include "MainGame.h"
 
-// Constructor
-MainGame::MainGame()
-{
-	gameState = GameState::PLAY;
-	// Sets up the game state.
-	Display* display;
-}
-
-// Destructor
 MainGame::~MainGame()
 {
 	gameState = GameState::EXIT;
@@ -31,16 +22,29 @@ void MainGame::initSystems()
 
 	player.init(display);
 
-	for (size_t i = 0; i < 1; i++)
+	glm::vec3 centerPoint = glm::vec3(0.0f, 0.0f, 50.0f);
+
+	// Initialize 216 cubes
+	createNumOfCubes(6, centerPoint);	
+
+	std::chrono::steady_clock::time_point end = std::chrono::steady_clock::now();
+
+	std::cout << "Initialization Time = " << std::chrono::duration_cast<std::chrono::milliseconds>(end - begin).count() << "[ms]" << std::endl;
+}
+
+
+void MainGame::createNumOfCubes(int amount, glm::vec3& centerPoint) {
+	for (int i = -(amount/2); i < (amount / 2); i++)
 	{
-		for (size_t j = 0; j < 1; j++)
+		for (int j = -(amount / 2); j < (amount / 2); j++)
 		{
-			for (size_t k = 0; k < 1; k++) {
+			for (int k = -(amount / 2); k < (amount / 2); k++) {
 
 				auto newEntity = activeScene.CreateEntity();
 
 				TransformComponent& transform = newEntity.GetComponent<TransformComponent>();
-				transform.SetPos(glm::vec3(i, j, k));
+
+				transform.SetPos(glm::vec3(centerPoint.x + (i * 3), centerPoint.y + (j * 3), centerPoint.z + (k * 3)));
 
 				newEntity.AddComponent<MaterialComponent>(ShaderType::EnviromentMapping, TextureType::Default, textureLoader);
 
@@ -48,32 +52,22 @@ void MainGame::initSystems()
 			}
 		}
 	}
-	
-
-	std::chrono::steady_clock::time_point end = std::chrono::steady_clock::now();
-
-	std::cout << "Initialization Time = " << std::chrono::duration_cast<std::chrono::milliseconds>(end - begin).count() << "[ms]" << std::endl;
 }
 
 void MainGame::gameLoop()
 {
 	// While game is still playing. Processes inputs and draws the game.
-	while (gameState != GameState::EXIT) 
+	while (gameState != GameState::EXIT)
 	{
 		Time::getInstance().Update();
 		player.Update();
 		// Update Scene
-		drawGame(); 
+		drawGame();
 	}
 }
 
-
-// Draws game
 void MainGame::drawGame()
 {	
-	// Create Blue Background
-	display.clearDisplay(0.46f, 0.57f, 0.71f, 1.0f);
-
 	display.bindFBO();
 
 	activeScene.onUpdate(player.getCamera());

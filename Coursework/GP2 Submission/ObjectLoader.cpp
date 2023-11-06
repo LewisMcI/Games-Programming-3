@@ -15,6 +15,10 @@ OBJModel::OBJModel(const std::string& fileName)
     hasUVs = false;
     hasNormals = false; 
     FILE* newFile = fopen(fileName.c_str(), "r");
+    if (newFile == NULL) {
+        std::cout << "Could not open file";
+        return;
+    }
 
     char line[1024];
     while (fgets(line, sizeof(line), newFile)) {

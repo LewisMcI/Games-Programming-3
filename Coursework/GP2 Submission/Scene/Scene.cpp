@@ -14,6 +14,10 @@ Scene::~Scene() {
 }
 void Scene::onUpdate(Camera& activeCamera)
 {
+	drawAllMeshComponents(activeCamera);
+}
+
+void Scene::drawAllMeshComponents(Camera& activeCamera) {
 	// Get and call draw on mesh's
 	auto view = registry.view<MeshComponent>();
 	for (auto entity : view) {
@@ -33,7 +37,7 @@ void Scene::onUpdate(Camera& activeCamera)
 
 		}
 		MaterialComponent& material = registry.get<MaterialComponent>(entity);
-		
+
 		material.Bind(transform, activeCamera);
 
 		mesh.Draw();

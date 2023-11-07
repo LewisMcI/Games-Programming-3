@@ -48,6 +48,7 @@ void Display::initFBO()
 
 	FBOShader.initShader("..\\Resources\\Shaders\\FBOShader.vert", "..\\Resources\\Shaders\\FBOShader.frag");
 }
+
 void Display::bindFBO()
 {
 	glBindFramebuffer(GL_FRAMEBUFFER, FBO);
@@ -55,21 +56,23 @@ void Display::bindFBO()
 	glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 }
+
 void Display::unbindFBO()
 {
 	glBindFramebuffer(GL_FRAMEBUFFER, 0);
 }
+
 void Display::renderFBO()
 {
 	float quadVertices[] = {
 		//positions   // texCoords
-		-0.5f,  0.5f,  0.0f, 1.0f,
-		-0.5f, -0.5f,  0.0f, 0.0f,
-		 0.5f, -0.5f,  1.0f, 0.0f,
+		-1.0f,  1.0f,  0.0f, 1.0f,
+		-1.0f, -1.0f,  0.0f, 0.0f,
+		 1.0f, -1.0f,  1.0f, 0.0f,
 
-		-0.5f,  0.5f,  0.0f, 1.0f,
-		 0.5f, -0.5f,  1.0f, 0.0f,
-		 0.5f,  0.5f,  1.0f, 1.0f
+		-1.0f,  1.0f,  0.0f, 1.0f,
+		 1.0f, -1.0f,  1.0f, 0.0f,
+		 1.0f,  1.0f,  1.0f, 1.0f
 	};
 
 	// cube VAO
@@ -89,6 +92,8 @@ void Display::renderFBO()
 	glClear(GL_COLOR_BUFFER_BIT);
 
 	FBOShader.Bind();
+	counter += .7f;
+	//FBOShader.setFloat("random", counter);
 	glBindVertexArray(quadVAO);
 	glBindTexture(GL_TEXTURE_2D, CBO);	// use the color attachment texture as the texture of the quad plane
 	glDrawArrays(GL_TRIANGLES, 0, 6);

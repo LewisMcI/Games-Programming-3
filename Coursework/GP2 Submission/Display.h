@@ -40,5 +40,7 @@ private:
 	GLuint quadVAO;
 	GLuint quadVBO;
 	Shader FBOShader;
+
+	float counter = 0;
 };
 

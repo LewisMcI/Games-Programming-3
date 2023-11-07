@@ -171,5 +171,13 @@
     <None Include="..\Resources\Shaders\GaussianBlur.vert" />
     <None Include="..\Resources\Shaders\ChromaticAbberation.frag" />
     <None Include="..\Resources\Shaders\ChromaticAbberation.vert" />
+    <None Include="..\Resources\Shaders\FBOShader.frag" />
+    <None Include="..\Resources\Shaders\FBOShader.vert" />
+    <None Include="..\Resources\Shaders\InversionShader.frag" />
+    <None Include="..\Resources\Shaders\InversionShader.vert" />
+    <None Include="..\Resources\Shaders\GreyscaleShader.frag" />
+    <None Include="..\Resources\Shaders\GreyscaleShader.vert" />
+    <None Include="..\Resources\Shaders\CameraShakeShader.frag" />
+    <None Include="..\Resources\Shaders\CameraShakeShader.vert" />
   </ItemGroup>
 </Project>

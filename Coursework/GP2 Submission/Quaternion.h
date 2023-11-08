@@ -1,36 +1,62 @@
 #pragma once
-
-#include <cmath>
-#include <iostream>
-#include <glm/detail/type_vec.hpp>
-#include <glm/detail/type_mat.hpp>
+#include <corecrt_math.h>
 #include <glm/glm.hpp>
 
-#define PI 3.14159265358979323846
-
 struct Quaternion {
-    double x, y, z, w;
-};
+    double w; // Real Part
+    double x; // I Component
+    double y; // J Component
+    double z; // K Component
+    Quaternion() {
+        w = 0; x = 0; y = 0; z = 0;
+    }
+    Quaternion(double w, double x, double y, double z) {
+        this->w = w;
+        this->x = x;
+        this->y = y;
+        this->z = z;
+    }
 
-// This assumes the axis magnitude is 1
-Quaternion axisAngleToQuaternion(double angle, double axisX, double axisY, double axisZ) {
-    Quaternion q;
-    float halfAngle = angle / 2.0f;
-    float sinHalfAngle = sin(halfAngle);
-    q.w = cos(halfAngle);
-    q.x = axisX * sinHalfAngle;
-    q.y = axisY * sinHalfAngle;
-    q.z = axisZ * sinHalfAngle;
-    return q;
-}
+    static Quaternion& MultiplyQuaternions(Quaternion& quat1, Quaternion& quat2) {
+        Quaternion multipliedQuat;
+        multipliedQuat.w = quat1.w * quat2.w - quat1.x * quat2.x - quat1.y * quat2.y - quat1.z * quat2.z;
+        multipliedQuat.x = quat1.w * quat2.x + quat1.x * quat2.w + quat1.y * quat2.z - quat1.z * quat2.y;
+        multipliedQuat.y = quat1.w * quat2.y - quat1.x * quat2.z + quat1.y * quat2.w + quat1.z * quat2.x;
+        multipliedQuat.z = quat1.w * quat2.z + quat1.x * quat2.y - quat1.y * quat2.x + quat1.z * quat2.w;
+        return multipliedQuat;
+    }
 
-glm::vec3 quaternionToAxisAxis(Quaternion& quat) {
-    float angle_rad = acos(quat.w) * 2;
+    static Quaternion& RotateVectorByQuaternion(glm::vec3 vector, Quaternion& quat) {
+        Quaternion& p = Quaternion(0.0f, vector.x, vector.y, vector.z);
 
-    float x = quat.x / sin(angle_rad / 2);
-    float y = quat.y / sin(angle_rad / 2);
-    float z = quat.z / sin(angle_rad / 2);
+        Quaternion& rotatedP = MultiplyQuaternions(quat, p);
+        rotatedP.conjugate();
+
+        glm::vec3 rotatedVector = glm::vec3(rotatedP.x, rotatedP.y, rotatedP.z);
+    }
+
+    void conjugate() {
+        x = -x;
+        y = -y;
+        z = -z;
+    }
     
-    return glm::vec3(x, y, z);
-}
+    void normalize() {
+        int magnitude = sqrt(w * w + x * x + y * y + z * z);
+        w = w / magnitude;
+        x = x / magnitude;
+        y = y / magnitude;
+        z = z / magnitude;
+    }
+
+    glm::mat3 toRotationMatrix() {
+        glm::mat3 rotationMatrix = glm::mat3(
+            1 - 2 * y * y - 2 * z * z, 2 * x * y - 2 * w * z, 2 * x * z + 2 * w * y,
+            2 * x * y + 2 * w * z, 1 - 2 * x * x - 2 * z * z, 2 * y * z - 2 * w * x,
+            2 * x * z - 2 * w * y, 2 * y * z + 2 * w * x, 1 - 2 * x * x - 2 * y * y
+        );
+
+        return rotationMatrix;
+    }
+};
 

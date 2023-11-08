@@ -46,7 +46,7 @@ void Display::initFBO()
 		std::cout << "FRAMEBUFFER:: Framebuffer is complete!" << std::endl;
 	glBindFramebuffer(GL_FRAMEBUFFER, 0);
 
-	FBOShader.initShader("..\\Resources\\Shaders\\FBOShader.vert", "..\\Resources\\Shaders\\FBOShader.frag");
+	FBOShader.initShader("..\\Resources\\Shaders\\Kuwahara.vert", "..\\Resources\\Shaders\\Kuwahara.frag");
 }
 
 void Display::bindFBO()
@@ -126,7 +126,7 @@ void Display::swapBuffer()
 void Display::initDisplay()
 {
 	// Initialize SDL.
-	//SDL_Init(SDL_INIT_EVERYTHING);
+	SDL_Init(SDL_INIT_EVERYTHING);
 	// Enable Double Buffer.
 	SDL_GL_SetAttribute(SDL_GL_RED_SIZE, 8);
 	SDL_GL_SetAttribute(SDL_GL_GREEN_SIZE, 8);

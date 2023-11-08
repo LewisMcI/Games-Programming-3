@@ -1,6 +1,43 @@
 ﻿C:\Program Files\Microsoft Visual Studio\2022\Community\MSBuild\Microsoft\VC\v170\Microsoft.CppBuild.targets(531,5): warning MSB8028: The intermediate directory (Debug\) contains files shared from another project (Labs.vcxproj).  This can lead to incorrect clean and rebuild behavior.
+  MaterialComponent.cpp
+C:\Users\lewis\Desktop\WIP\Games-Programming-3\Coursework\GP2 Submission\TextureLoader.h(18,10): warning C4101: 'textureId': unreferenced local variable
+  Display.cpp
+C:\Users\lewis\Desktop\WIP\Games-Programming-3\Coursework\GP2 Submission\Display.cpp(32,54): warning C4244: 'argument': conversion from 'float' to 'GLsizei', possible loss of data
+C:\Users\lewis\Desktop\WIP\Games-Programming-3\Coursework\GP2 Submission\Display.cpp(32,41): warning C4244: 'argument': conversion from 'float' to 'GLsizei', possible loss of data
+C:\Users\lewis\Desktop\WIP\Games-Programming-3\Coursework\GP2 Submission\Display.cpp(40,75): warning C4244: 'argument': conversion from 'float' to 'GLsizei', possible loss of data
+C:\Users\lewis\Desktop\WIP\Games-Programming-3\Coursework\GP2 Submission\Display.cpp(40,62): warning C4244: 'argument': conversion from 'float' to 'GLsizei', possible loss of data
+  GameObject.cpp
+  Game.cpp
+C:\Users\lewis\Desktop\WIP\Games-Programming-3\Coursework\GP2 Submission\Player.h(12,8): warning C4227: anachronism used: qualifiers on reference are ignored
+C:\Users\lewis\Desktop\WIP\Games-Programming-3\Coursework\GP2 Submission\MainGame.h(10,10): warning C4067: unexpected tokens following preprocessor directive - expected a newline
+C:\Users\lewis\Desktop\WIP\Games-Programming-3\Coursework\GP2 Submission\MainGame.h(13,10): warning C4067: unexpected tokens following preprocessor directive - expected a newline
+C:\Users\lewis\Desktop\WIP\Games-Programming-3\Coursework\GP2 Submission\TextureLoader.h(18,10): warning C4101: 'textureId': unreferenced local variable
   MainGame.cpp
 C:\Users\lewis\Desktop\WIP\Games-Programming-3\Coursework\GP2 Submission\Player.h(12,8): warning C4227: anachronism used: qualifiers on reference are ignored
-C:\Users\lewis\Desktop\WIP\Games-Programming-3\Coursework\GP2 Submission\MainGame.cpp(9,11): warning C4101: 'display': unreferenced local variable
-C:\Users\lewis\Desktop\WIP\Games-Programming-3\Coursework\GP2 Submission\MainGame.cpp(62,23): warning C4018: '<': signed/unsigned mismatch
-  GP2 Submission.vcxproj -> C:\Users\lewis\Desktop\WIP\Games-Programming-3\Coursework\Debug\GP2 Submission.exe
+C:\Users\lewis\Desktop\WIP\Games-Programming-3\Coursework\GP2 Submission\MainGame.h(10,10): warning C4067: unexpected tokens following preprocessor directive - expected a newline
+C:\Users\lewis\Desktop\WIP\Games-Programming-3\Coursework\GP2 Submission\MainGame.h(13,10): warning C4067: unexpected tokens following preprocessor directive - expected a newline
+C:\Users\lewis\Desktop\WIP\Games-Programming-3\Coursework\GP2 Submission\TextureLoader.h(18,10): warning C4101: 'textureId': unreferenced local variable
+  MeshLoader.cpp
+  Audio.cpp
+C:\Users\lewis\Desktop\WIP\Games-Programming-3\Coursework\GP2 Submission\Audio.cpp(54,13): warning C4018: '>=': signed/unsigned mismatch
+  Player.cpp
+C:\Users\lewis\Desktop\WIP\Games-Programming-3\Coursework\GP2 Submission\Player.h(12,8): warning C4227: anachronism used: qualifiers on reference are ignored
+  PlayerController.cpp
+C:\Users\lewis\Desktop\WIP\Games-Programming-3\Coursework\GP2 Submission\PlayerController.cpp(47,17): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+  Entity.cpp
+  Scene.cpp
+C:\Users\lewis\Desktop\WIP\Games-Programming-3\Coursework\GP2 Submission\TextureLoader.h(18,10): warning C4101: 'textureId': unreferenced local variable
+  Shader.cpp
+  SkyBox.cpp
+  TextureLoader.cpp
+C:\Users\lewis\Desktop\WIP\Games-Programming-3\Coursework\GP2 Submission\TextureLoader.h(18,10): warning C4101: 'textureId': unreferenced local variable
+  Time.cpp
+  Generating Code...
+C:\Users\lewis\Desktop\WIP\Games-Programming-3\Coursework\GP2 Submission\TextureLoader.cpp(48): warning C4715: 'TextureLoader::initTexture': not all control paths return a value
+  stb_image.c
+MeshLoader.obj : error LNK2019: unresolved external symbol "public: __thiscall Assimp::Importer::Importer(void)" (??0Importer@Assimp@@QAE@XZ) referenced in function "public: __thiscall Model::Model(char const *)" (??0Model@@QAE@PBD@Z)
+MeshLoader.obj : error LNK2019: unresolved external symbol "public: __thiscall Assimp::Importer::~Importer(void)" (??1Importer@Assimp@@QAE@XZ) referenced in function __unwindfunclet$??0Model@@QAE@PBD@Z$0
+MeshLoader.obj : error LNK2019: unresolved external symbol "public: struct aiScene const * __thiscall Assimp::Importer::ReadFile(char const *,unsigned int)" (?ReadFile@Importer@Assimp@@QAEPBUaiScene@@PBDI@Z) referenced in function "public: __thiscall Model::Model(char const *)" (??0Model@@QAE@PBD@Z)
+MeshLoader.obj : error LNK2019: unresolved external symbol "public: char const * __thiscall Assimp::Importer::GetErrorString(void)const " (?GetErrorString@Importer@Assimp@@QBEPBDXZ) referenced in function "private: void __thiscall Model::loadModel(char const *)" (?loadModel@Model@@AAEXPBD@Z)
+C:\Users\lewis\Desktop\WIP\Games-Programming-3\Coursework\deps\lib\assimp-vc143-mtd.lib : warning LNK4272: library machine type 'x64' conflicts with target machine type 'x86'
+C:\Users\lewis\Desktop\WIP\Games-Programming-3\Coursework\Debug\GP2 Submission.exe : fatal error LNK1120: 4 unresolved externals

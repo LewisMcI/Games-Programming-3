@@ -12,6 +12,7 @@
 #include "Components/MeshComponent.h"
 #include "Scene/Entity.h";
 #include "Components/MaterialComponent.h"
+#include "ModelManager.cpp"
 
 enum class GameState{PLAY, EXIT};
 
@@ -46,7 +47,7 @@ private:
 
 	TextureLoader textureLoader;
 
-	MeshLoader meshloader;
+	ModelManager masterModelLoader;
 
 };
 

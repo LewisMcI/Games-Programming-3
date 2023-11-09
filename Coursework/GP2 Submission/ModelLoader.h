@@ -9,170 +9,131 @@
 #include <GL/glew.h>
 #include <cassert>
 #include <iostream>
+#include <map>
 
-class Model
+struct Mesh {
+	unsigned int VAO, VBO1, VBO2, VBO3, EBO;
+
+	std::vector<glm::vec3> vertPositions;
+	std::vector<glm::vec3> vertNormals;
+	std::vector<glm::vec2> textCoords;
+	std::vector<unsigned int> vertIndices;
+	unsigned int textureHandle;
+};
+
+class ModelLoader
 {
-
-private:
-	Assimp::Importer importer;
-	const aiScene* scene = nullptr;
-	aiNode* rootNode = nullptr;
-
-	struct Mesh {
-		unsigned int VAO, VBO1, VBO2, VBO3, EBO;
-
-		std::vector<glm::vec3> vertPositions;
-		std::vector<glm::vec3> vertNormals;
-		std::vector<glm::vec2> textCoords;
-		std::vector<unsigned int> vertIndices;
-		unsigned int texHandle;
-
-		void Draw() {
-			glBindVertexArray(VAO);
-
-			// Draw Elements
-			glDrawArrays(GL_TRIANGLES, 0, vertIndices.size());
-
-			// Unbind
-			glBindVertexArray(0);
-		}
-	};
-	struct Texture {
-		unsigned int textureId;
-		std::string imageName;
-	};
-
 public:
-	unsigned int numMeshes;
-	std::vector<Mesh> meshList;
-	std::vector<Texture> textureList;
+	ModelLoader() = default;
+	std::vector<Mesh> loadModel(const char* modelPath) {
 
-	Model(const char* modelPath) {
-		scene = importer.ReadFile(modelPath, aiProcess_JoinIdenticalVertices | aiProcess_Triangulate | aiProcess_FlipUVs);
+		// Create model holding a list of mesh
+		std::vector<Mesh> meshList;
 
-		loadModel(modelPath);
-	}
+		// Load Model
+		model = importer.ReadFile(modelPath, aiProcess_JoinIdenticalVertices | aiProcess_Triangulate | aiProcess_FlipUVs);
 
-private:
-	void loadModel(const char* modelPath) {
-		if (!scene || !scene->mRootNode || scene->mFlags & AI_SCENE_FLAGS_INCOMPLETE)
-			std::cout << "Assimp importer.ReadFile(Error) -- " << importer.GetErrorString() << "\n";
+		// If model failed to load || model has no meshes || model encountered an issue
+		if (!model || !model->mRootNode || model->mFlags & AI_SCENE_FLAGS_INCOMPLETE) {
+			std::cerr << "Could not load model at: " << modelPath << std::endl;
+			return meshList;
+		}
 
+		// Model is fine to parse
 		else {
-			numMeshes = scene->mNumMeshes;
+			numMeshes = model->mNumMeshes;
 			meshList.resize(numMeshes);
 
 			aiMesh* mesh{};
+			
+			auto meshes = model->mMeshes;
 
-			int indicesOffset = 0;
-			// First loop cycles through all the models meshes
+			// Cycle through all the model meshes
 			for (unsigned int i = 0; i < numMeshes; ++i) {
-				mesh = scene->mMeshes[i];
+				mesh = model->mMeshes[i];
 
-				aiMaterial* material = scene->mMaterials[mesh->mMaterialIndex];
-
-				// Second loop cycles throughh all textures
-				//for (unsigned int texCount = 0; texCount < material->GetTextureCount(aiTextureType_DIFFUSE); ++texCount){
-				//	aiString string;
-				//	material->GetTexture(aiTextureType_DIFFUSE, texCount, &string);
-				//	 
-				//	int alreadyLoaded = isImageLoaded(string.C_Str());
-
-				//	// Image not loaded
-				//	if (alreadyLoaded == -1) {
-				//		bool loadSuccess = false;
-				//		unsigned int textureHandle = loadTextureImage(string.C_Str(), loadSuccess);
-
-				//		if (loadSuccess) {
-				//			Texture texture;
-				//			texture.imageName = string.C_Str();
-				//			texture.textureId = textureHandle;
-				//			
-				//			textureList.push_back(texture);
-				//			meshList[i].texHandle = textureHandle;
-				//		}
-				//	}
-				//	// Use existing image
-				//	else {
-				//		meshList[i].texHandle = alreadyLoaded;
-				//	}
-				//}
-
-				// Third loop cycles through all mesh vertices
-				for (unsigned int i2 = 0; i2 < mesh->mNumVertices; ++i2) {
+				unsigned int numVertices = mesh->mNumVertices;
+				// Cycle through mesh vertices
+				for (unsigned int j = 0; j < numVertices; ++j) {
+					// Add Positions
 					glm::vec3 position{};
-					position.x = mesh->mVertices[i2].x;
-					position.y = mesh->mVertices[i2].y;
-					position.z = mesh->mVertices[i2].z;
-
+					position.x = mesh->mVertices[j].x;
+					position.y = mesh->mVertices[j].y;
+					position.z = mesh->mVertices[j].z;
+					
 					meshList[i].vertPositions.push_back(position);
 
+					// Add Normals
 					if (mesh->HasNormals()) {
 						glm::vec3 normal{};
-						normal.x = mesh->mNormals[i2].x;
-						normal.y = mesh->mNormals[i2].y;
-						normal.z = mesh->mNormals[i2].z;
+						normal.x = mesh->mNormals[j].x;
+						normal.y = mesh->mNormals[j].y;
+						normal.z = mesh->mNormals[j].z;
 
 						meshList[i].vertNormals.push_back(normal);
 					}
 					else
 						meshList[i].vertNormals.push_back(glm::vec3(0.0f));
 
+					// Add Texture Coordinates
 					if (mesh->HasTextureCoords(0)) {
-						glm:: vec2 texCoords{};
-						texCoords.x = mesh->mTextureCoords[0][i2].x;
-						texCoords.y = mesh->mTextureCoords[0][i2].y;
+						glm::vec2 texCoords{};
+						texCoords.x = mesh->mTextureCoords[0][j].x;
+						texCoords.y = mesh->mTextureCoords[0][j].y;
 						meshList[i].textCoords.push_back(texCoords);
 					}
 					else
 						meshList[i].textCoords.push_back(glm::vec2(0.0f));
 				}
 
-				// Fourth loop cycles through all mesh indices
-				for (unsigned int i3 = 0; i3 < mesh->mNumFaces; ++i3)
-					for (unsigned int i4 = 0; i4 < mesh->mFaces[i3].mNumIndices; ++i4)
-						meshList[i].vertIndices.push_back(mesh->mFaces[i3].mIndices[i4] + indicesOffset);
+				// Cycle through mesh indices
+				for (unsigned int j = 0; j < mesh->mNumFaces; ++j)
+					for (unsigned int k = 0; k < mesh->mFaces[j].mNumIndices; ++k)
+						meshList[i].vertIndices.push_back(mesh->mFaces[j].mIndices[k]);
 
 				// Setup VAO VBO and EBO.
-				setBufferData(i);
+				std::cout << "Mesh Index: " << i << "\n";
+				setBufferData(meshList[i]);
 			}
-		}
+		}	
+		return meshList;
 	}
 
-	void setBufferData(unsigned int index) {
-		glGenVertexArrays(1, &meshList[index].VAO);
+private:
+	void setBufferData(Mesh& mesh) {
+		glGenVertexArrays(1, &mesh.VAO);
 		// Could use one VBO and usue glVertexAttrib pointer offset
-		glGenBuffers(1, &meshList[index].VBO1);
-		glGenBuffers(1, &meshList[index].VBO2);
-		glGenBuffers(1, &meshList[index].VBO3);
-		glGenBuffers(1, &meshList[index].EBO);
+		glGenBuffers(1, &mesh.VBO1);
+		glGenBuffers(1, &mesh.VBO2);
+		glGenBuffers(1, &mesh.VBO3);
+		glGenBuffers(1, &mesh.EBO);
 
-		glBindVertexArray(meshList[index].VAO);
+		glBindVertexArray(mesh.VAO);
 
 		// Vertex Positions
-		glBindBuffer(GL_ARRAY_BUFFER, meshList[index].VBO1);
-		glBufferData(GL_ARRAY_BUFFER, sizeof(glm::vec3) * meshList[index].vertPositions.size(), &meshList[index].vertPositions[0], GL_STATIC_DRAW);
+		glBindBuffer(GL_ARRAY_BUFFER, mesh.VBO1);
+		glBufferData(GL_ARRAY_BUFFER, sizeof(glm::vec3) * mesh.vertPositions.size(), &mesh.vertPositions[0], GL_STATIC_DRAW);
 
 		glEnableVertexAttribArray(0);
 		glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
 
 		// Texture Coordinates
-		glBindBuffer(GL_ARRAY_BUFFER, meshList[index].VBO3);
-		glBufferData(GL_ARRAY_BUFFER, sizeof(glm::vec2) * meshList[index].textCoords.size(), &meshList[index].textCoords[0], GL_STATIC_DRAW);
+		glBindBuffer(GL_ARRAY_BUFFER, mesh.VBO3);
+		glBufferData(GL_ARRAY_BUFFER, sizeof(glm::vec2) * mesh.textCoords.size(), &mesh.textCoords[0], GL_STATIC_DRAW);
 
 		glEnableVertexAttribArray(1);
 		glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 2 * sizeof(float), (void*)0);
 
 		// Vertex Normals
-		glBindBuffer(GL_ARRAY_BUFFER, meshList[index].VBO2);
-		glBufferData(GL_ARRAY_BUFFER, sizeof(glm::vec3) * meshList[index].vertNormals.size(), &meshList[index].vertNormals[0], GL_STATIC_DRAW);
+		glBindBuffer(GL_ARRAY_BUFFER, mesh.VBO2);
+		glBufferData(GL_ARRAY_BUFFER, sizeof(glm::vec3) * mesh.vertNormals.size(), &mesh.vertNormals[0], GL_STATIC_DRAW);
 
 		glEnableVertexAttribArray(2);
 		glVertexAttribPointer(2, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
 
 		// Indices for glDrawElements()
-		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, meshList[index].EBO);
-		glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(unsigned int) * meshList[index].vertIndices.size(), &meshList[index].vertIndices[0], GL_STATIC_DRAW);
+		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, mesh.EBO);
+		glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(unsigned int) * mesh.vertIndices.size(), &mesh.vertIndices[0], GL_STATIC_DRAW);
 
 		glBindVertexArray(0);
 
@@ -180,64 +141,12 @@ private:
 		glDisableVertexAttribArray(0);
 		glDisableVertexAttribArray(1);
 	}
-	int isImageLoaded(std::string fileName) {
-		for (unsigned int i = 0; i < textureList.size(); ++i) {
-			if (fileName.compare(textureList[i].imageName) == 0)
-				return textureList[i].textureId;
-		}
-		return -1;
-	}
 
-	//unsigned int loadTextureImage(std::string fileName, bool& loadComplete) {
-	//	// stbi_set_flip_vertically_on_load(1); // If image is upside down
+	Assimp::Importer importer;
+	// Generally referred to as a Scene using assimp, however I feel model better describes its purpose in the 
+	// case of this engine.
+	const aiScene* model = nullptr;
+	aiNode* rootNode = nullptr;
 
-
-	//	int width, height, numOfComponents;
-	//	// Load Image
-	//	unsigned char* data = stbi_load((fileName).c_str(), &width, &height, &numOfComponents, 0);
-
-	//	// If data could not be loaded
-	//	if (data == NULL)
-	//	{	
-	//		loadComplete = false;
-	//		stbi_image_free(data);
-	//		std::cerr << "Image Loaded: " << fileName << std::endl;
-	//		return 0;
-	//	}
-
-	//	GLenum format{};
-	//	if (numOfComponents == 1)
-	//		format = GL_RED;
-	//	else if (numOfComponents == 3)
-	//		format = GL_RGB;
-	//	else if (numOfComponents == 4)
-	//		format = GL_RGBA;
-
-	//	GLuint textureId;
-
-	//	// Generates texture names
-	//	glGenTextures(1, &textureId);
-
-	//	// Bind the newly created textureHandler
-	//	glBindTexture(GL_TEXTURE_2D, textureId);
-
-	//	glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
-
-	//	// Specify the 2D texture image (Target, Mipmapping Level, Internal Format, Width, Height, Border Size, Format, Type, Image Data)
-	//	glTexImage2D(GL_TEXTURE_2D, 0, format, width, height, 0, format, GL_UNSIGNED_BYTE, data);
-	//	glGenerateMipmap(GL_TEXTURE_2D);
-	//	// Wrap Textures with Width and Height
-	//	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
-	//	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
-
-	//	// Enable Linear Filtering for minification and magnification
-	//	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-	//	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-
-
-	//	loadComplete = true;
-	//	// Free memory allocated by STBI_LOAD
-	//	stbi_image_free(data);
-	//	std::cout << "Image Loaded: " << fileName << "\n";
-	//}
+	unsigned int numMeshes;
 };

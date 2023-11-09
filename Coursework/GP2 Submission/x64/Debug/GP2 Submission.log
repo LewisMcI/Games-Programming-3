@@ -1,5 +1,4 @@
 ﻿  MainGame.cpp
-C:\Users\lewis\Desktop\WIP\Games-Programming-3\Coursework\GP2 Submission\ModelLoader.h(34,50): warning C4267: 'argument': conversion from 'size_t' to 'GLsizei', possible loss of data
 C:\Users\lewis\Desktop\WIP\Games-Programming-3\Coursework\GP2 Submission\Player.h(12,8): warning C4227: anachronism used: qualifiers on reference are ignored
 C:\Users\lewis\Desktop\WIP\Games-Programming-3\Coursework\GP2 Submission\MainGame.h(10,10): warning C4067: unexpected tokens following preprocessor directive - expected a newline
 C:\Users\lewis\Desktop\WIP\Games-Programming-3\Coursework\GP2 Submission\MainGame.h(13,10): warning C4067: unexpected tokens following preprocessor directive - expected a newline

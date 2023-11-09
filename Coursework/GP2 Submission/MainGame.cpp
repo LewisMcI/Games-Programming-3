@@ -26,16 +26,16 @@ void MainGame::initSystems()
 	glm::vec3 centerPoint = glm::vec3(0.0f, 0.0f, 50.0f);
 
 	// Initialize 216 cubes
-	//createNumOfCubes(6, centerPoint);	
-	auto newEntity = activeScene.CreateEntity();
+	createNumOfCubes(2, centerPoint);	
+	//auto newEntity = activeScene.CreateEntity();
 
-	TransformComponent& transform = newEntity.GetComponent<TransformComponent>();
+	//TransformComponent& transform = newEntity.GetComponent<TransformComponent>();
 
-	transform.SetPos(glm::vec3(centerPoint.x , centerPoint.y, centerPoint.z));
+	//transform.SetPos(glm::vec3(centerPoint.x , centerPoint.y, centerPoint.z));
 
-	newEntity.AddComponent<MaterialComponent>(ShaderType::Default, TextureType::Brick, textureLoader);
+	//newEntity.AddComponent<MaterialComponent>(ShaderType::Default, TextureType::Brick, textureLoader);
 
-	newEntity.AddComponent<MeshComponent>(MeshType::Ship, meshloader);
+	//newEntity.AddComponent<MeshComponent>(MeshType::Ship, masterModelLoader);
 
 	std::chrono::steady_clock::time_point end = std::chrono::steady_clock::now();
 
@@ -54,11 +54,11 @@ void MainGame::createNumOfCubes(int amount, glm::vec3& centerPoint) {
 
 				TransformComponent& transform = newEntity.GetComponent<TransformComponent>();
 
-				transform.SetPos(glm::vec3(centerPoint.x + (i * 3), centerPoint.y + (j * 3), centerPoint.z + (k * 3)));
+				transform.SetPos(glm::vec3(centerPoint.x + (i * 30), centerPoint.y + (j * 30), centerPoint.z + (k * 30)));
 
-				newEntity.AddComponent<MaterialComponent>(ShaderType::EnviromentMapping, TextureType::Default, textureLoader);
+				newEntity.AddComponent<MaterialComponent>(ShaderType::Default, TextureType::Brick, textureLoader);
 
-				newEntity.AddComponent<MeshComponent>(MeshType::Draven, meshloader);
+				newEntity.AddComponent<MeshComponent>(MeshType::Ship, masterModelLoader);
 			}
 		}
 	}

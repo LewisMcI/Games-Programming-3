@@ -148,6 +148,7 @@
     <ClCompile Include="MainGame.cpp" />
     <ClCompile Include="MeshLoader.cpp" />
     <ClCompile Include="Audio.cpp" />
+    <ClCompile Include="ModelManager.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="PlayerController.cpp" />
     <ClCompile Include="Scene\Entity.cpp" />

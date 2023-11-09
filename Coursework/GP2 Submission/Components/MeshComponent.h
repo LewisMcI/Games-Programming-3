@@ -1,16 +1,19 @@
 #pragma once
-#include "../MeshLoader.h"
+#include "../ModelManager.cpp"
 
 class MeshComponent {
 public:
-	MeshComponent(MeshType meshType, MeshLoader& meshLoader) : mesh(meshLoader){
-		mesh.loadModel(meshType);
+	MeshComponent(MeshType meshType, ModelManager& modelManager) 
+		: myMeshType(meshType), myModelManager(modelManager){
+		modelManager.loadModel(meshType);
 	}
 
 	void Draw() {
-		mesh.Draw();
+		myModelManager.draw(myMeshType);
 	}
 protected:
 private:
-	MeshLoader& mesh;
+	ModelManager& myModelManager;
+
+	MeshType myMeshType;
 };

@@ -1,34 +1,28 @@
-c:\users\lewis\desktop\wip\games-programming-3\coursework\gp2 submission\x64\debug\vc143.pdb
-c:\users\lewis\desktop\wip\games-programming-3\coursework\gp2 submission\x64\debug\vc143.idb
-c:\users\lewis\desktop\wip\games-programming-3\coursework\gp2 submission\x64\debug\time.obj
-c:\users\lewis\desktop\wip\games-programming-3\coursework\gp2 submission\x64\debug\textureloader.obj
-c:\users\lewis\desktop\wip\games-programming-3\coursework\gp2 submission\x64\debug\skybox.obj
-c:\users\lewis\desktop\wip\games-programming-3\coursework\gp2 submission\x64\debug\shader.obj
-c:\users\lewis\desktop\wip\games-programming-3\coursework\gp2 submission\x64\debug\scene.obj
-c:\users\lewis\desktop\wip\games-programming-3\coursework\gp2 submission\x64\debug\entity.obj
-c:\users\lewis\desktop\wip\games-programming-3\coursework\gp2 submission\x64\debug\playercontroller.obj
-c:\users\lewis\desktop\wip\games-programming-3\coursework\gp2 submission\x64\debug\player.obj
-c:\users\lewis\desktop\wip\games-programming-3\coursework\gp2 submission\x64\debug\audio.obj
-c:\users\lewis\desktop\wip\games-programming-3\coursework\gp2 submission\x64\debug\meshloader.obj
-c:\users\lewis\desktop\wip\games-programming-3\coursework\gp2 submission\x64\debug\maingame.obj
-c:\users\lewis\desktop\wip\games-programming-3\coursework\gp2 submission\x64\debug\game.obj
-c:\users\lewis\desktop\wip\games-programming-3\coursework\gp2 submission\x64\debug\gameobject.obj
-c:\users\lewis\desktop\wip\games-programming-3\coursework\gp2 submission\x64\debug\display.obj
-c:\users\lewis\desktop\wip\games-programming-3\coursework\gp2 submission\x64\debug\materialcomponent.obj
-c:\users\lewis\desktop\wip\games-programming-3\coursework\gp2 submission\x64\debug\stb_image.obj
-c:\users\lewis\desktop\wip\games-programming-3\coursework\gp2 submission\x64\debug\modelmanager.obj
-c:\users\lewis\desktop\wip\games-programming-3\coursework\x64\debug\assimp-vc143-mtd.dll
-c:\users\lewis\desktop\wip\games-programming-3\coursework\x64\debug\minizip.dll
-c:\users\lewis\desktop\wip\games-programming-3\coursework\x64\debug\zlibd1.dll
-c:\users\lewis\desktop\wip\games-programming-3\coursework\x64\debug\pugixml.dll
-c:\users\lewis\desktop\wip\games-programming-3\coursework\x64\debug\gp2 submission.exe
-c:\users\lewis\desktop\wip\games-programming-3\coursework\gp2 submission\x64\debug\gp2 submission.ilk
-c:\users\lewis\desktop\wip\games-programming-3\coursework\x64\debug\gp2 submission.pdb
-c:\users\lewis\desktop\wip\games-programming-3\coursework\gp2 submission\x64\debug\gp2 submission.tlog\cl.command.1.tlog
-c:\users\lewis\desktop\wip\games-programming-3\coursework\gp2 submission\x64\debug\gp2 submission.tlog\cl.items.tlog
-c:\users\lewis\desktop\wip\games-programming-3\coursework\gp2 submission\x64\debug\gp2 submission.tlog\cl.read.1.tlog
-c:\users\lewis\desktop\wip\games-programming-3\coursework\gp2 submission\x64\debug\gp2 submission.tlog\cl.write.1.tlog
-c:\users\lewis\desktop\wip\games-programming-3\coursework\gp2 submission\x64\debug\gp2 submission.tlog\gp2 submission.write.1u.tlog
-c:\users\lewis\desktop\wip\games-programming-3\coursework\gp2 submission\x64\debug\gp2 submission.tlog\link.command.1.tlog
-c:\users\lewis\desktop\wip\games-programming-3\coursework\gp2 submission\x64\debug\gp2 submission.tlog\link.read.1.tlog
-c:\users\lewis\desktop\wip\games-programming-3\coursework\gp2 submission\x64\debug\gp2 submission.tlog\link.write.1.tlog
+c:\users\lmcint218\documents\github\games-programming-3\coursework\gp2 submission\x64\debug\vc143.pdb
+c:\users\lmcint218\documents\github\games-programming-3\coursework\gp2 submission\x64\debug\vc143.idb
+c:\users\lmcint218\documents\github\games-programming-3\coursework\gp2 submission\x64\debug\time.obj
+c:\users\lmcint218\documents\github\games-programming-3\coursework\gp2 submission\x64\debug\textureloader.obj
+c:\users\lmcint218\documents\github\games-programming-3\coursework\gp2 submission\x64\debug\skybox.obj
+c:\users\lmcint218\documents\github\games-programming-3\coursework\gp2 submission\x64\debug\shader.obj
+c:\users\lmcint218\documents\github\games-programming-3\coursework\gp2 submission\x64\debug\scene.obj
+c:\users\lmcint218\documents\github\games-programming-3\coursework\gp2 submission\x64\debug\entity.obj
+c:\users\lmcint218\documents\github\games-programming-3\coursework\gp2 submission\x64\debug\playercontroller.obj
+c:\users\lmcint218\documents\github\games-programming-3\coursework\gp2 submission\x64\debug\player.obj
+c:\users\lmcint218\documents\github\games-programming-3\coursework\gp2 submission\x64\debug\modelmanager.obj
+c:\users\lmcint218\documents\github\games-programming-3\coursework\gp2 submission\x64\debug\audio.obj
+c:\users\lmcint218\documents\github\games-programming-3\coursework\gp2 submission\x64\debug\maingame.obj
+c:\users\lmcint218\documents\github\games-programming-3\coursework\gp2 submission\x64\debug\game.obj
+c:\users\lmcint218\documents\github\games-programming-3\coursework\gp2 submission\x64\debug\gameobject.obj
+c:\users\lmcint218\documents\github\games-programming-3\coursework\gp2 submission\x64\debug\display.obj
+c:\users\lmcint218\documents\github\games-programming-3\coursework\gp2 submission\x64\debug\materialcomponent.obj
+c:\users\lmcint218\documents\github\games-programming-3\coursework\gp2 submission\x64\debug\stb_image.obj
+c:\users\lmcint218\documents\github\games-programming-3\coursework\x64\debug\gp2 submission.exe
+c:\users\lmcint218\documents\github\games-programming-3\coursework\gp2 submission\x64\debug\gp2 submission.ilk
+c:\users\lmcint218\documents\github\games-programming-3\coursework\x64\debug\gp2 submission.pdb
+c:\users\lmcint218\documents\github\games-programming-3\coursework\gp2 submission\x64\debug\gp2 submission.tlog\cl.command.1.tlog
+c:\users\lmcint218\documents\github\games-programming-3\coursework\gp2 submission\x64\debug\gp2 submission.tlog\cl.items.tlog
+c:\users\lmcint218\documents\github\games-programming-3\coursework\gp2 submission\x64\debug\gp2 submission.tlog\cl.read.1.tlog
+c:\users\lmcint218\documents\github\games-programming-3\coursework\gp2 submission\x64\debug\gp2 submission.tlog\cl.write.1.tlog
+c:\users\lmcint218\documents\github\games-programming-3\coursework\gp2 submission\x64\debug\gp2 submission.tlog\link.command.1.tlog
+c:\users\lmcint218\documents\github\games-programming-3\coursework\gp2 submission\x64\debug\gp2 submission.tlog\link.read.1.tlog
+c:\users\lmcint218\documents\github\games-programming-3\coursework\gp2 submission\x64\debug\gp2 submission.tlog\link.write.1.tlog

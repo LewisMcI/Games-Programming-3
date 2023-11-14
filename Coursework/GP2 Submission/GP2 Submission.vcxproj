@@ -146,7 +146,6 @@
     <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="MainGame.cpp" />
-    <ClCompile Include="MeshLoader.cpp" />
     <ClCompile Include="Audio.cpp" />
     <ClCompile Include="ModelManager.cpp" />
     <ClCompile Include="Player.cpp" />
@@ -167,9 +166,9 @@
     <ClInclude Include="GameObject.h" />
     <ClInclude Include="MainGame.h" />
     <ClInclude Include="Components\MaterialComponent.h" />
-    <ClInclude Include="MeshLoader.h" />
     <ClInclude Include="ModelLoader.h" />
     <ClInclude Include="Audio.h" />
+    <ClInclude Include="ModelManager.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="PlayerController.h" />
     <ClInclude Include="Quaternion.h" />

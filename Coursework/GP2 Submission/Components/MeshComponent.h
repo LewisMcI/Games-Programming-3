@@ -1,5 +1,5 @@
 #pragma once
-#include "../ModelManager.cpp"
+#include "../ModelManager.h"
 
 class MeshComponent {
 public:

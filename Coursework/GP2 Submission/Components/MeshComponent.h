@@ -11,6 +11,7 @@ public:
 	void Draw() {
 		myModelManager.draw(myMeshType);
 	}
+
 protected:
 private:
 	ModelManager& myModelManager;

@@ -44,7 +44,7 @@ void PlayerController::processInput()
 
 void PlayerController::processKeyboardInput(const Uint8* keys)
 {
-	float distance = 20.0f * Time::getInstance().getDeltaTime();
+	float distance = 40.0f * Time::getInstance().getDeltaTime();
 
 	if (keys[SDL_SCANCODE_W]) { // Move forward
 		playerCamera->MoveX(distance);

@@ -24,17 +24,9 @@ void MainGame::initSystems()
 	player.init(display);
 
 	glm::vec3 centerPoint = glm::vec3(0.0f, 0.0f, 0);
-	auto newEntity = activeScene.CreateEntity();
 
-	TransformComponent& transform = newEntity.GetComponent<TransformComponent>();
-
-	transform.SetPos(glm::vec3(centerPoint.x + (30), centerPoint.y + (30), centerPoint.z + (30)));
-
-	newEntity.AddComponent<MaterialComponent>(ShaderType::EnviromentMapping, TextureType::Default, textureLoader);
-
-	newEntity.AddComponent<MeshComponent>(MeshType::Ship, masterModelLoader);
 	// Initialize 216 cubes
-	createNumOfCubes(2, centerPoint);	
+	createNumOfCubes(2, centerPoint);
 
 
 	std::chrono::steady_clock::time_point end = std::chrono::steady_clock::now();
@@ -58,7 +50,7 @@ void MainGame::createNumOfCubes(int amount, glm::vec3& centerPoint) {
 
 				newEntity.AddComponent<MaterialComponent>(ShaderType::EnviromentMapping, TextureType::Default, textureLoader);
 
-				newEntity.AddComponent<MeshComponent>(MeshType::Cube, masterModelLoader);
+				newEntity.AddComponent<MeshComponent>(MeshType::Ship, masterModelLoader);
 			}
 		}
 	}

@@ -74,74 +74,58 @@ bool ModelManager::lookForModelBinary(std::string meshPath)
 	if (!vert_data.is_open()) { file_not_found = true; }
 	vert_data.close();
 
-	vert_data.open("Model Data/" + model_name + "_sampler_array_pos.bin", std::ios::in);
-	std::cout << "   Detecting: " << model_name + "_sampler_array_pos.bin: " << vert_data.is_open() << "\n";
-	if (!vert_data.is_open()) { file_not_found = true; }
-	vert_data.close();
-
-	vert_data.open("Model Data/" + model_name + "_image_names.txt", std::ios::in);
-	std::cout << "   Detecting: " << model_name + "_image_names.txt: " << vert_data.is_open() << "\n";
-	if (!vert_data.is_open()) { file_not_found = true; }
-	vert_data.close();
-
 	if (file_not_found)
 		return false;
 
 	return true;
 }
-//
-//void ModelManager::writeModelBinary(MeshType& meshType)
-//{
-//	std::string meshPath = meshPaths[meshType];
-//	std::string file_name;
-//	std::ofstream vert_data; // Write data.
-//
-//	std::size_t position = meshPath.find_last_of("\\");
-//	std::string model_name = meshPath.substr(position + 1);
-//
-//	file_name = "Model Data/" + model_name + "_vert_positions.bin";
-//	vert_data.open(file_name, std::ios::out | std::ios::binary);
-//	vert_data.write(reinterpret_cast<char*>(&meshes_5VBO_combined.vert_positions[0]), meshes_5VBO_combined.vert_positions.size() * 3 * sizeof(float));
-//	vert_data.close();
-//
-//	file_name = "Model Data/" + model_name + "_vert_normals.bin";
-//	vert_data.open(file_name, std::ios::out | std::ios::binary);
-//	vert_data.write(reinterpret_cast<char*>(&meshes_5VBO_combined.vert_normals[0]), meshes_5VBO_combined.vert_normals.size() * 3 * sizeof(float));
-//	vert_data.close();
-//
-//	file_name = "Model Data/" + model_name + "_tex_coords.bin";
-//	vert_data.open(file_name, std::ios::out | std::ios::binary);
-//	vert_data.write(reinterpret_cast<char*>(&meshes_5VBO_combined.tex_coords[0]), meshes_5VBO_combined.tex_coords.size() * 2 * sizeof(float));
-//	vert_data.close();
-//
-//	file_name = "Model Data/" + model_name + "_vert_indices.bin";
-//	vert_data.open(file_name, std::ios::out | std::ios::binary);
-//	vert_data.write(reinterpret_cast<char*>(&meshes_5VBO_combined.vert_indices[0]), meshes_5VBO_combined.vert_indices.size() * sizeof(unsigned int));
-//	vert_data.close();
-//
-//	file_name = "Model Data/" + model_name + "_mesh_num.bin";
-//	vert_data.open(file_name, std::ios::out | std::ios::binary);
-//	vert_data.write(reinterpret_cast<char*>(&meshes_5VBO_combined.mesh_num[0]), meshes_5VBO_combined.mesh_num.size() * sizeof(unsigned int));
-//	vert_data.close();
-//
-//	file_name = "Model Data/" + model_name + "_sampler_array_pos.bin";
-//	vert_data.open(file_name, std::ios::out | std::ios::binary);
-//	vert_data.write(reinterpret_cast<char*>(&meshes_5VBO_combined.sampler_array_pos[0]), meshes_5VBO_combined.sampler_array_pos.size() * sizeof(unsigned int));
-//	vert_data.close();
-//
-//	std::string names_to_file;
-//	//for (unsigned int i = 0; i < texture_list.size(); ++i)
-//	//{
-//	//	names_to_file += texture_list[i].image_name;
-//	//	names_to_file += "\n";
-//	//}
-//	// file_name = "Model Data/" + model_name + "_image_names.bin";
-//	// vert_data.open(file_name, std::ios::out | std::ios::binary);
-//	file_name = "Model Data/" + model_name + "_image_names.txt";
-//	vert_data.open(file_name, std::ios::out);
-//	vert_data.write(reinterpret_cast<char*>(&names_to_file[0]), names_to_file.size() * sizeof(char));
-//	vert_data.close();
-//}
+
+void ModelManager::writeModelBinary(MeshType& meshType)
+{
+	std::cout << "Writing binaries" << "\n";
+	std::string meshPath = meshPaths[meshType];
+	std::vector<Mesh>& mesh = loadedMeshes[meshType];
+
+	std::string file_name;
+	std::ofstream vert_data; // Write data.
+
+	std::size_t position = meshPath.find_last_of("\\");
+	std::string model_name = meshPath.substr(position + 1);
+
+	file_name = "Model Data/" + model_name + "_vert_positions.bin";1
+	vert_data.open(file_name, std::ios::out | std::ios::binary);
+	vert_data.write(reinterpret_cast<char*>(&mesh[0].vertPositions[0]), mesh[0].vertPositions.size() * 3 * sizeof(float));
+	vert_data.close();
+
+	file_name = "Model Data/" + model_name + "_vert_normals.bin";
+	vert_data.open(file_name, std::ios::out | std::ios::binary);
+	vert_data.write(reinterpret_cast<char*>(&mesh[0].vertNormals[0]), mesh[0].vertNormals.size() * 3 * sizeof(float));
+	vert_data.close();
+
+	file_name = "Model Data/" + model_name + "_tex_coords.bin";
+	vert_data.open(file_name, std::ios::out | std::ios::binary);
+	vert_data.write(reinterpret_cast<char*>(&mesh[0].textCoords[0]), mesh[0].textCoords.size() * 2 * sizeof(float));
+	vert_data.close();
+
+	file_name = "Model Data/" + model_name + "_vert_indices.bin";
+	vert_data.open(file_name, std::ios::out | std::ios::binary);
+	vert_data.write(reinterpret_cast<char*>(&mesh[0].vertIndices[0]), mesh[0].vertIndices.size() * sizeof(unsigned int));
+	vert_data.close();
+
+
+	//std::string names_to_file;
+	//for (unsigned int i = 0; i < texture_list.size(); ++i)
+	//{
+	//	names_to_file += texture_list[i].image_name;
+	//	names_to_file += "\n";
+	//}
+	// file_name = "Model Data/" + model_name + "_image_names.bin";
+	// vert_data.open(file_name, std::ios::out | std::ios::binary);
+	//file_name = "Model Data/" + model_name + "_image_names.txt";
+	//vert_data.open(file_name, std::ios::out);
+	//vert_data.write(reinterpret_cast<char*>(&names_to_file[0]), names_to_file.size() * sizeof(char));
+	//vert_data.close();
+}
 
 //
 //void ModelManager::readModelBinary(std::string meshPath)

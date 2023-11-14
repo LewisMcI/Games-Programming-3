@@ -10,9 +10,20 @@
 #include <cassert>
 #include <iostream>
 #include <map>
+#include <fstream>
 
 struct Mesh {
-	unsigned int VAO, VBO1, VBO2, VBO3, EBO;
+	enum
+	{
+		POSITION_VERTEXBUFFER,
+		TEXCOORD_VB,
+		NORMAL_VB,
+		NUM_BUFFERS
+	};
+
+	GLuint VAO, EBO;
+	GLuint vertexArrayBuffers[static_cast<size_t>(NUM_BUFFERS)];
+
 
 	std::vector<glm::vec3> vertPositions;
 	std::vector<glm::vec3> vertNormals;
@@ -103,33 +114,32 @@ private:
 	void setBufferData(Mesh& mesh) {
 		glGenVertexArrays(1, &mesh.VAO);
 		// Could use one VBO and usue glVertexAttrib pointer offset
-		glGenBuffers(1, &mesh.VBO1);
-		glGenBuffers(1, &mesh.VBO2);
-		glGenBuffers(1, &mesh.VBO3);
+		glGenBuffers(4, mesh.vertexArrayBuffers); //generate our buffers based of our array of data/buffers - GLuint vertexArrayBuffers[NUM_BUFFERS];
 		glGenBuffers(1, &mesh.EBO);
 
 		glBindVertexArray(mesh.VAO);
 
 		// Vertex Positions
-		glBindBuffer(GL_ARRAY_BUFFER, mesh.VBO1);
+
+		glBindBuffer(GL_ARRAY_BUFFER, mesh.vertexArrayBuffers[mesh.POSITION_VERTEXBUFFER]);
 		glBufferData(GL_ARRAY_BUFFER, sizeof(glm::vec3) * mesh.vertPositions.size(), &mesh.vertPositions[0], GL_STATIC_DRAW);
 
-		glEnableVertexAttribArray(0);
-		glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
+		glEnableVertexAttribArray(mesh.POSITION_VERTEXBUFFER);
+		glVertexAttribPointer(mesh.POSITION_VERTEXBUFFER, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
 
 		// Texture Coordinates
-		glBindBuffer(GL_ARRAY_BUFFER, mesh.VBO3);
+		glBindBuffer(GL_ARRAY_BUFFER, mesh.vertexArrayBuffers[mesh.TEXCOORD_VB]);
 		glBufferData(GL_ARRAY_BUFFER, sizeof(glm::vec2) * mesh.textCoords.size(), &mesh.textCoords[0], GL_STATIC_DRAW);
 
-		glEnableVertexAttribArray(1);
-		glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 2 * sizeof(float), (void*)0);
+		glEnableVertexAttribArray(mesh.TEXCOORD_VB);
+		glVertexAttribPointer(mesh.TEXCOORD_VB, 2, GL_FLOAT, GL_FALSE, 2 * sizeof(float), (void*)0);
 
 		// Vertex Normals
-		glBindBuffer(GL_ARRAY_BUFFER, mesh.VBO2);
+		glBindBuffer(GL_ARRAY_BUFFER, mesh.vertexArrayBuffers[mesh.NORMAL_VB]);
 		glBufferData(GL_ARRAY_BUFFER, sizeof(glm::vec3) * mesh.vertNormals.size(), &mesh.vertNormals[0], GL_STATIC_DRAW);
 
-		glEnableVertexAttribArray(2);
-		glVertexAttribPointer(2, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
+		glEnableVertexAttribArray(mesh.NORMAL_VB);
+		glVertexAttribPointer(mesh.NORMAL_VB, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
 
 		// Indices for glDrawElements()
 		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, mesh.EBO);

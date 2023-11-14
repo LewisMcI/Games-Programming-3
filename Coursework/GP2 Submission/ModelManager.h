@@ -21,5 +21,7 @@ private:
 
 	// Map of MeshType and Loaded Meshes
 	std::map<MeshType, std::vector<Mesh>> loadedMeshes;
-
+	bool lookForModelBinary(std::string meshPath);
+	void writeModelBinary(MeshType& meshType);
+	void readModelBinary(std::string meshPath);
 };

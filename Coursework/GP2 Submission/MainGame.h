@@ -12,7 +12,7 @@
 #include "Components/MeshComponent.h"
 #include "Scene/Entity.h";
 #include "Components/MaterialComponent.h"
-#include "ModelManager.cpp"
+#include "ModelManager.h"
 
 enum class GameState{PLAY, EXIT};
 

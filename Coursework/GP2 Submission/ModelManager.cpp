@@ -1,48 +1,31 @@
 #pragma once
-#include "ModelLoader.h"
+#include "ModelManager.h"
 
-enum class MeshType { Cube, Draven, Ship };
-class ModelManager {
-public:
-	ModelManager() = default;
+void ModelManager::loadModel(MeshType& meshType) {
+	if (!loadedMeshes.count(meshType)) {
+		std::vector<Mesh> mesh = modelLoader.loadModel(meshPaths[meshType].c_str());
+		loadedMeshes.emplace(meshType, mesh);
+	}
+}
 
-	void loadModel(MeshType& meshType) {
-		if (!loadedMeshes.count(meshType)) {
-			std::vector<Mesh> mesh = modelLoader.loadModel(meshPaths[meshType].c_str());
-			loadedMeshes.emplace(meshType, mesh);
+void ModelManager::draw(MeshType& meshTypeToDraw) {
+	for (const auto& pair : loadedMeshes) {
+		// Get currentMeshType
+		MeshType currMeshType = pair.first;
+		// If we are not looking at the right model, move to next model
+		if (currMeshType != meshTypeToDraw)
+			continue;
+		// Get list of meshes
+		const std::vector<Mesh>& meshVector = pair.second;
+		// Loop through all meshes in vector and draw
+		for (const Mesh& mesh : meshVector) {
+			glBindVertexArray(mesh.VAO);
+
+			// Draw Elements
+			glDrawElements(GL_TRIANGLES, (GLsizei)mesh.vertIndices.size(), GL_UNSIGNED_INT, 0);
+
+			// Unbind
+			glBindVertexArray(0);
 		}
 	}
-	void draw(MeshType& meshType) {
-
-		for (const auto& pair : loadedMeshes) {
-
-			MeshType meshType = pair.first; // The key (MeshType) in the map
-			const std::vector<Mesh>& meshVector = pair.second; // The associated vector of Mesh
-
-			// Now, loop through every value in the vector
-			for (const Mesh& mesh : meshVector) {
-				glBindVertexArray(mesh.VAO);
-
-				// Draw Elements
-				glDrawElements(GL_TRIANGLES, (GLsizei)mesh.vertIndices.size(), GL_UNSIGNED_INT, 0);
-
-				// Unbind
-				glBindVertexArray(0);
-			}
-		}
-	}
-
-private:
-
-	ModelLoader modelLoader;
-
-	std::map<MeshType, std::string> meshPaths = {
-			{MeshType::Cube, "..\\Resources\\Models\\Cube.obj"},
-			{MeshType::Draven, "..\\Resources\\Models\\draven.obj"},
-			{MeshType::Ship, "..\\Resources\\Models\\Ship.obj"}
-	};
-
-	// Map of MeshType and Loaded Meshes
-	std::map<MeshType, std::vector<Mesh>> loadedMeshes;
-
-};
+}

@@ -23,19 +23,19 @@ void MainGame::initSystems()
 
 	player.init(display);
 
-	glm::vec3 centerPoint = glm::vec3(0.0f, 0.0f, 50.0f);
+	glm::vec3 centerPoint = glm::vec3(0.0f, 0.0f, 0);
+	auto newEntity = activeScene.CreateEntity();
 
+	TransformComponent& transform = newEntity.GetComponent<TransformComponent>();
+
+	transform.SetPos(glm::vec3(centerPoint.x + (30), centerPoint.y + (30), centerPoint.z + (30)));
+
+	newEntity.AddComponent<MaterialComponent>(ShaderType::EnviromentMapping, TextureType::Default, textureLoader);
+
+	newEntity.AddComponent<MeshComponent>(MeshType::Ship, masterModelLoader);
 	// Initialize 216 cubes
 	createNumOfCubes(2, centerPoint);	
-	//auto newEntity = activeScene.CreateEntity();
 
-	//TransformComponent& transform = newEntity.GetComponent<TransformComponent>();
-
-	//transform.SetPos(glm::vec3(centerPoint.x , centerPoint.y, centerPoint.z));
-
-	//newEntity.AddComponent<MaterialComponent>(ShaderType::Default, TextureType::Brick, textureLoader);
-
-	//newEntity.AddComponent<MeshComponent>(MeshType::Ship, masterModelLoader);
 
 	std::chrono::steady_clock::time_point end = std::chrono::steady_clock::now();
 
@@ -56,13 +56,14 @@ void MainGame::createNumOfCubes(int amount, glm::vec3& centerPoint) {
 
 				transform.SetPos(glm::vec3(centerPoint.x + (i * 30), centerPoint.y + (j * 30), centerPoint.z + (k * 30)));
 
-				newEntity.AddComponent<MaterialComponent>(ShaderType::Default, TextureType::Brick, textureLoader);
+				newEntity.AddComponent<MaterialComponent>(ShaderType::EnviromentMapping, TextureType::Default, textureLoader);
 
-				newEntity.AddComponent<MeshComponent>(MeshType::Ship, masterModelLoader);
+				newEntity.AddComponent<MeshComponent>(MeshType::Cube, masterModelLoader);
 			}
 		}
 	}
 }
+
 
 void MainGame::gameLoop()
 {

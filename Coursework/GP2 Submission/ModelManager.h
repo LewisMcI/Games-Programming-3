@@ -9,6 +9,14 @@ public:
 	void loadModel(MeshType& meshType);
 	void draw(MeshType& meshType);
 
+	std::string SerializeMeshToJson(const Mesh& mesh);
+
+	bool SaveJsonToFile(const std::string& json, const std::string& filename);
+
+	std::string LoadJsonFromFile(const std::string& filename);
+
+	Mesh RecreateMeshFromJson(const std::string& json);
+
 private:
 	ModelLoader modelLoader;
 
@@ -21,7 +29,4 @@ private:
 
 	// Map of MeshType and Loaded Meshes
 	std::map<MeshType, std::vector<Mesh>> loadedMeshes;
-	bool lookForModelBinary(std::string meshPath);
-	void writeModelBinary(MeshType& meshType);
-	void readModelBinary(std::string meshPath);
 };

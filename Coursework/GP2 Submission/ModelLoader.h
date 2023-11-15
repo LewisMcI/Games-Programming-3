@@ -103,13 +103,16 @@ public:
 						meshList[i].vertIndices.push_back(mesh->mFaces[j].mIndices[k]);
 
 				// Setup VAO VBO and EBO.
-				std::cout << "Mesh Index: " << i << "\n";
 				setBufferData(meshList[i]);
 			}
 		}	
 		return meshList;
 	}
 
+	void loadModel(Mesh& mesh) {
+		setBufferData(mesh);
+		
+	}
 private:
 	void setBufferData(Mesh& mesh) {
 		glGenVertexArrays(1, &mesh.VAO);

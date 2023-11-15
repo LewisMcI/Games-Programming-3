@@ -1,21 +1,52 @@
 #pragma once
 #include "ModelManager.h"
+#include <cstdio> // Include for FILE operations
+#include <filesystem> // C++17 feature, include for directory operations
+#include <sstream>
+#include <iostream>
+#include <rapidjson/document.h>
+#include <rapidjson/writer.h>
+#include <rapidjson/stringbuffer.h>
+
+namespace fs = std::filesystem;
 
 void ModelManager::loadModel(MeshType& meshType) {
 	// If model already loaded, return
 	if (loadedMeshes.count(meshType))
 		return;
 
-	// If model binaries exist
-	if (lookForModelBinary(meshPaths[meshType]))
-	{
+    std::string meshPath = meshPaths[meshType];
 
-	}
+    // Extracting filename from the given filePath
+    fs::path originalPath(meshPath);
+    std::string fileName = originalPath.filename().string();
+    std::string binariesPath = "..\\Resources\\ModelBinaries" + fileName;
+
+	// If model binaries exist
+    if (std::filesystem::exists(binariesPath)) {
+        std::cout << "Binaries for model to load exists, LOADING: " << fileName << "\n\n";
+        // Get Mesh
+        Mesh newMesh = RecreateMeshFromJson(LoadJsonFromFile(binariesPath));
+        // Send data to buffer
+        modelLoader.loadModel(newMesh);
+        // TEMP
+        std::vector<Mesh> newMeshList;
+        newMeshList.emplace_back(newMesh);
+        // Add new mesh to list
+        loadedMeshes.emplace(meshType, newMeshList);
+    }
 	// Load model
 	else {
-		std::vector<Mesh> mesh = modelLoader.loadModel(meshPaths[meshType].c_str());
+        std::cout << "Binaries do not exist for model" << "\n\n";
+        // Load new mesh
+		std::vector<Mesh> mesh = modelLoader.loadModel(meshPath.c_str());
+
+        // Add new mesh to list
 		loadedMeshes.emplace(meshType, mesh);
-		writeModelBinary(meshType);
+		
+        // Write mesh to file.
+        std::string json = SerializeMeshToJson(mesh.at(0));
+        SaveJsonToFile(json, binariesPath);
 	}
 }
 
@@ -40,224 +71,168 @@ void ModelManager::draw(MeshType& meshTypeToDraw) {
 		}
 	}
 }
-bool ModelManager::lookForModelBinary(std::string meshPath)
-{
-	bool file_not_found = false;
 
-	std::ifstream vert_data; // Read data.
 
-	std::size_t position = meshPath.find_last_of("\\");
-	std::string model_name = meshPath.substr(position + 1);
+// Function to serialize Mesh struct to JSON
+std::string ModelManager::SerializeMeshToJson(const Mesh& mesh) {
+    rapidjson::Document doc;
+    doc.SetObject();
 
-	vert_data.open("Model Data/" + model_name + "_vert_positions.bin", std::ios::in);
-	std::cout << "   Detecting: " << model_name + "_vert_positions.bin: " << vert_data.is_open() << "\n";
-	if (!vert_data.is_open()) { file_not_found = true; }
-	vert_data.close();
+    std::cout << "\nSerializing Mesh struct to JSON..." << "\n\n";
 
-	vert_data.open("Model Data/" + model_name + "_vert_normals.bin", std::ios::in);
-	std::cout << "   Detecting: " << model_name + "_vert_normals.bin: " << vert_data.is_open() << "\n";
-	if (!vert_data.is_open()) { file_not_found = true; }
-	vert_data.close();
+    // Create rapidjson allocator
+    rapidjson::Document::AllocatorType& allocator = doc.GetAllocator();
 
-	vert_data.open("Model Data/" + model_name + "_tex_coords.bin", std::ios::in);
-	std::cout << "   Detecting: " << model_name + "_tex_coords.bin: " << vert_data.is_open() << "\n";
-	if (!vert_data.is_open()) { file_not_found = true; }
-	vert_data.close();
+    // Create rapidjson arrays for vectors
+    rapidjson::Value vertPositions(rapidjson::kArrayType);
+    for (const auto& vert : mesh.vertPositions) {
+        rapidjson::Value vertJson(rapidjson::kArrayType);
+        vertJson.PushBack(vert.x, allocator);
+        vertJson.PushBack(vert.y, allocator);
+        vertJson.PushBack(vert.z, allocator);
+        vertPositions.PushBack(vertJson, allocator);
+    }
 
-	vert_data.open("Model Data/" + model_name + "_vert_indices.bin", std::ios::in);
-	std::cout << "   Detecting: " << model_name + "_vert_indices.bin: " << vert_data.is_open() << "\n";
-	if (!vert_data.is_open()) { file_not_found = true; }
-	vert_data.close();
+    // Serialize vertNormals
+    rapidjson::Value vertNormals(rapidjson::kArrayType);
+    for (const auto& normal : mesh.vertNormals) {
+        rapidjson::Value normalJson(rapidjson::kArrayType);
+        normalJson.PushBack(normal.x, allocator);
+        normalJson.PushBack(normal.y, allocator);
+        normalJson.PushBack(normal.z, allocator);
+        vertNormals.PushBack(normalJson, allocator);
+    }
 
-	vert_data.open("Model Data/" + model_name + "_mesh_num.bin", std::ios::in);
-	std::cout << "   Detecting: " << model_name + "_mesh_num.bin: " << vert_data.is_open() << "\n";
-	if (!vert_data.is_open()) { file_not_found = true; }
-	vert_data.close();
+    // Serialize textCoords
+    rapidjson::Value textCoords(rapidjson::kArrayType);
+    for (const auto& texCoord : mesh.textCoords) {
+        rapidjson::Value texCoordJson(rapidjson::kArrayType);
+        texCoordJson.PushBack(texCoord.x, allocator);
+        texCoordJson.PushBack(texCoord.y, allocator);
+        textCoords.PushBack(texCoordJson, allocator);
+    }
 
-	if (file_not_found)
-		return false;
+    // Serialize vertIndices
+    rapidjson::Value vertIndices(rapidjson::kArrayType);
+    for (const auto& index : mesh.vertIndices) {
+        vertIndices.PushBack(index, allocator);
+    }
 
-	return true;
+    // Add arrays to the JSON object
+    doc.AddMember("vertPositions", vertPositions, allocator);
+    doc.AddMember("vertNormals", vertNormals, allocator);
+    doc.AddMember("textCoords", textCoords, allocator);
+    doc.AddMember("vertIndices", vertIndices, allocator);
+
+    // Serialize textureHandle
+    doc.AddMember("textureHandle", mesh.textureHandle, allocator);
+
+    // Create a string buffer and writer for JSON serialization
+    rapidjson::StringBuffer buffer;
+    rapidjson::Writer<rapidjson::StringBuffer> writer(buffer);
+    doc.Accept(writer);
+
+    std::cout << "Serialization to JSON completed." << "\n\n";
+
+    // Return the serialized JSON as a string
+    return buffer.GetString();
 }
 
-void ModelManager::writeModelBinary(MeshType& meshType)
-{
-	std::cout << "Writing binaries" << "\n";
-	std::string meshPath = meshPaths[meshType];
-	std::vector<Mesh>& mesh = loadedMeshes[meshType];
+// Function to save JSON data to a file
+bool ModelManager::SaveJsonToFile(const std::string& json, const std::string& filename) {
+    std::ofstream file(filename);
+    if (!file.is_open()) {
+        std::cerr << "Failed to open file: " << filename << std::endl;
+        return false;
+    }
 
-	std::string file_name;
-	std::ofstream vert_data; // Write data.
-
-	std::size_t position = meshPath.find_last_of("\\");
-	std::string model_name = meshPath.substr(position + 1);
-
-	file_name = "Model Data/" + model_name + "_vert_positions.bin";1
-	vert_data.open(file_name, std::ios::out | std::ios::binary);
-	vert_data.write(reinterpret_cast<char*>(&mesh[0].vertPositions[0]), mesh[0].vertPositions.size() * 3 * sizeof(float));
-	vert_data.close();
-
-	file_name = "Model Data/" + model_name + "_vert_normals.bin";
-	vert_data.open(file_name, std::ios::out | std::ios::binary);
-	vert_data.write(reinterpret_cast<char*>(&mesh[0].vertNormals[0]), mesh[0].vertNormals.size() * 3 * sizeof(float));
-	vert_data.close();
-
-	file_name = "Model Data/" + model_name + "_tex_coords.bin";
-	vert_data.open(file_name, std::ios::out | std::ios::binary);
-	vert_data.write(reinterpret_cast<char*>(&mesh[0].textCoords[0]), mesh[0].textCoords.size() * 2 * sizeof(float));
-	vert_data.close();
-
-	file_name = "Model Data/" + model_name + "_vert_indices.bin";
-	vert_data.open(file_name, std::ios::out | std::ios::binary);
-	vert_data.write(reinterpret_cast<char*>(&mesh[0].vertIndices[0]), mesh[0].vertIndices.size() * sizeof(unsigned int));
-	vert_data.close();
-
-
-	//std::string names_to_file;
-	//for (unsigned int i = 0; i < texture_list.size(); ++i)
-	//{
-	//	names_to_file += texture_list[i].image_name;
-	//	names_to_file += "\n";
-	//}
-	// file_name = "Model Data/" + model_name + "_image_names.bin";
-	// vert_data.open(file_name, std::ios::out | std::ios::binary);
-	//file_name = "Model Data/" + model_name + "_image_names.txt";
-	//vert_data.open(file_name, std::ios::out);
-	//vert_data.write(reinterpret_cast<char*>(&names_to_file[0]), names_to_file.size() * sizeof(char));
-	//vert_data.close();
+    file << json;
+    file.close();
+    std::cout << "Saved JSON data to file: " << filename << std::endl;
+    return true;
 }
 
-//
-//void ModelManager::readModelBinary(std::string meshPath)
-//{
-//	std::string file_name;
-//	std::ifstream vert_data; // Read data.
-//	size_t vector_bytes_size = 0;
-//	size_t vector_index_size = 0;
-//
-//	std::size_t position = meshPath.find_last_of("\\");
-//	std::string model_name = meshPath.substr(position + 1);
-//	file_name = model_name;
-//
-//	// -------------------
-//
-//	file_name = "Model Data/" + model_name + "_vert_positions.bin";
-//	vert_data.open(file_name, std::ios::in | std::ios::binary | std::ios::ate);
-//
-//	vector_bytes_size = vert_data.tellg();
-//	vector_index_size = vector_bytes_size / (3 * sizeof(float));
-//
-//	meshes_5VBO_combined.vert_positions.resize(vector_index_size);
-//
-//	vert_data.seekg(std::ios::beg);
-//	vert_data.read(reinterpret_cast<char*>(&meshes_5VBO_combined.vert_positions[0]), vector_bytes_size);
-//	vert_data.close();
-//
-//	// -------------------
-//
-//	file_name = "Model Data/" + model_name + "_vert_normals.bin";
-//	vert_data.open(file_name, std::ios::in | std::ios::binary | std::ios::ate);
-//
-//	vector_bytes_size = vert_data.tellg();
-//	vector_index_size = vector_bytes_size / (3 * sizeof(float));
-//
-//	meshes_5VBO_combined.vert_normals.resize(vector_index_size);
-//
-//	vert_data.seekg(std::ios::beg);
-//	vert_data.read(reinterpret_cast<char*>(&meshes_5VBO_combined.vert_normals[0]), vector_bytes_size);
-//	vert_data.close();
-//
-//	// -------------------
-//
-//	file_name = "Model Data/" + model_name + "_tex_coords.bin";
-//	vert_data.open(file_name, std::ios::in | std::ios::binary | std::ios::ate);
-//
-//	vector_bytes_size = vert_data.tellg();
-//	vector_index_size = vector_bytes_size / (2 * sizeof(float));
-//
-//	meshes_5VBO_combined.tex_coords.resize(vector_index_size);
-//
-//	vert_data.seekg(std::ios::beg);
-//	vert_data.read(reinterpret_cast<char*>(&meshes_5VBO_combined.tex_coords[0]), vector_bytes_size);
-//	vert_data.close();
-//
-//	// -------------------
-//
-//	file_name = "Model Data/" + model_name + "_vert_indices.bin";
-//	vert_data.open(file_name, std::ios::in | std::ios::binary | std::ios::ate);
-//
-//	vector_bytes_size = vert_data.tellg();
-//	vector_index_size = vector_bytes_size / sizeof(unsigned int);
-//
-//	meshes_5VBO_combined.vert_indices.resize(vector_index_size);
-//
-//	vert_data.seekg(std::ios::beg);
-//	vert_data.read(reinterpret_cast<char*>(&meshes_5VBO_combined.vert_indices[0]), vector_bytes_size);
-//	vert_data.close();
-//
-//	// -------------------
-//
-//	file_name = "Model Data/" + model_name + "_mesh_num.bin";
-//	vert_data.open(file_name, std::ios::in | std::ios::binary | std::ios::ate);
-//
-//	vector_bytes_size = vert_data.tellg();
-//	vector_index_size = vector_bytes_size / sizeof(unsigned int);
-//
-//	meshes_5VBO_combined.mesh_num.resize(vector_index_size);
-//
-//	vert_data.seekg(std::ios::beg);
-//	vert_data.read(reinterpret_cast<char*>(&meshes_5VBO_combined.mesh_num[0]), vector_bytes_size);
-//	vert_data.close();
-//
-//	// -------------------
-//
-//	file_name = "Model Data/" + model_name + "_sampler_array_pos.bin";
-//	vert_data.open(file_name, std::ios::in | std::ios::binary | std::ios::ate);
-//
-//	vector_bytes_size = vert_data.tellg();
-//	vector_index_size = vector_bytes_size / sizeof(unsigned int);
-//
-//	meshes_5VBO_combined.sampler_array_pos.resize(vector_index_size);
-//
-//	vert_data.seekg(std::ios::beg);
-//	vert_data.read(reinterpret_cast<char*>(&meshes_5VBO_combined.sampler_array_pos[0]), vector_bytes_size);
-//	vert_data.close();
-//
-//	// -------------------		
-//
-//		// file_name = "Model Data/" + model_name + "_image_names.bin";
-//		// vert_data.open(file_name, std::ios::in | std::ios::binary | std::ios::ate);
-//	file_name = "Model Data/" + model_name + "_image_names.txt";
-//	vert_data.open(file_name, std::ios::in | std::ios::ate);
-//
-//	vector_bytes_size = vert_data.tellg();
-//	vector_index_size = vector_bytes_size / sizeof(char);
-//
-//	std::string names_from_file;
-//	names_from_file.resize(vector_index_size);
-//
-//	vert_data.seekg(std::ios::beg);
-//	vert_data.read(reinterpret_cast<char*>(&names_from_file[0]), vector_bytes_size);
-//	vert_data.close();
-//
-//	const char* all_names = names_from_file.c_str();
-//
-//	std::string single_name;
-//	for (unsigned int i = 0; i < names_from_file.size(); ++i)
-//	{
-//		if (*all_names != '\n')
-//			single_name += *all_names;
-//		else
-//		{
-//			Texture texture;
-//			texture.image_name = single_name;
-//			texture.tex_handle = 0; // Temporary value. Gets overridden in: load_file_name_images()
-//
-//			meshes_5VBO_combined.texture_list.push_back(texture);
-//			single_name.clear();
-//		}
-//		++all_names;
-//	}
-//	/*for (unsigned int i = 0; i < meshes_5VBO_combined.texture_list.size(); ++i)
-//		std::cout << "\n Retrieved names: " << meshes_5VBO_combined.texture_list[i].image_name << "\n";*/
-//}
+std::string ModelManager::LoadJsonFromFile(const std::string& filename) {
+    std::ifstream file(filename);
+    if (!file.is_open()) {
+        std::cerr << "Failed to open file: " << filename << std::endl;
+        return ""; // Return an empty string if file opening fails
+    }
+
+    std::stringstream buffer;
+    buffer << file.rdbuf(); // Read file content into a stringstream
+
+    file.close();
+    std::cout << "Loaded JSON data from file: " << filename << std::endl;
+
+    return buffer.str(); // Return the content of the file as a string
+}
+
+Mesh ModelManager::RecreateMeshFromJson(const std::string& json) {
+    Mesh mesh; // Create an empty Mesh object
+
+    rapidjson::Document doc;
+    doc.Parse(json.c_str());
+
+    std::cout << "\nRecreating Mesh from JSON..." << "\n\n";
+
+    // Access and extract JSON arrays for each member
+    if (doc.HasMember("vertPositions") && doc["vertPositions"].IsArray()) {
+        const rapidjson::Value& vertPositions = doc["vertPositions"];
+        for (rapidjson::SizeType i = 0; i < vertPositions.Size(); ++i) {
+            const rapidjson::Value& vert = vertPositions[i];
+            if (vert.IsArray() && vert.Size() == 3) {
+                glm::vec3 position(vert[0].GetFloat(), vert[1].GetFloat(), vert[2].GetFloat());
+                mesh.vertPositions.push_back(position);
+            }
+        }
+        std::cout << "Deserialized vertex positions" << std::endl;
+    }
+
+    // Extract and deserialize vertNormals
+    if (doc.HasMember("vertNormals") && doc["vertNormals"].IsArray()) {
+        const rapidjson::Value& vertNormals = doc["vertNormals"];
+        for (rapidjson::SizeType i = 0; i < vertNormals.Size(); ++i) {
+            const rapidjson::Value& normal = vertNormals[i];
+            if (normal.IsArray() && normal.Size() == 3) {
+                glm::vec3 normalVec(normal[0].GetFloat(), normal[1].GetFloat(), normal[2].GetFloat());
+                mesh.vertNormals.push_back(normalVec);
+            }
+        }
+        std::cout << "Deserialized vertex normals" << std::endl;
+    }
+
+    // Extract and deserialize textCoords
+    if (doc.HasMember("textCoords") && doc["textCoords"].IsArray()) {
+        const rapidjson::Value& textCoords = doc["textCoords"];
+        for (rapidjson::SizeType i = 0; i < textCoords.Size(); ++i) {
+            const rapidjson::Value& texCoord = textCoords[i];
+            if (texCoord.IsArray() && texCoord.Size() == 2) {
+                glm::vec2 texCoordVec(texCoord[0].GetFloat(), texCoord[1].GetFloat());
+                mesh.textCoords.push_back(texCoordVec);
+            }
+        }
+        std::cout << "Deserialized texture coordinates" << std::endl;
+    }
+
+    // Extract and deserialize vertIndices
+    if (doc.HasMember("vertIndices") && doc["vertIndices"].IsArray()) {
+        const rapidjson::Value& vertIndices = doc["vertIndices"];
+        for (rapidjson::SizeType i = 0; i < vertIndices.Size(); ++i) {
+            if (vertIndices[i].IsUint()) {
+                unsigned int index = vertIndices[i].GetUint();
+                mesh.vertIndices.push_back(index);
+            }
+        }
+        std::cout << "Deserialized vertex indicies" << std::endl;
+    }
+
+    // Extract and deserialize textureHandle
+    if (doc.HasMember("textureHandle") && doc["textureHandle"].IsUint()) {
+        mesh.textureHandle = doc["textureHandle"].GetUint();
+    }
+
+    std::cout << "Mesh recreation from JSON completed." << "\n\n";
+
+    return mesh;
+}

@@ -50,7 +50,7 @@ void MainGame::createNumOfCubes(int amount, glm::vec3& centerPoint) {
 
 				newEntity.AddComponent<MaterialComponent>(ShaderType::EnviromentMapping, TextureType::Default, textureLoader);
 
-				newEntity.AddComponent<MeshComponent>(MeshType::Ship, masterModelLoader);
+				newEntity.AddComponent<MeshComponent>(MeshType::Cube, masterModelLoader);
 			}
 		}
 	}

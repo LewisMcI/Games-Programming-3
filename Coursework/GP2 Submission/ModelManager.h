@@ -9,13 +9,13 @@ public:
 	void loadModel(MeshType& meshType);
 	void draw(MeshType& meshType);
 
-	std::string SerializeMeshToJson(const Mesh& mesh);
+	std::string SerializeMeshToJson(const std::vector<Mesh>& mesh);
 
 	bool SaveJsonToFile(const std::string& json, const std::string& filename);
 
 	std::string LoadJsonFromFile(const std::string& filename);
 
-	Mesh RecreateMeshFromJson(const std::string& json);
+	std::vector<Mesh> RecreateMeshFromJson(const std::string& json);
 
 private:
 	ModelLoader modelLoader;

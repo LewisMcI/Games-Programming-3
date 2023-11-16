@@ -109,9 +109,12 @@ public:
 		return meshList;
 	}
 
-	void loadModel(Mesh& mesh) {
-		setBufferData(mesh);
-		
+	void loadModel(std::vector<Mesh>& meshes) {
+		for (size_t i = 0; i < meshes.size(); i++)
+		{
+			setBufferData(meshes[i]);
+
+		}
 	}
 private:
 	void setBufferData(Mesh& mesh) {

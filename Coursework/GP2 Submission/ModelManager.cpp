@@ -166,19 +166,29 @@ bool ModelManager::SaveJsonToFile(const std::string& json, const std::string& fi
 }
 
 std::string ModelManager::LoadJsonFromFile(const std::string& filename) {
-    std::ifstream file(filename);
-    if (!file.is_open()) {
+    FILE* file = std::fopen(filename.c_str(), "r");
+    if (file == nullptr) {
         std::cerr << "Failed to open file: " << filename << std::endl;
         return ""; // Return an empty string if file opening fails
     }
 
-    std::stringstream buffer;
-    buffer << file.rdbuf(); // Read file content into a stringstream
+    // Find the file size
+    std::fseek(file, 0, SEEK_END);
+    long fileSize = std::ftell(file);
+    std::rewind(file);
 
-    file.close();
+    // Allocate memory to read the file
+    char* buffer = new char[fileSize + 1];
+    std::fread(buffer, sizeof(char), fileSize, file);
+    buffer[fileSize] = '\0'; // Null-terminate the string
+
+    std::fclose(file);
     std::cout << "Loaded JSON data from file: " << filename << std::endl;
 
-    return buffer.str(); // Return the content of the file as a string
+    std::string fileContent(buffer);
+    delete[] buffer;
+
+    return fileContent; // Return the content of the file as a string
 }
 
 std::vector<Mesh> ModelManager::RecreateMeshFromJson(const std::string& json) {

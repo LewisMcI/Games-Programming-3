@@ -23,20 +23,9 @@ void MainGame::initSystems()
 
 	player.init(display);
 
-	glm::vec3 centerPoint = glm::vec3(0.0f, 0.0f, 0);
+	glm::vec3 position = glm::vec3(0.0f, 0.0f, 0.0f);
 
-	// Initialize 216 cubes
-	//createNumOfCubes(2, centerPoint);
-
-	auto newEntity = activeScene.CreateEntity();
-
-	TransformComponent& transform = newEntity.GetComponent<TransformComponent>();
-
-	transform.SetPos(glm::vec3(centerPoint.x + (30), centerPoint.y + (30), centerPoint.z + (30)));
-
-	newEntity.AddComponent<MaterialComponent>(ShaderType::EnviromentMapping, TextureType::Default, textureLoader);
-
-	newEntity.AddComponent<MeshComponent>(MeshType::Ship, masterModelLoader);
+	createObject(MeshType::Ship, ShaderType::EnviromentMapping, TextureType::Default, position);
 
 	std::chrono::steady_clock::time_point end = std::chrono::steady_clock::now();
 
@@ -44,25 +33,17 @@ void MainGame::initSystems()
 }
 
 
-void MainGame::createNumOfCubes(int amount, glm::vec3& centerPoint) {
-	for (int i = -(amount/2); i < (amount / 2); i++)
-	{
-		for (int j = -(amount / 2); j < (amount / 2); j++)
-		{
-			for (int k = -(amount / 2); k < (amount / 2); k++) {
+void MainGame::createObject(const MeshType& meshType, const ShaderType& shaderType, const TextureType& textureType, glm::vec3& position) {
 
-				auto newEntity = activeScene.CreateEntity();
+	auto newEntity = activeScene.CreateEntity();
 
-				TransformComponent& transform = newEntity.GetComponent<TransformComponent>();
+	TransformComponent& transform = newEntity.GetComponent<TransformComponent>();
 
-				transform.SetPos(glm::vec3(centerPoint.x + (i * 30), centerPoint.y + (j * 30), centerPoint.z + (k * 30)));
+	transform.SetPos(glm::vec3(position.x + (30), position.y + (30), position.z + (30)));
 
-				newEntity.AddComponent<MaterialComponent>(ShaderType::EnviromentMapping, TextureType::Default, textureLoader);
+	newEntity.AddComponent<MaterialComponent>(ShaderType::EnviromentMapping, TextureType::Default, textureLoader);
 
-				newEntity.AddComponent<MeshComponent>(MeshType::Ship, masterModelLoader);
-			}
-		}
-	}
+	newEntity.AddComponent<MeshComponent>(MeshType::Ship, masterModelLoader);
 }
 
 

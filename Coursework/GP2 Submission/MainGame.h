@@ -29,6 +29,7 @@ protected:
 private:
 
 	void initSystems();
+	void createObject(const MeshType& meshType, const ShaderType& shaderType, const TextureType& textureType, glm::vec3& position);
 	void createNumOfCubes(int amount, glm::vec3& centerPoint);
 	void gameLoop();
 	void drawGame();

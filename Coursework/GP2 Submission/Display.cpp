@@ -126,7 +126,7 @@ void Display::swapBuffer()
 void Display::initDisplay()
 {
 	// Initialize SDL.
-	SDL_Init(SDL_INIT_EVERYTHING);
+	//SDL_Init(SDL_INIT_EVERYTHING);
 	// Enable Double Buffer.
 	SDL_GL_SetAttribute(SDL_GL_RED_SIZE, 8);
 	SDL_GL_SetAttribute(SDL_GL_GREEN_SIZE, 8);

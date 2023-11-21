@@ -15,21 +15,20 @@ void MainGame::run()
 
 void MainGame::initSystems()
 {
-	std::chrono::steady_clock::time_point begin = std::chrono::steady_clock::now();
 
 	display.initDisplay();
 
 	skybox.init();
 
 	player.init(display);
+	std::chrono::steady_clock::time_point begin = std::chrono::steady_clock::now();
 
 	float pos = 0;
 	for (size_t i = 0; i < 1; i++)
 	{
 		glm::vec3 position = glm::vec3(pos, pos, pos);
-		createObject(MeshType::Cube, ShaderType::Default, TextureType::Brick, position);
+		createObject(MeshType::Asteroid, ShaderType::EnviromentMapping, TextureType::Metal, position);
 		pos += 30.0f;
-
 	}
 
 	std::chrono::steady_clock::time_point end = std::chrono::steady_clock::now();

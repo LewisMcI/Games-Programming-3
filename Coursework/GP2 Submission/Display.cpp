@@ -46,7 +46,7 @@ void Display::initFBO()
 		std::cout << "FRAMEBUFFER:: Framebuffer is complete!" << std::endl;
 	glBindFramebuffer(GL_FRAMEBUFFER, 0);
 
-	FBOShader.initShader("..\\Resources\\Shaders\\Kuwahara.vert", "..\\Resources\\Shaders\\Kuwahara.frag");
+	FBOShader.initShader("..\\Resources\\Shaders\\FBOShader.vert", "..\\Resources\\Shaders\\FBOShader.frag");
 }
 
 void Display::bindFBO()
@@ -74,7 +74,6 @@ void Display::renderFBO()
 		 1.0f, -1.0f,  1.0f, 0.0f,
 		 1.0f,  1.0f,  1.0f, 1.0f
 	};
-
 	// cube VAO
 	glGenVertexArrays(1, &quadVAO);
 	glGenBuffers(1, &quadVBO);

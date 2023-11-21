@@ -34,7 +34,7 @@ void MaterialComponent::LinkShader(TransformComponent& transform, Camera& camera
 
 		glm::mat4 modelView = view * model;
 		associatedShader.setVec3("camPos", camera.getPos());
-		associatedShader.setFloat("reflectiveness", .75f);
+		associatedShader.setFloat("reflectiveness", .25f);
 
 		glEnable(GL_BLEND);
 		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);

@@ -20,7 +20,8 @@ void Scene::onUpdate(Camera& activeCamera)
 void Scene::drawAllMeshComponents(Camera& activeCamera) {
 	// Get and call draw on mesh's
 	auto view = registry.view<MeshComponent>();
-	for (auto entity : view) {
+
+	for (const auto& entity : view) {
 		MeshComponent& mesh = view.get<MeshComponent>(entity);
 
 		// If transform does not exist, add default transform component

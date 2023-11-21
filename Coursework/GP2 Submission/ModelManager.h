@@ -1,7 +1,7 @@
 #pragma once
 #include "ModelLoader.h"
 
-enum class MeshType { Cube, Draven, Ship };
+enum class MeshType { Cube, Draven, Ship, Asteroid };
 class ModelManager {
 public:
 	ModelManager() = default;
@@ -22,9 +22,10 @@ private:
 
 	// Map of MeshType and Mesh Paths
 	std::map<MeshType, std::string> meshPaths = {
-			{MeshType::Cube, "..\\Resources\\Models\\Cube.obj"},
+			{MeshType::Cube, "..\\Resources\\Models\\Zuccarello.obj"},
 			{MeshType::Draven, "..\\Resources\\Models\\draven.obj"},
-			{MeshType::Ship, "..\\Resources\\Models\\Ship.obj"}
+			{MeshType::Ship, "..\\Resources\\Models\\Ship.obj"},
+			{MeshType::Asteroid, "..\\Resources\\Model\\Asteroid.obj"}
 	};
 
 	// Map of MeshType and Loaded Meshes

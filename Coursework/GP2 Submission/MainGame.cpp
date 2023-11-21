@@ -23,12 +23,12 @@ void MainGame::initSystems()
 
 	player.init(display);
 
-	float pos = 30.0f;
+	float pos = 0;
 	for (size_t i = 0; i < 1; i++)
 	{
-		pos += 30.0f;
 		glm::vec3 position = glm::vec3(pos, pos, pos);
-		createObject(MeshType::Ship, ShaderType::EnviromentMapping, TextureType::Default, position);
+		createObject(MeshType::Cube, ShaderType::Default, TextureType::Brick, position);
+		pos += 30.0f;
 
 	}
 

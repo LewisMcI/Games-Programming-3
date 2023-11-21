@@ -3,12 +3,12 @@
 void Skybox::init() {
 	std::vector<std::string> faces
 	{
-		"..\\Resources\\Textures\\Skybox\\right.png",
-		"..\\Resources\\Textures\\Skybox\\left.png",
-		"..\\Resources\\Textures\\Skybox\\top.png",
-		"..\\Resources\\Textures\\Skybox\\bottom.png",
-		"..\\Resources\\Textures\\Skybox\\front.png",
-		"..\\Resources\\Textures\\Skybox\\back.png"
+		"..\\Resources\\Textures\\Skybox\\px.png",
+		"..\\Resources\\Textures\\Skybox\\nx.png",
+		"..\\Resources\\Textures\\Skybox\\py.png",
+		"..\\Resources\\Textures\\Skybox\\ny.png",
+		"..\\Resources\\Textures\\Skybox\\pz.png",
+		"..\\Resources\\Textures\\Skybox\\nz.png"
 	};
 	float skyboxVertices[] = {
 		// positions          

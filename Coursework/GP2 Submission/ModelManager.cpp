@@ -88,6 +88,7 @@ std::string ModelManager::SerializeMeshToJson(const std::vector<Mesh>& meshes) {
 
     // Create rapidjson allocator
     rapidjson::Document::AllocatorType& allocator = doc.GetAllocator();
+    doc.Reserve(meshes.size(), allocator);
     int count = 0;
     for (const auto& mesh : meshes) {
         count++;

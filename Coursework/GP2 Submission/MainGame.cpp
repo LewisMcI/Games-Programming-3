@@ -23,7 +23,7 @@ void MainGame::initSystems()
 
 	player.init(display);
 
-	glm::vec3 position = glm::vec3(0.0f, 0.0f, 0.0f);
+	glm::vec3 position = glm::vec3(30.0f, 30.0f, 30.0f);
 
 	createObject(MeshType::Ship, ShaderType::EnviromentMapping, TextureType::Default, position);
 
@@ -39,11 +39,11 @@ void MainGame::createObject(const MeshType& meshType, const ShaderType& shaderTy
 
 	TransformComponent& transform = newEntity.GetComponent<TransformComponent>();
 
-	transform.SetPos(glm::vec3(position.x + (30), position.y + (30), position.z + (30)));
+	transform.SetPos(glm::vec3(position.x, position.y, position.z));
 
-	newEntity.AddComponent<MaterialComponent>(ShaderType::EnviromentMapping, TextureType::Default, textureLoader);
+	newEntity.AddComponent<MaterialComponent>(shaderType, textureType, textureLoader);
 
-	newEntity.AddComponent<MeshComponent>(MeshType::Ship, masterModelLoader);
+	newEntity.AddComponent<MeshComponent>(meshType, masterModelLoader);
 }
 
 

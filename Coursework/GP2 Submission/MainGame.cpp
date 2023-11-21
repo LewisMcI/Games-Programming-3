@@ -23,9 +23,14 @@ void MainGame::initSystems()
 
 	player.init(display);
 
-	glm::vec3 position = glm::vec3(30.0f, 30.0f, 30.0f);
+	float pos = 30.0f;
+	for (size_t i = 0; i < 1; i++)
+	{
+		pos += 30.0f;
+		glm::vec3 position = glm::vec3(pos, pos, pos);
+		createObject(MeshType::Ship, ShaderType::EnviromentMapping, TextureType::Default, position);
 
-	createObject(MeshType::Ship, ShaderType::EnviromentMapping, TextureType::Default, position);
+	}
 
 	std::chrono::steady_clock::time_point end = std::chrono::steady_clock::now();
 

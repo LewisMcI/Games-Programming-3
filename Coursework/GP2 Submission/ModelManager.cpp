@@ -193,80 +193,76 @@ std::string ModelManager::LoadJsonFromFile(const std::string& filename) {
 }
 
 std::vector<Mesh> ModelManager::RecreateMeshFromJson(const std::string& json) {
-    std::vector<Mesh> meshes; // Create an empty Mesh object
+    std::vector<Mesh> meshes;
 
     rapidjson::Document doc;
     doc.Parse(json.c_str());
 
-    std::cout << "\nRecreating Mesh from JSON..." << "\n\n";
-
     if (doc.IsArray()) {
+        meshes.reserve(doc.Size());
+
         for (rapidjson::SizeType meshIdx = 0; meshIdx < doc.Size(); ++meshIdx) {
             const rapidjson::Value& meshData = doc[meshIdx];
-
             Mesh mesh;
 
-            // Access and extract JSON arrays for each member
+            // Extract and deserialize vertPositions
             if (meshData.HasMember("vertPositions") && meshData["vertPositions"].IsArray()) {
                 const rapidjson::Value& vertPositions = meshData["vertPositions"];
+                mesh.vertPositions.reserve(vertPositions.Size());
+
                 for (rapidjson::SizeType i = 0; i < vertPositions.Size(); ++i) {
                     const rapidjson::Value& vert = vertPositions[i];
                     if (vert.IsArray() && vert.Size() == 3) {
-                        glm::vec3 position(vert[0].GetFloat(), vert[1].GetFloat(), vert[2].GetFloat());
-                        mesh.vertPositions.push_back(position);
+                        mesh.vertPositions.emplace_back(vert[0].GetFloat(), vert[1].GetFloat(), vert[2].GetFloat());
                     }
                 }
-                std::cout << "Deserialized vertex positions" << std::endl;
             }
 
             // Extract and deserialize vertNormals
             if (meshData.HasMember("vertNormals") && meshData["vertNormals"].IsArray()) {
                 const rapidjson::Value& vertNormals = meshData["vertNormals"];
+                mesh.vertNormals.reserve(vertNormals.Size());
+
                 for (rapidjson::SizeType i = 0; i < vertNormals.Size(); ++i) {
                     const rapidjson::Value& normal = vertNormals[i];
                     if (normal.IsArray() && normal.Size() == 3) {
-                        glm::vec3 normalVec(normal[0].GetFloat(), normal[1].GetFloat(), normal[2].GetFloat());
-                        mesh.vertNormals.push_back(normalVec);
+                        mesh.vertNormals.emplace_back(normal[0].GetFloat(), normal[1].GetFloat(), normal[2].GetFloat());
                     }
                 }
-                std::cout << "Deserialized vertex normals" << std::endl;
             }
 
             // Extract and deserialize textCoords
             if (meshData.HasMember("textCoords") && meshData["textCoords"].IsArray()) {
                 const rapidjson::Value& textCoords = meshData["textCoords"];
+                mesh.textCoords.reserve(textCoords.Size());
+
                 for (rapidjson::SizeType i = 0; i < textCoords.Size(); ++i) {
                     const rapidjson::Value& texCoord = textCoords[i];
                     if (texCoord.IsArray() && texCoord.Size() == 2) {
-                        glm::vec2 texCoordVec(texCoord[0].GetFloat(), texCoord[1].GetFloat());
-                        mesh.textCoords.push_back(texCoordVec);
+                        mesh.textCoords.emplace_back(texCoord[0].GetFloat(), texCoord[1].GetFloat());
                     }
                 }
-                std::cout << "Deserialized texture coordinates" << std::endl;
             }
 
             // Extract and deserialize vertIndices
             if (meshData.HasMember("vertIndices") && meshData["vertIndices"].IsArray()) {
                 const rapidjson::Value& vertIndices = meshData["vertIndices"];
+                mesh.vertIndices.reserve(vertIndices.Size());
+
                 for (rapidjson::SizeType i = 0; i < vertIndices.Size(); ++i) {
                     if (vertIndices[i].IsUint()) {
-                        unsigned int index = vertIndices[i].GetUint();
-                        mesh.vertIndices.push_back(index);
+                        mesh.vertIndices.emplace_back(vertIndices[i].GetUint());
                     }
                 }
-                std::cout << "Deserialized vertex indicies" << std::endl;
             }
 
             // Extract and deserialize textureHandle
             if (meshData.HasMember("textureHandle") && meshData["textureHandle"].IsUint()) {
                 mesh.textureHandle = meshData["textureHandle"].GetUint();
             }
-            meshes.push_back(mesh);
+
+            meshes.emplace_back(std::move(mesh));
         }
-        std::cout << "Mesh recreation from JSON completed." << "\n\n";
-    }
-    else {
-        std::cout << "JSON data does not contain an array of meshes." << "\n\n";
     }
 
     return meshes;

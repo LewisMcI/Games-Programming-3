@@ -8,13 +8,14 @@
 
 Scene::Scene(){
 	//m_Registry.on_construct<MeshComponent>().connect<&MeshComponent::OnMeshComponentConstruct>();
+	sceneSkybox = std::make_unique<Skybox>();
 }
 Scene::~Scene() {
-
 }
 void Scene::onUpdate(Camera& activeCamera)
 {
 	drawAllMeshComponents(activeCamera);
+	sceneSkybox.get()->draw(&activeCamera);
 }
 
 void Scene::drawAllMeshComponents(Camera& activeCamera) {

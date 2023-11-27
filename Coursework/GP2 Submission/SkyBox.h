@@ -9,7 +9,9 @@
 class Skybox
 {
 public:
-	void init();
+	Skybox() {
+		init();
+	}
 	void draw(Camera* camera);
 
 	unsigned int textureID;
@@ -17,6 +19,8 @@ public:
 	unsigned int skyboxVBO;
 
 private:
+	void init();
+
 	Shader shader;
 
 };

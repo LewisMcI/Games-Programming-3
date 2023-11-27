@@ -15,21 +15,17 @@ void MainGame::run()
 
 void MainGame::initSystems()
 {
-
 	display.initDisplay();
 
-	skybox.init();
+	activeScene = std::make_unique<Scene>();
 
 	player.init(display);
+
 	std::chrono::steady_clock::time_point begin = std::chrono::steady_clock::now();
 
 	float pos = 0;
-	for (size_t i = 0; i < 1; i++)
-	{
-		glm::vec3 position = glm::vec3(pos, pos, pos);
-		createObject(MeshType::Asteroid, ShaderType::EnviromentMapping, TextureType::Metal, position);
-		pos += 30.0f;
-	}
+	glm::vec3 position = glm::vec3(pos, pos, pos);
+	createObject(MeshType::Asteroid, ShaderType::EnviromentMapping, TextureType::Brick, position);
 
 	std::chrono::steady_clock::time_point end = std::chrono::steady_clock::now();
 
@@ -39,11 +35,12 @@ void MainGame::initSystems()
 
 void MainGame::createObject(const MeshType& meshType, const ShaderType& shaderType, const TextureType& textureType, glm::vec3& position) {
 
-	auto newEntity = activeScene.CreateEntity();
+	auto newEntity = activeScene.get()->CreateEntity();
 
 	TransformComponent& transform = newEntity.GetComponent<TransformComponent>();
 
 	transform.SetPos(glm::vec3(position.x, position.y, position.z));
+	transform.SetScale(glm::vec3(0.1f, 0.1f, 0.1f));
 
 	newEntity.AddComponent<MaterialComponent>(shaderType, textureType, textureLoader);
 
@@ -67,9 +64,7 @@ void MainGame::drawGame()
 {	
 	display.bindFBO();
 
-	activeScene.onUpdate(player.getCamera());
-	
-	skybox.draw(&player.getCamera());
+	activeScene.get()->onUpdate(player.getCamera());
 
 	display.unbindFBO();
 

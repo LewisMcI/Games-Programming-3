@@ -30,7 +30,7 @@ private:
 	std::map<TextureType, std::string> texturePaths = {
 		{ TextureType::Default, "..\\Resources\\Textures\\DefaultTexture.jpg" },
 		{ TextureType::Brick, "..\\Resources\\Textures\\Bricks\\BrickAlbedo.png" },
-		{ TextureType::Metal, "..\\Resources\\Textures\\metal.png"}
+		{ TextureType::Metal, "..\\Resources\\Textures\\metal.jpg"}
 	};
 };
 

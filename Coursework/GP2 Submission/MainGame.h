@@ -40,11 +40,9 @@ private:
 
 	Shader shaderSkybox;
 
-	Skybox skybox;
-
 	Player player;
 
-	Scene activeScene;
+	std::unique_ptr<Scene> activeScene;
 
 	TextureLoader textureLoader;
 

@@ -25,7 +25,7 @@ private:
 			{MeshType::Cube, "..\\Resources\\Models\\Cube.obj"},
 			{MeshType::Draven, "..\\Resources\\Models\\draven.obj"},
 			{MeshType::Ship, "..\\Resources\\Models\\Ship.obj"},
-			{MeshType::Asteroid, "..\\Resources\\Models\\Asteroid.obj"},
+			{MeshType::Asteroid, "..\\Resources\\Models\\sponza.obj"},
 			{MeshType::R33, "..\\Resources\\Models\\R33.obj"},
 			{MeshType::Zuccarello, "..\\Resources\\Models\\Zuccarello.obj"}
 	};

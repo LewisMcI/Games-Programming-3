@@ -23,7 +23,7 @@ void MainGame::initSystems()
 
 	float pos = 0;
 	glm::vec3 position = glm::vec3(pos, pos, pos);
-	createObject(MeshType::Asteroid, ShaderType::EnviromentMapping, TextureType::Brick, position);
+	createObject(MeshType::Box, ShaderType::Default, TextureType::Box, position);
 
 	std::chrono::steady_clock::time_point end = std::chrono::steady_clock::now();
 
@@ -38,7 +38,8 @@ void MainGame::createObject(const MeshType& meshType, const ShaderType& shaderTy
 	TransformComponent& transform = player.get()->GetComponent<TransformComponent>();
 
 	transform.SetPos(glm::vec3(position.x, position.y, position.z));
-	transform.SetScale(glm::vec3(0.1f, 0.1f, 0.1f));
+	transform.SetRot(glm::vec3(-1.5708f, 0.0f, 3.14159f));
+	transform.SetScale(glm::vec3(8.0f, 8.0f, 8.0f));
 
 	player.get()->AddComponent<MaterialComponent>(shaderType, textureType, textureLoader);
 

@@ -1,7 +1,7 @@
 #pragma once
 #include "ModelLoader.h"
 
-enum class MeshType { Cube, Draven, Ship, Asteroid, R33, Zuccarello };
+enum class MeshType { Cube, Draven, Ship, Asteroid, R33, Zuccarello, Box };
 class ModelManager {
 public:
 	ModelManager() = default;
@@ -27,7 +27,8 @@ private:
 			{MeshType::Ship, "..\\Resources\\Models\\Ship.obj"},
 			{MeshType::Asteroid, "..\\Resources\\Models\\sponza.obj"},
 			{MeshType::R33, "..\\Resources\\Models\\R33.obj"},
-			{MeshType::Zuccarello, "..\\Resources\\Models\\Zuccarello.obj"}
+			{MeshType::Zuccarello, "..\\Resources\\Models\\Zuccarello.obj"},
+			{MeshType::Box, "..\\Resources\\Models\\box.glb"}
 	};
 
 	// Map of MeshType and Loaded Meshes

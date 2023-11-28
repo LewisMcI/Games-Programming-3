@@ -19,8 +19,6 @@ void MainGame::initSystems()
 
 	activeScene = std::make_unique<Scene>();
 
-	player.init(display);
-
 	std::chrono::steady_clock::time_point begin = std::chrono::steady_clock::now();
 
 	float pos = 0;
@@ -35,16 +33,19 @@ void MainGame::initSystems()
 
 void MainGame::createObject(const MeshType& meshType, const ShaderType& shaderType, const TextureType& textureType, glm::vec3& position) {
 
-	auto newEntity = activeScene.get()->CreateEntity();
+	player = std::make_unique<Entity>(activeScene.get()->CreateEntity());
 
-	TransformComponent& transform = newEntity.GetComponent<TransformComponent>();
+	TransformComponent& transform = player.get()->GetComponent<TransformComponent>();
 
 	transform.SetPos(glm::vec3(position.x, position.y, position.z));
 	transform.SetScale(glm::vec3(0.1f, 0.1f, 0.1f));
 
-	newEntity.AddComponent<MaterialComponent>(shaderType, textureType, textureLoader);
+	player.get()->AddComponent<MaterialComponent>(shaderType, textureType, textureLoader);
 
-	newEntity.AddComponent<MeshComponent>(meshType, masterModelLoader);
+	player.get()->AddComponent<MeshComponent>(meshType, masterModelLoader);
+
+	Player& playerComponent = player.get()->AddComponent<Player>();
+	playerComponent.init(display);
 }
 
 
@@ -54,7 +55,7 @@ void MainGame::gameLoop()
 	while (gameState != GameState::EXIT)
 	{
 		Time::getInstance().Update();
-		player.Update();
+		player.get()->GetComponent<Player>().Update();
 		// Update Scene
 		drawGame();
 	}
@@ -64,7 +65,7 @@ void MainGame::drawGame()
 {	
 	display.bindFBO();
 
-	activeScene.get()->onUpdate(player.getCamera());
+	activeScene.get()->onUpdate(player.get()->GetComponent<Player>().getCamera());
 
 	display.unbindFBO();
 

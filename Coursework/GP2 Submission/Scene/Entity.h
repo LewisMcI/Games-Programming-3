@@ -37,7 +37,6 @@ public:
 			std::cout << "Debug: Trying to Remove Component that does not exist";
 		entityScene->registry.remove<T>(entityHandle);
 	}
-
 protected:
 private:
 	entt::entity entityHandle = entt::null;

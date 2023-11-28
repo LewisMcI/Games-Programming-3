@@ -20,7 +20,7 @@ class MainGame
 {
 public:
 
-	MainGame() = default;
+	MainGame() {};
 	~MainGame();
 
 	void run();
@@ -40,7 +40,7 @@ private:
 
 	Shader shaderSkybox;
 
-	Player player;
+	std::unique_ptr<Entity> player;
 
 	std::unique_ptr<Scene> activeScene;
 

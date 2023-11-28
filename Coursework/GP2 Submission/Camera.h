@@ -2,6 +2,7 @@
 
 #include <glm/glm.hpp>
 #include <glm/gtx/transform.hpp>
+#include "Components/TransformComponent.h"
 
 struct Camera
 {
@@ -18,6 +19,7 @@ public:
 
 	glm::vec3 getPos()
 	{
+		cameraPos = *transform.get()->GetPos();
 		return this->cameraPos;
 	}
 
@@ -32,6 +34,7 @@ public:
 	}
 	inline glm::mat4 GetViewProjection() const
 	{
+		cameraPos = *transform.get()->GetPos();
 		return projection * glm::lookAt(cameraPos, cameraPos + forward, up);
 	}
 
@@ -77,4 +80,6 @@ private:
 	glm::vec3 cameraPos;
 	glm::vec3 forward;
 	glm::vec3 up;
+
+	std::unique_ptr<TransformComponent> transform;
 };

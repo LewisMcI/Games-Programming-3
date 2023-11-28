@@ -9,7 +9,7 @@ public:
 	PlayerController();
 	~PlayerController();
 
-	void init(Camera* camera);
+	void init(Camera* camera, TransformComponent* transform);
 
 	void processInput();
 
@@ -19,6 +19,8 @@ public:
 
 protected:
 private:
+
+	TransformComponent* playerTransform;
 
 	Camera* playerCamera;
 };

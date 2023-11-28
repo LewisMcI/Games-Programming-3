@@ -25,27 +25,43 @@ void MainGame::initSystems()
 	glm::vec3 position = glm::vec3(pos, pos, pos);
 	createObject(MeshType::Box, ShaderType::Default, TextureType::Box, position);
 
+	createPlayer(MeshType::Ship, ShaderType::EnviromentMapping, TextureType::Metal, position);
+
 	std::chrono::steady_clock::time_point end = std::chrono::steady_clock::now();
 
 	std::cout << "Initialization Time = " << std::chrono::duration_cast<std::chrono::milliseconds>(end - begin).count() << "[ms]" << std::endl;
 }
 
-
 void MainGame::createObject(const MeshType& meshType, const ShaderType& shaderType, const TextureType& textureType, glm::vec3& position) {
+
+	auto newEntity = std::make_unique<Entity>(activeScene.get()->CreateEntity());
+
+	TransformComponent& transform = newEntity.get()->GetComponent<TransformComponent>();
+
+	transform.setPos(glm::vec3(position.x, position.y, position.z));
+	transform.setRot(glm::vec3(-1.5708f, 0.0f, 3.14159f));
+	transform.setScale(glm::vec3(8.0f, 8.0f, 8.0f));
+
+	newEntity.get()->AddComponent<MaterialComponent>(shaderType, textureType, textureLoader);
+
+	newEntity.get()->AddComponent<MeshComponent>(meshType, masterModelLoader);
+
+}
+void MainGame::createPlayer(const MeshType& meshType, const ShaderType& shaderType, const TextureType& textureType, glm::vec3& position) {
 
 	player = std::make_unique<Entity>(activeScene.get()->CreateEntity());
 
 	TransformComponent& transform = player.get()->GetComponent<TransformComponent>();
 
-	transform.SetPos(glm::vec3(position.x, position.y, position.z));
-	transform.SetRot(glm::vec3(-1.5708f, 0.0f, 3.14159f));
-	transform.SetScale(glm::vec3(8.0f, 8.0f, 8.0f));
+	transform.setPos(glm::vec3(position.x, position.y, position.z));
+	transform.setRot(glm::vec3(0.0f, 0.0f, 0.0f));
+	transform.setScale(glm::vec3(.1f, .1f, .1f));
 
 	player.get()->AddComponent<MaterialComponent>(shaderType, textureType, textureLoader);
 
 	player.get()->AddComponent<MeshComponent>(meshType, masterModelLoader);
 
-	Player& playerComponent = player.get()->AddComponent<Player>();
+	Player& playerComponent = player.get()->AddComponent<Player>(transform);
 	playerComponent.init(display);
 }
 

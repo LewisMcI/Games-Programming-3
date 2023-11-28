@@ -13,7 +13,7 @@ public:
 		this->rot = rot;
 		this->scale = scale;
 	}
-	inline glm::mat4 GetModel() const //runs as compile time
+	inline glm::mat4 getModel() const //runs as compile time
 	{
 		glm::mat4 posMat = glm::translate(pos);
 		glm::mat4 scaleMat = glm::scale(scale);
@@ -23,12 +23,24 @@ public:
 		glm::mat4 rotMat = rotX * rotY * rotZ;
 		return posMat * rotMat * scaleMat;
 	}
-	inline glm::vec3* GetPos() { return &pos; } //getters
-	inline glm::vec3* GetRot() { return &rot; }
-	inline glm::vec3* GetScale() { return &scale; }
-	inline void SetPos(glm::vec3& pos) { this->pos = pos; } // setters
-	inline void SetRot(glm::vec3& rot) { this->rot = rot; }
-	inline void SetScale(glm::vec3& scale) { this->scale = scale; }
+	inline glm::vec3* getPos() { return &pos; } //getters
+	inline glm::vec3* getRot() { return &rot; }
+	inline glm::vec3* getScale() { return &scale; }
+	inline void setPos(glm::vec3& pos) { this->pos = pos; } // setters
+	inline void setRot(glm::vec3& rot) { this->rot = rot; }
+	inline void setScale(glm::vec3& scale) { this->scale = scale; }
+
+	void moveX(float distance){
+		pos.x += distance;
+	}
+
+	void moveY(float distance){
+		pos.y += distance;
+	}
+
+	void moveZ(float distance){
+		pos.z += distance;
+	}
 
 	static void OnTransformConstruct()
 	{

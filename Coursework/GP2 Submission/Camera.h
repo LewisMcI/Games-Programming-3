@@ -21,6 +21,25 @@ public:
 	{
 		return this->cameraPos;
 	}
+	
+	void setPos(glm::vec3& newPos) {
+		this->cameraPos = newPos;
+	}
+
+	void followRot(TransformComponent& targetTransform, float distance) {
+		// Get the target's position and forward direction
+		glm::vec3 targetPos = *(targetTransform.getPos());
+		glm::vec3 targetForward = glm::normalize(targetTransform.getModel() * glm::vec4(0.0f, 0.0f, 1.0f, 0.0f));
+
+		// Set the desired offset from the target
+		glm::vec3 offset = -targetForward * distance;
+
+		// Set the camera's position and make it look at the target
+		setPos(targetPos + offset);
+		LookAt(targetPos);
+	}
+
+
 
 	inline glm::mat4 getProjection() const
 	{
@@ -31,6 +50,7 @@ public:
 	{
 		return glm::lookAt(cameraPos, cameraPos + forward, up);
 	}
+
 	inline glm::mat4 GetViewProjection() const
 	{
 		return projection * glm::lookAt(cameraPos, cameraPos + forward, up);
@@ -40,37 +60,6 @@ public:
 		glm::vec3 dir = target - cameraPos;
 		forward = glm::normalize(dir);
 	}
-
-	void MoveX(float moveAmount)
-	{
-		cameraPos += forward * moveAmount;
-	}
-
-	void MoveZ(float moveAmount)
-	{
-		glm::vec3 right = glm::normalize(glm::cross(up, forward));
-		cameraPos += right * moveAmount;
-	}
-
-	void MoveY(float moveAmount)
-	{
-		cameraPos += up * moveAmount;
-	}
-
-	void RotateX(float angle)
-	{
-		glm::mat4 rotation = glm::rotate(angle, up);
-
-		forward = glm::vec3(glm::normalize(rotation * glm::vec4(forward, 0.0)));
-	}
-
-	void RotateY(float angle)
-	{
-		glm::vec3 right = glm::normalize(glm::cross(up, forward));
-
-		forward = glm::vec3(glm::normalize(glm::rotate(angle, right) * glm::vec4(forward, 0.0)));
-	}
-
 
 protected:
 private:

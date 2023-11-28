@@ -28,7 +28,7 @@ void MaterialComponent::LinkShader(TransformComponent& transform, Camera& camera
 	case ShaderType::Default:
 		break;
 	case ShaderType::EnviromentMapping:
-		glm::mat4 model = transform.GetModel();
+		glm::mat4 model = transform.getModel();
 
 		glm::mat4 view = camera.GetViewProjection();
 
@@ -38,7 +38,7 @@ void MaterialComponent::LinkShader(TransformComponent& transform, Camera& camera
 
 		glEnable(GL_BLEND);
 		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-		associatedShader.setMat4("model", transform.GetModel());
+		associatedShader.setMat4("model", transform.getModel());
 		associatedShader.setMat4("transform", modelView);
 		GLuint diffuseTexLocation = glGetUniformLocation(associatedShader.getId(), "diffuse");
 		GLuint skyboxTexLocation = glGetUniformLocation(associatedShader.getId(), "skybox");

@@ -11,9 +11,10 @@ PlayerController::~PlayerController()
 {
 }
 
-void PlayerController::init(Camera* camera)
+void PlayerController::init(Camera* camera, TransformComponent* transform)
 {
 	playerCamera = camera;
+	playerTransform = transform;
 }
 
 void PlayerController::processInput()
@@ -47,29 +48,29 @@ void PlayerController::processKeyboardInput(const Uint8* keys)
 	float distance = 40.0f * Time::getInstance().getDeltaTime();
 
 	if (keys[SDL_SCANCODE_W]) { // Move forward
-		playerCamera->MoveX(distance);
+		playerTransform->moveZ(distance);
 	}
 	if (keys[SDL_SCANCODE_S]) { // Move backward
-		playerCamera->MoveX(-distance);
+		playerTransform->moveZ(-distance);
 	}
 	if (keys[SDL_SCANCODE_A]) { // Move left
-		playerCamera->MoveZ(distance);
+		playerTransform->moveX(distance);
 	}
 	if (keys[SDL_SCANCODE_D]) { // Move right
-		playerCamera->MoveZ(-distance);
+		playerTransform->moveX(-distance);
 	}
 	if (keys[SDL_SCANCODE_SPACE]) {
-		playerCamera->MoveY(distance);
+		playerTransform->moveY(distance);
 	}
 	if (keys[SDL_SCANCODE_LSHIFT]) {
-		playerCamera->MoveY(-distance);
+		playerTransform->moveY(-distance);
 	}
 }
 
 void PlayerController::processMouseInput(SDL_MouseMotionEvent* event)
 {	
 	// Rotates X by the relative X value given through the cursor. (Must be inverted)
-	playerCamera->RotateX(-event->xrel * 0.001f);
+	//playerTransform->rotateX(-event->xrel * 0.001f);
 	// Rotates Y by the relative Y value given through the cursor.
-	playerCamera->RotateY(event->yrel * 0.001f);
+	//playerTransform->rotateY(event->yrel * 0.001f);
 }

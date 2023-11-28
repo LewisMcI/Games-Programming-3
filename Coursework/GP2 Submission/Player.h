@@ -1,9 +1,12 @@
 #pragma once
 #include "PlayerController.h"
 #include "Display.h"
+
 class Player {
 public:
-	Player();
+	Player(TransformComponent& transform) : transform(transform) {
+
+	}
 
 	void init(Display& display);
 
@@ -16,4 +19,5 @@ protected:
 private:
 	Camera playerCamera;
 	PlayerController playerController;
+	TransformComponent& transform;
 };

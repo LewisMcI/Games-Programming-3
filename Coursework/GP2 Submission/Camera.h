@@ -40,7 +40,6 @@ public:
 	}
 
 
-
 	inline glm::mat4 getProjection() const
 	{
 		return projection;
@@ -60,7 +59,6 @@ public:
 		glm::vec3 dir = target - cameraPos;
 		forward = glm::normalize(dir);
 	}
-
 protected:
 private:
 	glm::mat4 projection;

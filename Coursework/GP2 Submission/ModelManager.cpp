@@ -12,7 +12,7 @@ namespace fs = std::filesystem;
 
 void ModelManager::loadModel(MeshType& meshType) {
 	// If model already loaded, return
-	if (loadedMeshes.count(meshType))
+	if (loadedModels.count(meshType))
 		return;
 
     std::string meshPath = meshPaths[meshType];
@@ -28,11 +28,11 @@ void ModelManager::loadModel(MeshType& meshType) {
         std::cout << "Binaries for model to load exists, LOADING: " << fileName << "\n";
         std::cout << "________________________________" << "\n";
         // Get Mesh
-        std::vector<Mesh> newModel = RecreateMeshFromJson(LoadJsonFromFile(binariesPath));
+        Model newModel = RecreateModelFromJson(LoadJsonFromFile(binariesPath));
         // Send data to buffer
         modelLoader.loadModel(newModel);
         // Add new mesh to list
-        loadedMeshes.emplace(meshType, newModel);
+        loadedModels.emplace(meshType, newModel);
         std::cout << "\n________________________________" << "\n";
     }
 	// Load model
@@ -40,14 +40,14 @@ void ModelManager::loadModel(MeshType& meshType) {
         std::cout << "Binaries do not exist for model" << "\n";
         std::cout << "________________________________" << "\n";
         // Load new mesh
-		std::vector<Mesh> mesh = modelLoader.loadModel(meshPath.c_str());
+		Model model = modelLoader.loadModel(meshPath.c_str());
 
         // Add new mesh to list
-		loadedMeshes.emplace(meshType, mesh);
+		loadedModels.emplace(meshType, model);
         std::chrono::steady_clock::time_point begin = std::chrono::steady_clock::now();
 
         // Write mesh to file.
-        std::string json = SerializeMeshToJson(mesh);
+        std::string json = SerializeMeshToJson(model);
         SaveJsonToFile(json, binariesPath);
         std::cout << "\n________________________________" << "\n";
         std::chrono::steady_clock::time_point end = std::chrono::steady_clock::now();
@@ -57,16 +57,16 @@ void ModelManager::loadModel(MeshType& meshType) {
 }
 
 void ModelManager::draw(MeshType& meshTypeToDraw) {
-	for (const auto& pair : loadedMeshes) {
+	for (const auto& pair : loadedModels) {
 		// Get currentMeshType
 		MeshType currMeshType = pair.first;
 		// If we are not looking at the right model, move to next model
 		if (currMeshType != meshTypeToDraw)
 			continue;
 		// Get list of meshes
-		const std::vector<Mesh>& meshVector = pair.second;
+		const Model& modelVector = pair.second;
 		// Loop through all meshes in vector and draw
-		for (const Mesh& mesh : meshVector) {
+		for (const Mesh& mesh : modelVector.meshList) {
 			glBindVertexArray(mesh.VAO);
 
 			// Draw Elements
@@ -80,7 +80,7 @@ void ModelManager::draw(MeshType& meshTypeToDraw) {
 
 
 // Function to serialize Mesh struct to JSON
-std::string ModelManager::SerializeMeshToJson(const std::vector<Mesh>& meshes) {
+std::string ModelManager::SerializeMeshToJson(const Model& model) {
     rapidjson::Document doc;
     doc.SetArray();
 
@@ -88,9 +88,9 @@ std::string ModelManager::SerializeMeshToJson(const std::vector<Mesh>& meshes) {
 
     // Create rapidjson allocator
     rapidjson::Document::AllocatorType& allocator = doc.GetAllocator();
-    doc.Reserve(meshes.size(), allocator);
+    doc.Reserve(model.meshList.size(), allocator);
     int count = 0;
-    for (const auto& mesh : meshes) {
+    for (const auto& mesh : model.meshList) {
         count++;
         std::cout << "Loading mesh data for mesh: " << count << "\n";
         rapidjson::Value meshObj(rapidjson::kObjectType);
@@ -192,14 +192,14 @@ std::string ModelManager::LoadJsonFromFile(const std::string& filename) {
     return fileContent; // Return the content of the file as a string
 }
 
-std::vector<Mesh> ModelManager::RecreateMeshFromJson(const std::string& json) {
-    std::vector<Mesh> meshes;
+Model ModelManager::RecreateModelFromJson(const std::string& json) {
+    Model model;
 
     rapidjson::Document doc;
     doc.Parse(json.c_str());
 
     if (doc.IsArray()) {
-        meshes.reserve(doc.Size());
+        model.meshList.reserve(doc.Size());
 
         for (rapidjson::SizeType meshIdx = 0; meshIdx < doc.Size(); ++meshIdx) {
             const rapidjson::Value& meshData = doc[meshIdx];
@@ -261,9 +261,9 @@ std::vector<Mesh> ModelManager::RecreateMeshFromJson(const std::string& json) {
                 mesh.textureHandle = meshData["textureHandle"].GetUint();
             }
 
-            meshes.emplace_back(std::move(mesh));
+            model.meshList.emplace_back(std::move(mesh));
         }
     }
 
-    return meshes;
+    return model;
 }

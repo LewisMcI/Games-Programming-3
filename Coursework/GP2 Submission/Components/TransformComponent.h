@@ -2,6 +2,7 @@
 #include <glm/glm.hpp>
 #include <glm/gtx/transform.hpp>
 #include <iostream>
+#define PI 3.141592
 
 struct TransformComponent
 {
@@ -40,6 +41,33 @@ public:
 
 	void moveZ(float distance){
 		pos.z += distance;
+	}
+
+	float toRadians(float degrees) { return degrees * (PI / 180); }
+
+
+	// Takes angle in degrees
+	void rotateX(float angle) {
+		// Convert degrees to radians
+		angle = toRadians(angle);
+		// Add rotation
+		rot.x += angle;
+	}
+
+	// Takes angle in degrees
+	void rotateY(float angle) {
+		// Convert degrees to radians
+		angle = toRadians(angle);
+		// Add rotation
+		rot.y += angle;
+	}
+
+	// Takes angle in degrees
+	void rotateZ(float angle) {
+		// Convert degrees to radians
+		angle = toRadians(angle);
+		// Add rotation
+		rot.z += angle;
 	}
 
 	static void OnTransformConstruct()

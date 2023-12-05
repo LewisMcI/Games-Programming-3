@@ -4,7 +4,7 @@
 #include <GL\glew.h>
 #include <unordered_map>
 
-enum class TextureType { Default, Brick, Metal, Box };
+enum class TextureType { Default, Brick, Metal };
 class TextureLoader
 {
 public:
@@ -30,8 +30,7 @@ private:
 	std::map<TextureType, std::string> texturePaths = {
 		{ TextureType::Default, "..\\Resources\\Textures\\DefaultTexture.jpg" },
 		{ TextureType::Brick, "..\\Resources\\Textures\\Bricks\\BrickAlbedo.png" },
-		{ TextureType::Metal, "..\\Resources\\Textures\\metal.jpg"},
-		{ TextureType::Box, "..\\Resources\\Textures\\box.png" }
+		{ TextureType::Metal, "..\\Resources\\Textures\\metal.jpg"}
 	};
 };
 

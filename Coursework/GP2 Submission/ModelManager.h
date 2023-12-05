@@ -1,7 +1,7 @@
 #pragma once
 #include "ModelLoader.h"
 
-enum class MeshType { Cube, Draven, Ship, Asteroid, R33, Zuccarello, Box };
+enum class MeshType { Cube, Sphere, Ship, Asteroid, R33 };
 class ModelManager {
 public:
 	ModelManager() = default;
@@ -9,13 +9,13 @@ public:
 	void loadModel(MeshType& meshType);
 	void draw(MeshType& meshType);
 
-	std::string SerializeMeshToJson(const std::vector<Mesh>& mesh);
+	std::string SerializeMeshToJson(const Model& model);
 
 	bool SaveJsonToFile(const std::string& json, const std::string& filename);
 
 	std::string LoadJsonFromFile(const std::string& filename);
 
-	std::vector<Mesh> RecreateMeshFromJson(const std::string& json);
+	Model RecreateModelFromJson(const std::string& json);
 
 private:
 	ModelLoader modelLoader;
@@ -23,14 +23,12 @@ private:
 	// Map of MeshType and Mesh Paths
 	std::map<MeshType, std::string> meshPaths = {
 			{MeshType::Cube, "..\\Resources\\Models\\Cube.obj"},
-			{MeshType::Draven, "..\\Resources\\Models\\draven.obj"},
+			{MeshType::Sphere, "..\\Resources\\Models\\Sphere.obj"},
 			{MeshType::Ship, "..\\Resources\\Models\\Ship.obj"},
-			{MeshType::Asteroid, "..\\Resources\\Models\\sponza.obj"},
-			{MeshType::R33, "..\\Resources\\Models\\R33.obj"},
-			{MeshType::Zuccarello, "..\\Resources\\Models\\Zuccarello.obj"},
-			{MeshType::Box, "..\\Resources\\Models\\box.glb"}
+			{MeshType::Asteroid, "..\\Resources\\Models\\Asteroid.obj"},
+			{MeshType::R33, "..\\Resources\\Models\\R33.obj"}
 	};
 
 	// Map of MeshType and Loaded Meshes
-	std::map<MeshType, std::vector<Mesh>> loadedMeshes;
+	std::map<MeshType, Model> loadedModels;
 };

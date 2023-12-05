@@ -12,6 +12,7 @@
 #include <map>
 #include <fstream>
 
+
 struct Mesh {
 	enum
 	{
@@ -32,36 +33,36 @@ struct Mesh {
 	unsigned int textureHandle;
 };
 
+struct Model {
+	std::vector<Mesh> meshList;
+};
+
 class ModelLoader
 {
 public:
 	ModelLoader() = default;
-	std::vector<Mesh> loadModel(const char* modelPath) {
-
-		// Create model holding a list of mesh
-		std::vector<Mesh> meshList;
-
+	Model loadModel(const char* modelPath) {
+		Model newModel;
 		// Load Model
-		model = importer.ReadFile(modelPath, aiProcess_JoinIdenticalVertices | aiProcess_Triangulate | aiProcess_FlipUVs);
+		modelData = importer.ReadFile(modelPath, aiProcess_JoinIdenticalVertices | aiProcess_Triangulate | aiProcess_FlipUVs);
 
 		// If model failed to load || model has no meshes || model encountered an issue
-		if (!model || !model->mRootNode || model->mFlags & AI_SCENE_FLAGS_INCOMPLETE) {
+		if (!modelData || !modelData->mRootNode || modelData->mFlags & AI_SCENE_FLAGS_INCOMPLETE) {
 			std::cerr << "Could not load model at: " << modelPath << std::endl;
-			return meshList;
+			return newModel;
 		}
 
 		// Model is fine to parse
 		else {
-			numMeshes = model->mNumMeshes;
-			meshList.resize(numMeshes);
+			unsigned int numMeshes = modelData->mNumMeshes;
+			newModel.meshList.resize(numMeshes);
 
 			aiMesh* mesh{};
-			
-			auto meshes = model->mMeshes;
+			auto meshes = modelData->mMeshes;
 
 			// Cycle through all the model meshes
 			for (unsigned int i = 0; i < numMeshes; ++i) {
-				mesh = model->mMeshes[i];
+				mesh = modelData->mMeshes[i];
 
 				unsigned int numVertices = mesh->mNumVertices;
 				// Cycle through mesh vertices
@@ -72,7 +73,7 @@ public:
 					position.y = mesh->mVertices[j].y;
 					position.z = mesh->mVertices[j].z;
 					
-					meshList[i].vertPositions.push_back(position);
+					newModel.meshList[i].vertPositions.push_back(position);
 
 					// Add Normals
 					if (mesh->HasNormals()) {
@@ -81,38 +82,38 @@ public:
 						normal.y = mesh->mNormals[j].y;
 						normal.z = mesh->mNormals[j].z;
 
-						meshList[i].vertNormals.push_back(normal);
+						newModel.meshList[i].vertNormals.push_back(normal);
 					}
 					else
-						meshList[i].vertNormals.push_back(glm::vec3(0.0f));
+						newModel.meshList[i].vertNormals.push_back(glm::vec3(0.0f));
 
 					// Add Texture Coordinates
 					if (mesh->HasTextureCoords(0)) {
 						glm::vec2 texCoords{};
 						texCoords.x = mesh->mTextureCoords[0][j].x;
 						texCoords.y = mesh->mTextureCoords[0][j].y;
-						meshList[i].textCoords.push_back(texCoords);
+						newModel.meshList[i].textCoords.push_back(texCoords);
 					}
 					else
-						meshList[i].textCoords.push_back(glm::vec2(0.0f));
+						newModel.meshList[i].textCoords.push_back(glm::vec2(0.0f));
 				}
 
 				// Cycle through mesh indices
 				for (unsigned int j = 0; j < mesh->mNumFaces; ++j)
 					for (unsigned int k = 0; k < mesh->mFaces[j].mNumIndices; ++k)
-						meshList[i].vertIndices.push_back(mesh->mFaces[j].mIndices[k]);
+						newModel.meshList[i].vertIndices.push_back(mesh->mFaces[j].mIndices[k]);
 
 				// Setup VAO VBO and EBO.
-				setBufferData(meshList[i]);
+				setBufferData(newModel.meshList[i]);
 			}
 		}	
-		return meshList;
+		return newModel;
 	}
 
-	void loadModel(std::vector<Mesh>& meshes) {
-		for (size_t i = 0; i < meshes.size(); i++)
+	void loadModel(Model& model) {
+		for (size_t i = 0; i < model.meshList.size(); i++)
 		{
-			setBufferData(meshes[i]);
+			setBufferData(model.meshList[i]);
 
 		}
 	}
@@ -161,8 +162,7 @@ private:
 	Assimp::Importer importer;
 	// Generally referred to as a Scene using assimp, however I feel model better describes its purpose in the 
 	// case of this engine.
-	const aiScene* model = nullptr;
+	const aiScene* modelData = nullptr;
 	aiNode* rootNode = nullptr;
 
-	unsigned int numMeshes;
 };

@@ -48,23 +48,23 @@ void PlayerController::processKeyboardInput(const Uint8* keys)
 	float distance = 40.0f * Time::getInstance().getDeltaTime();
 
 	if (keys[SDL_SCANCODE_W]) { // Move forward
-		playerTransform->moveZ(distance);
+		playerTransform->rotateX(distance);
 	}
 	if (keys[SDL_SCANCODE_S]) { // Move backward
-		playerTransform->moveZ(-distance);
+		playerTransform->rotateX(-distance);
 	}
 	if (keys[SDL_SCANCODE_A]) { // Move left
-		playerTransform->moveX(distance);
+		playerTransform->rotateY(-distance);
 	}
 	if (keys[SDL_SCANCODE_D]) { // Move right
-		playerTransform->moveX(-distance);
+		playerTransform->rotateY(distance);
 	}
-	if (keys[SDL_SCANCODE_SPACE]) {
-		playerTransform->moveY(distance);
-	}
-	if (keys[SDL_SCANCODE_LSHIFT]) {
-		playerTransform->moveY(-distance);
-	}
+	//if (keys[SDL_SCANCODE_SPACE]) {
+	//	playerTransform->moveY(distance);
+	//}
+	//if (keys[SDL_SCANCODE_LSHIFT]) {
+	//	playerTransform->moveY(-distance);
+	//}
 }
 
 void PlayerController::processMouseInput(SDL_MouseMotionEvent* event)

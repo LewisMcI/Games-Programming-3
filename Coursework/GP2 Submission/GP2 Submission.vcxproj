@@ -160,6 +160,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Camera.h" />
+    <ClInclude Include="Components\AsteroidSpawner.h" />
     <ClInclude Include="Components\MeshComponent.h" />
     <ClInclude Include="Components\TagComponent.h" />
     <ClInclude Include="Display.h" />

@@ -1,0 +1,34 @@
+﻿  Game.cpp
+C:\Users\lewis\Documents\GitHub\Games-Programming-3\Coursework\GP2 Submission\Components\TransformComponent.h(46,50): warning C4244: 'return': conversion from 'double' to 'float', possible loss of data
+  (compiling source file 'Game.cpp')
+  
+C:\Users\lewis\Documents\GitHub\Games-Programming-3\Coursework\GP2 Submission\Player.h(15,8): warning C4227: anachronism used: qualifiers on reference are ignored
+  (compiling source file 'Game.cpp')
+  
+C:\Users\lewis\Documents\GitHub\Games-Programming-3\Coursework\GP2 Submission\MainGame.h(10,10): warning C4067: unexpected tokens following preprocessor directive - expected a newline
+  (compiling source file 'Game.cpp')
+  
+C:\Users\lewis\Documents\GitHub\Games-Programming-3\Coursework\GP2 Submission\MainGame.h(13,10): warning C4067: unexpected tokens following preprocessor directive - expected a newline
+  (compiling source file 'Game.cpp')
+  
+C:\Users\lewis\Documents\GitHub\Games-Programming-3\Coursework\GP2 Submission\TextureLoader.h(18,10): warning C4101: 'textureId': unreferenced local variable
+  (compiling source file 'Game.cpp')
+  
+  MainGame.cpp
+C:\Users\lewis\Documents\GitHub\Games-Programming-3\Coursework\GP2 Submission\Components\TransformComponent.h(46,50): warning C4244: 'return': conversion from 'double' to 'float', possible loss of data
+  (compiling source file 'MainGame.cpp')
+  
+C:\Users\lewis\Documents\GitHub\Games-Programming-3\Coursework\GP2 Submission\Player.h(15,8): warning C4227: anachronism used: qualifiers on reference are ignored
+  (compiling source file 'MainGame.cpp')
+  
+C:\Users\lewis\Documents\GitHub\Games-Programming-3\Coursework\GP2 Submission\MainGame.h(10,10): warning C4067: unexpected tokens following preprocessor directive - expected a newline
+  (compiling source file 'MainGame.cpp')
+  
+C:\Users\lewis\Documents\GitHub\Games-Programming-3\Coursework\GP2 Submission\MainGame.h(13,10): warning C4067: unexpected tokens following preprocessor directive - expected a newline
+  (compiling source file 'MainGame.cpp')
+  
+C:\Users\lewis\Documents\GitHub\Games-Programming-3\Coursework\GP2 Submission\TextureLoader.h(18,10): warning C4101: 'textureId': unreferenced local variable
+  (compiling source file 'MainGame.cpp')
+  
+  Generating Code...
+  GP2 Submission.vcxproj -> C:\Users\lewis\Documents\GitHub\Games-Programming-3\Coursework\x64\Debug\GP2 Submission.exe

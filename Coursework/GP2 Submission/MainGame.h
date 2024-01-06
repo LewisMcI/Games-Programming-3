@@ -7,13 +7,14 @@
 #include "SkyBox.h"
 #include "GameObject.h"
 #include "Player.h"
-#include "Scene/Scene.h"]
 #include <chrono>
 #include "Components/MeshComponent.h"
 #include "Scene/Entity.h";
 #include "Components/MaterialComponent.h"
 #include "ModelManager.h"
 #include "Components/AsteroidSpawner.h"
+#include "Scene/SceneManager.h"
+#include "Scene/GameScene.h"
 
 enum class GameState{PLAY, EXIT};
 
@@ -22,45 +23,37 @@ class MainGame
 public:
 
 	MainGame() {};
-	~MainGame();
-
-	void run();
-
-	auto& createEntity(glm::vec3& position = glm::vec3(0.0f), glm::vec3& rotation = glm::vec3(0.0f), glm::vec3& scale = glm::vec3(1.0f)) {
-
-		auto newEntity = std::make_unique<Entity>(activeScene.get()->CreateEntity());
-
-		TransformComponent& transform = newEntity.get()->GetComponent<TransformComponent>();
-
-		transform.setPos(glm::vec3(position.x, position.y, position.z));
-		transform.setRot(glm::vec3(rotation.x, rotation.y, rotation.z));
-		transform.setScale(glm::vec3(scale.x, scale.y, scale.z));
-
-		return newEntity;
+	~MainGame() {
+		gameState = GameState::EXIT;
 	}
 
-	TextureLoader textureLoader;
-
-	ModelManager masterModelLoader;
+	void runGame();
 
 protected:
 private:
 
 	void initSystems();
-	void createObject(const MeshType& meshType, const ShaderType& shaderType, const TextureType& textureType, glm::vec3& position);
-	void createPlayer(const MeshType& meshType, const ShaderType& shaderType, const TextureType& textureType, glm::vec3& position);
+
 	void gameLoop();
+
 	void drawGame();
+
+	void displayFunctionTime(const std::string& taskName, std::function<void()> initializationFunction) {
+		std::chrono::steady_clock::time_point begin, end;
+
+		begin = std::chrono::steady_clock::now();
+
+		initializationFunction();
+
+		end = std::chrono::steady_clock::now();
+
+		std::cout << taskName << " = " << std::chrono::duration_cast<std::chrono::milliseconds>(end - begin).count() << "[ms]" << std::endl;
+	}
 
 	GameState gameState;
 
 	Display display;
 
-	Shader shaderSkybox;
-
-	std::unique_ptr<Entity> player;
-
-	std::unique_ptr<Scene> activeScene;
-
+	GameScene gameScene;
 };
 

@@ -2,9 +2,11 @@
 #include <glm/glm.hpp>
 #include <glm/gtx/transform.hpp>
 #include <iostream>
+#include "Component.h"
+
 #define PI 3.141592
 
-struct TransformComponent
+struct TransformComponent : Component
 {
 public:
 	TransformComponent(const glm::vec3& pos = glm::vec3(), const glm::vec3& rot = glm::vec3(), const
@@ -13,6 +15,9 @@ public:
 		this->pos = pos;
 		this->rot = rot;
 		this->scale = scale;
+	}
+	void onUpdate() {
+		
 	}
 	inline glm::mat4 getModel() const //runs as compile time
 	{
@@ -68,11 +73,6 @@ public:
 		angle = toRadians(angle);
 		// Add rotation
 		rot.z += angle;
-	}
-
-	static void OnTransformConstruct()
-	{
-		std::cout << "Transform Constructed\n";
 	}
 protected:
 private:

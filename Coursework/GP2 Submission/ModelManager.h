@@ -6,6 +6,11 @@ class ModelManager {
 public:
 	ModelManager() = default;
 
+	static ModelManager& getInstance() {
+		static ModelManager instance;
+		return instance;
+	}
+
 	void loadModel(MeshType& meshType);
 	void draw(MeshType& meshType);
 

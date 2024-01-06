@@ -8,9 +8,9 @@ public:
 
 	}
 
-	void init(Display& display);
+	void init();
 
-	void Update();
+	void onUpdate();
 
 	Camera& const getCamera() {
 		return playerCamera;

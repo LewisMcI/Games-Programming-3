@@ -4,7 +4,7 @@
 
 enum class ShaderType { Default, EnviromentMapping };
 
-class MaterialComponent {
+class MaterialComponent : Component {
 public:
 
 	MaterialComponent(ShaderType shaderType = ShaderType::Default, TextureType textureType = TextureType::Default, TextureLoader& textureLoader = TextureLoader())

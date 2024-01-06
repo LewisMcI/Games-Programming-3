@@ -1,11 +1,10 @@
 #include "Display.h"
+#include "Other/GlobalVariables.h"
 
 Display::Display()
 {
 	// We will initialize the window as null	
 	sdlWindow = nullptr;
-	screenWidth = 1089.1f;
-	screenHeight = 800.1f;
 }
 
 Display::~Display()
@@ -19,7 +18,7 @@ Display::~Display()
 }
 
 float Display::getHeight() {
-	return screenHeight;
+	return DISPLAY_HEIGHT;
 }
 void Display::initFBO()
 {
@@ -29,7 +28,7 @@ void Display::initFBO()
 	// create a colorbuffer for attachment texture
 	glGenTextures(1, &CBO);
 	glBindTexture(GL_TEXTURE_2D, CBO); 
-	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, screenWidth, screenHeight, 0, GL_RGB, GL_UNSIGNED_BYTE, NULL);
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, DISPLAY_WIDTH, DISPLAY_HEIGHT, 0, GL_RGB, GL_UNSIGNED_BYTE, NULL);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 	glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, CBO, 0);
@@ -37,13 +36,13 @@ void Display::initFBO()
 	// create a renderbuffer object for depth and stencil attachment 
 	glGenRenderbuffers(1, &RBO);
 	glBindRenderbuffer(GL_RENDERBUFFER, RBO);
-	glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH24_STENCIL8, screenWidth, screenHeight); // use a single renderbuffer object for both a depth AND stencil buffer.
+	glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH24_STENCIL8, DISPLAY_WIDTH, DISPLAY_HEIGHT); // use a single renderbuffer object for both a depth AND stencil buffer.
 	glBindRenderbuffer(GL_RENDERBUFFER, 0);
 	glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_STENCIL_ATTACHMENT, GL_RENDERBUFFER, RBO); // now actually attach it
 
 	// now that we actually created the framebuffer and added all attachments we want to check if it is actually complete now
-	if (glCheckFramebufferStatus(GL_FRAMEBUFFER) == GL_FRAMEBUFFER_COMPLETE)
-		std::cout << "FRAMEBUFFER:: Framebuffer is complete!" << std::endl;
+	/*if (glCheckFramebufferStatus(GL_FRAMEBUFFER) == GL_FRAMEBUFFER_COMPLETE)
+		std::cout << "FRAMEBUFFER:: Framebuffer is complete!" << std::endl;*/
 	glBindFramebuffer(GL_FRAMEBUFFER, 0);
 
 	FBOShader.initShader("..\\Resources\\Shaders\\FBOShader.vert", "..\\Resources\\Shaders\\FBOShader.frag");
@@ -98,7 +97,7 @@ void Display::renderFBO()
 	glDrawArrays(GL_TRIANGLES, 0, 6);
 }
 float Display::getWidth() {
-	return screenWidth;
+	return DISPLAY_WIDTH;
 }
 
 void Display::clearDisplay(float r, float g, float b, float a)
@@ -132,7 +131,7 @@ void Display::initDisplay()
 	SDL_GL_SetAttribute(SDL_GL_BLUE_SIZE, 8);
 	SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, 1);
 	// Create window with args.
-	sdlWindow = SDL_CreateWindow("Asteroids (or something)", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, (int)screenWidth, (int)screenHeight, SDL_WINDOW_OPENGL);
+	sdlWindow = SDL_CreateWindow("Asteroids (or something)", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, (int)DISPLAY_WIDTH, (int)DISPLAY_HEIGHT, SDL_WINDOW_OPENGL);
 	// Calls the returnError method if the Window failed to initialize.
 	if (sdlWindow == nullptr) {
 		returnError("Window failed to initialize");

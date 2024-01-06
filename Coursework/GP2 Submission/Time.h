@@ -14,7 +14,7 @@ public:
 
 	double getDeltaTime();
 	double getCurrentTime();
-	void Update();
+	void onUpdate();
 
 private:
 	Time();

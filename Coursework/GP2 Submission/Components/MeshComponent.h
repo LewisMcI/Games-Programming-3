@@ -1,7 +1,7 @@
 #pragma once
 #include "../ModelManager.h"
 
-class MeshComponent {
+class MeshComponent : Component {
 public:
 	MeshComponent(MeshType meshType, ModelManager& modelManager) 
 		: myMeshType(meshType), myModelManager(modelManager){

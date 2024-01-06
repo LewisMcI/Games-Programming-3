@@ -151,6 +151,7 @@
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="PlayerController.cpp" />
     <ClCompile Include="Scene\Entity.cpp" />
+    <ClCompile Include="Scene\GameScene.cpp" />
     <ClCompile Include="Scene\Scene.cpp" />
     <ClCompile Include="Shader.cpp" />
     <ClCompile Include="SkyBox.cpp" />
@@ -161,6 +162,7 @@
   <ItemGroup>
     <ClInclude Include="Camera.h" />
     <ClInclude Include="Components\AsteroidSpawner.h" />
+    <ClInclude Include="Components\Component.h" />
     <ClInclude Include="Components\MeshComponent.h" />
     <ClInclude Include="Components\TagComponent.h" />
     <ClInclude Include="Display.h" />
@@ -170,11 +172,15 @@
     <ClInclude Include="ModelLoader.h" />
     <ClInclude Include="Audio.h" />
     <ClInclude Include="ModelManager.h" />
+    <ClInclude Include="Other\EventSystem.h" />
+    <ClInclude Include="Other\GlobalVariables.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="PlayerController.h" />
     <ClInclude Include="Quaternion.h" />
     <ClInclude Include="Scene\Entity.h" />
+    <ClInclude Include="Scene\GameScene.h" />
     <ClInclude Include="Scene\Scene.h" />
+    <ClInclude Include="Scene\SceneManager.h" />
     <ClInclude Include="Shader.h" />
     <ClInclude Include="SkyBox.h" />
     <ClInclude Include="stb_image.h" />

@@ -10,6 +10,11 @@ class TextureLoader
 public:
 	TextureLoader() = default;
 
+	static TextureLoader& getInstance() {
+		static TextureLoader instance;
+		return instance;
+	}
+
 	GLuint initTexture(TextureType& textureType);
 
 	GLuint getID(TextureType textureType) { 

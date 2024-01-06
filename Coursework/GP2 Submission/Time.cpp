@@ -20,7 +20,7 @@ double Time::getCurrentTime() {
 }
 
 // Calculated deltaTime using last and current time.
-void Time::Update() {
+void Time::onUpdate() {
 	// Sets lastTime to now
 	lastTime = currentTime;
 

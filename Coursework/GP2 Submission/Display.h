@@ -32,8 +32,6 @@ private:
 	SDL_GLContext glContext;
 	// Holds pointer to window
 	SDL_Window* sdlWindow;
-	float screenWidth;
-	float screenHeight;
 
 	GLuint FBO;
 	GLuint RBO;

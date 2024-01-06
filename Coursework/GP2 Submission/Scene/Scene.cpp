@@ -1,24 +1,25 @@
 #include "Scene.h"
 #include "Entity.h"
-#include "../Camera.h"
-#include "../Components/MeshComponent.h"
-#include "../Components/TransformComponent.h"
-#include "../Components/MaterialComponent.h"
-#include "../Components/TagComponent.h"
+#include "../Components/Component.h"
+
 
 Scene::Scene(){
-	//m_Registry.on_construct<MeshComponent>().connect<&MeshComponent::OnMeshComponentConstruct>();
 	sceneSkybox = std::make_unique<Skybox>();
-}
-Scene::~Scene() {
-}
-void Scene::onUpdate(Camera& activeCamera)
-{
-	drawAllMeshComponents(activeCamera);
-	sceneSkybox.get()->draw(&activeCamera);
+	Entity& obj = CreateEntity();
 }
 
-void Scene::drawAllMeshComponents(Camera& activeCamera) {
+void Scene::onUpdate() {
+	eventSystem.notify<OnUpdateEvent>();
+}
+void Scene::draw()
+{
+	if (activeCamera == nullptr)
+		return;
+	drawAllMeshComponents();
+	sceneSkybox.get()->draw(activeCamera);
+}
+
+void Scene::drawAllMeshComponents() {
 	// Get and call draw on mesh's
 	auto view = registry.view<MeshComponent>();
 
@@ -40,7 +41,7 @@ void Scene::drawAllMeshComponents(Camera& activeCamera) {
 		}
 		MaterialComponent& material = registry.get<MaterialComponent>(entity);
 
-		material.Bind(transform, activeCamera);
+		material.Bind(transform, *activeCamera);
 
 		mesh.Draw();
 	}

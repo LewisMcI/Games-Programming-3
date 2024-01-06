@@ -1,6 +1,19 @@
 #pragma once
 #include "entt\entt.hpp"
 #include "Scene.h"
+// Check if a type has a member function called onUpdate
+template <typename T>
+struct has_onUpdate {
+	// SFINAE test
+	template <typename C>
+	static constexpr auto test(int) -> decltype(std::declval<C>().onUpdate(), std::true_type{});
+
+	// Fallback
+	template <typename>
+	static constexpr std::false_type test(...);
+
+	static constexpr bool value = decltype(test<T>(0))::value;
+};
 
 class Entity {
 public:
@@ -11,11 +24,21 @@ public:
 	* Takes all values and passes them along without unpacking.
 	*/
 	template <typename T, typename... Args>
-	T& AddComponent(Args&&... args){
+	T& AddComponent(Args&&... args) {
+		// Check if Entity already has Component (Debugging purposes)
 		if (HasComponent<T>())
 			std::cout << "Debug: Trying to Add Component that already exists";
 
-		return entityScene->registry.emplace<T>(entityHandle, std::forward<Args>(args)...);
+		// Create and Add Component
+		auto& component = entityScene->registry.emplace<T>(entityHandle, std::forward<Args>(args)...);
+		// Check if the new component has an onUpdate function
+		if constexpr (has_onUpdate<T>::value) {
+			// Subscribe the onUpdate method to the onUpdateEvent
+			entityScene->subscribeUpdate([&component]() {
+				component.onUpdate();
+				});
+		}
+		return component;
 	}
 
 	template<typename T>

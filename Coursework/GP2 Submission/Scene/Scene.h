@@ -1,15 +1,14 @@
 #pragma once
 #include "entt\entt.hpp"
 #include <glm\glm.hpp>
-#include "..\Camera.h"
-#include "..\SkyBox.h"
-#include "..\Camera.h"
+#include "../Base Scripts/Camera.h"
+#include "../Base Scripts/SkyBox.h"
+#include "../Other/EventSystem.h"
 #include "..\Components\MeshComponent.h"
 #include "..\Components\TransformComponent.h"
 #include "..\Components\MaterialComponent.h"
 #include "..\Components\TagComponent.h"
-#include "../Other/EventSystem.h"
-class Entity;
+#include "Entity.h"
 
 class Scene
 {
@@ -23,7 +22,7 @@ public:
 
 	void draw();
 
-	Entity CreateEntity(const std::string& name = "");
+	Entity CreateEntity(const std::string& name = "", glm::vec3 pos = glm::vec3(0.0f));
 	
 	void subscribeUpdate(std::function<void()> callback) {
 		eventSystem.subscribe<OnUpdateEvent>(callback);

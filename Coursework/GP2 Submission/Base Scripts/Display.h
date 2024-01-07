@@ -5,6 +5,7 @@
 #include <iostream>
 #include <string>
 #include "Shader.h"
+#include "../Other/GlobalVariables.h"
 using namespace std;
 
 

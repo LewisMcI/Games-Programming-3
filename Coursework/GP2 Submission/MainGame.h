@@ -2,17 +2,15 @@
 #define SDL_MAIN_HANDLED 
 #include <SDL2/SDL.h>
 #include <GL/glew.h>
-#include "Display.h" 
-#include "Time.h"
-#include "SkyBox.h"
-#include "GameObject.h"
-#include "Player.h"
+#include "./Base Scripts/Display.h" 
+#include "Base Scripts/Time.h"
+#include "Base Scripts/SkyBox.h"
+#include "Components/Player.h"
 #include <chrono>
 #include "Components/MeshComponent.h"
 #include "Scene/Entity.h";
 #include "Components/MaterialComponent.h"
 #include "ModelManager.h"
-#include "Components/AsteroidSpawner.h"
 #include "Scene/SceneManager.h"
 #include "Scene/GameScene.h"
 

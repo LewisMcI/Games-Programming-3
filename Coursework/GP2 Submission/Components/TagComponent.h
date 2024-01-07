@@ -2,7 +2,7 @@
 #include <string>
 #include "Component.h"
 
-struct TagComponent : Component {
+struct TagComponent : public Component {
 	std::string Tag;
 
 	TagComponent() = default;

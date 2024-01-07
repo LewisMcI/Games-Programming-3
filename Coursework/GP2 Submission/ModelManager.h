@@ -1,5 +1,5 @@
 #pragma once
-#include "ModelLoader.h"
+#include "Base Scripts/ModelLoader.h"
 
 enum class MeshType { Cube, Sphere, Ship, Asteroid, R33 };
 class ModelManager {

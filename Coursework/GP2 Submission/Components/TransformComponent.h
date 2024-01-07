@@ -6,7 +6,7 @@
 
 #define PI 3.141592
 
-struct TransformComponent : Component
+struct TransformComponent : public Component
 {
 public:
 	TransformComponent(const glm::vec3& pos = glm::vec3(), const glm::vec3& rot = glm::vec3(), const
@@ -16,9 +16,7 @@ public:
 		this->rot = rot;
 		this->scale = scale;
 	}
-	void onUpdate() {
-		
-	}
+
 	inline glm::mat4 getModel() const //runs as compile time
 	{
 		glm::mat4 posMat = glm::translate(pos);

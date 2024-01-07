@@ -1,14 +1,14 @@
 #pragma once
-#include "../Shader.h"
-#include "../TextureLoader.h"
+#include "../Base Scripts/Shader.h"
+#include "../Base Scripts/TextureLoader.h"
 
 enum class ShaderType { Default, EnviromentMapping };
 
-class MaterialComponent : Component {
+class MaterialComponent : public Component {
 public:
 
-	MaterialComponent(ShaderType shaderType = ShaderType::Default, TextureType textureType = TextureType::Default, TextureLoader& textureLoader = TextureLoader())
-		: associatedShaderType(shaderType), associatedTextureType(textureType), textureLoader(textureLoader)
+	MaterialComponent(ShaderType shaderType = ShaderType::Default, TextureType textureType = TextureType::Default)
+		: associatedShaderType(shaderType), associatedTextureType(textureType), textureLoader(TextureLoader::getInstance())
 	{
 		LoadMaterial();
 	}

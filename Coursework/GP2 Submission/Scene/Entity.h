@@ -1,6 +1,9 @@
 #pragma once
 #include "entt\entt.hpp"
-#include "Scene.h"
+
+/*Forward Declaration to prevent Circular Includes*/
+class Scene;
+
 // Check if a type has a member function called onUpdate
 template <typename T>
 struct has_onUpdate {
@@ -31,13 +34,20 @@ public:
 
 		// Create and Add Component
 		auto& component = entityScene->registry.emplace<T>(entityHandle, std::forward<Args>(args)...);
-		// Check if the new component has an onUpdate function
+		// If T has method onUpdate
 		if constexpr (has_onUpdate<T>::value) {
 			// Subscribe the onUpdate method to the onUpdateEvent
 			entityScene->subscribeUpdate([&component]() {
 				component.onUpdate();
 				});
 		}
+
+		// If T is, or extends Component
+		if constexpr (std::is_base_of_v<Component, T>) {
+			// Set the variable Entity* entity equal to this class
+			component.entity = this;
+		}
+
 		return component;
 	}
 
@@ -60,8 +70,9 @@ public:
 			std::cout << "Debug: Trying to Remove Component that does not exist";
 		entityScene->registry.remove<T>(entityHandle);
 	}
+	entt::entity entityHandle = entt::null;
+
 protected:
 private:
-	entt::entity entityHandle = entt::null;
 	Scene* entityScene = nullptr;
 };

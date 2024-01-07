@@ -1,7 +1,9 @@
 #pragma once
 #define SDL_MAIN_HANDLED 
-#include "Camera.h"
+#include "../Base Scripts/Camera.h"
 #include <SDL2/SDL_events.h>
+#include <iostream>
+#include "../Base Scripts/Time.h"
 
 class PlayerController
 {

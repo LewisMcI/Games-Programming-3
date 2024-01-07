@@ -1,7 +1,4 @@
 #include "Scene.h"
-#include "Entity.h"
-#include "../Components/Component.h"
-
 
 Scene::Scene(){
 	sceneSkybox = std::make_unique<Skybox>();
@@ -37,7 +34,6 @@ void Scene::drawAllMeshComponents() {
 		if (!registry.all_of<MaterialComponent>(entity)) {
 			MaterialComponent& material = registry.emplace<MaterialComponent>(entity);
 			std::cout << "DEBUG: Replaced missing material with default.";
-
 		}
 		MaterialComponent& material = registry.get<MaterialComponent>(entity);
 
@@ -47,10 +43,10 @@ void Scene::drawAllMeshComponents() {
 	}
 }
 
-Entity Scene::CreateEntity(const std::string& name)
+Entity Scene::CreateEntity(const std::string& name, glm::vec3 pos)
 {
 	Entity entity = { registry.create(), this };
-	entity.AddComponent<TransformComponent>();
+	entity.AddComponent<TransformComponent>(pos);
 	auto& tag = entity.AddComponent<TagComponent>();
 	tag.Tag = name.empty() ? "Entity" : name;
 	return entity;

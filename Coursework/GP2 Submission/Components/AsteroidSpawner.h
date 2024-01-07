@@ -1,44 +1,31 @@
 #pragma once
+#include "Component.h"
+#include "MaterialComponent.h"
+#include "MeshComponent.h"
+#include "../Scene/Entity.h"
+#include "../Scene/SceneManager.h"
+#include "../Base Scripts/Time.h"
+#include "AsteroidMovement.h"
 
+class AsteroidSpawner : public Component {
+public:
+	AsteroidSpawner() {
+		std::cout << "Asteroid Spawner Created" << std::endl;
+	}
 
-//class AsteroidSpawner {
-//private:
-//	ShaderType defaultShaderType = ShaderType::Default;
-//	TextureType defaultTextureType = TextureType::Brick;
-//	MeshType defaultMeshType = MeshType::Asteroid;
-//
-//public:
-//	AsteroidSpawner(MeshComponent& asteroidMesh, TransformComponent& playerTransform, MainGame& mainGame) 
-//		: asteroidMesh(asteroidMesh), playerTransform(playerTransform), mainGame(mainGame) {
-//
-//	}
-//	~AsteroidSpawner();
-//
-//	void Update() {
-//		double currTime = Time::getInstance().getCurrentTime();
-//		if (currTime > nextTime) {
-//			nextTime = currTime + cooldownTime;
-//			SpawnAsteroid();
-//		}
-//	}
-//protected:
-//private:
-//	MeshComponent& asteroidMesh;
-//	TransformComponent& playerTransform;
-//	MainGame& mainGame;
-//
-//	float cooldownTime = 5.0f;
-//	double nextTime = 0.0f;
-//
-//	void SpawnAsteroid() {
-//		// Find random position around player
-//		glm::vec3& asteroidPosition = glm::vec3(0.0f);
-//
-//		// Spawn Entity
-//		auto& newEntity = mainGame.createEntity(asteroidPosition);
-//
-//		newEntity.get()->AddComponent<MaterialComponent>(defaultShaderType, defaultTextureType, mainGame.textureLoader);
-//
-//		newEntity.get()->AddComponent<MeshComponent>(defaultMeshType, mainGame.masterModelLoader);
-//	}
-//};
+	ShaderType defaultShaderType = ShaderType::Default;
+	TextureType defaultTextureType = TextureType::Brick;
+	MeshType defaultMeshType = MeshType::Asteroid;
+
+	void onUpdate();
+
+protected:
+private:
+
+	float cooldownTime = 5.0f;
+	double nextTime = 0.0f;
+
+	int asteroidCount = 0;
+	std::vector<Entity*> listOfAsteroids;
+	void SpawnAsteroid();
+};

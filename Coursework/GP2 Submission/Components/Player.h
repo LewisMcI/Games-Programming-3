@@ -1,6 +1,6 @@
 #pragma once
 #include "PlayerController.h"
-#include "Display.h"
+#include "../Base Scripts/Display.h"
 
 class Player {
 public:

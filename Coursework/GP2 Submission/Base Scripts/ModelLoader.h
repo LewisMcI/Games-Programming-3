@@ -25,7 +25,6 @@ struct Mesh {
 	GLuint VAO, EBO;
 	GLuint vertexArrayBuffers[static_cast<size_t>(NUM_BUFFERS)];
 
-
 	std::vector<glm::vec3> vertPositions;
 	std::vector<glm::vec3> vertNormals;
 	std::vector<glm::vec2> textCoords;

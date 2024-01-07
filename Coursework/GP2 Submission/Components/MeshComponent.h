@@ -1,11 +1,11 @@
 #pragma once
 #include "../ModelManager.h"
 
-class MeshComponent : Component {
+class MeshComponent : public Component {
 public:
-	MeshComponent(MeshType meshType, ModelManager& modelManager) 
-		: myMeshType(meshType), myModelManager(modelManager){
-		modelManager.loadModel(meshType);
+	MeshComponent(MeshType meshType) 
+		: myMeshType(meshType), myModelManager(ModelManager::getInstance()){
+		myModelManager.loadModel(meshType);
 	}
 
 	void Draw() {

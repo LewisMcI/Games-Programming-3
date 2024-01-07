@@ -1,5 +1,5 @@
 #include "Display.h"
-#include "Other/GlobalVariables.h"
+
 
 Display::Display()
 {

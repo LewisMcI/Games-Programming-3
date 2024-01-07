@@ -3,7 +3,7 @@
 #include <iostream>
 #include <fstream>
 #include "Camera.h"
-#include "Components/TransformComponent.h"
+#include "../Components/TransformComponent.h"
 #include <string>
 
 class Shader

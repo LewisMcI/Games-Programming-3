@@ -11,6 +11,7 @@
 #include <iostream>
 #include <map>
 #include <fstream>
+#include "../Other/GlobalVariables.h"
 
 
 struct Mesh {
@@ -47,7 +48,8 @@ public:
 
 		// If model failed to load || model has no meshes || model encountered an issue
 		if (!modelData || !modelData->mRootNode || modelData->mFlags & AI_SCENE_FLAGS_INCOMPLETE) {
-			std::cerr << "Could not load model at: " << modelPath << std::endl;
+			if (USE_ERROR_DEBUGGING)
+				std::cerr << "Could not load model at: " << modelPath << ": Model has no meshes, encountered an issue or failed during loading." << std::endl;
 			return newModel;
 		}
 

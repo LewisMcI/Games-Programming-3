@@ -1,5 +1,6 @@
 #pragma once
 #include "entt\entt.hpp"
+#include "../Other/GlobalVariables.h"
 
 /*Forward Declaration to prevent Circular Includes*/
 class Scene;
@@ -20,8 +21,13 @@ struct has_onUpdate {
 
 class Entity {
 public:
-	Entity(entt::entity handle, Scene* scene);
-	Entity(const Entity& other) = default;
+	Entity::Entity(entt::entity handle, Scene* scene)
+		: entityHandle(handle), entityScene(scene) {
+	}
+	/* Copy Constructor*/
+	Entity(const Entity& other) : entityHandle(other.entityHandle), entityScene(other.entityScene){
+
+	}
 
 	/* Variatic Template
 	* Takes all values and passes them along without unpacking.
@@ -29,7 +35,7 @@ public:
 	template <typename T, typename... Args>
 	T& AddComponent(Args&&... args) {
 		// Check if Entity already has Component (Debugging purposes)
-		if (HasComponent<T>())
+		if (HasComponent<T>() && USE_WARNING_DEBUGGING)
 			std::cout << "Debug: Trying to Add Component that already exists";
 
 		// Create and Add Component
@@ -42,10 +48,10 @@ public:
 				});
 		}
 
-		// If T is, or extends Component
+		// If component is, or extends Component
 		if constexpr (std::is_base_of_v<Component, T>) {
-			// Set the variable Entity* entity equal to this class
-			component.entity = this;
+			std::cout << "addentity";
+			component.entity = std::make_shared<Entity>(entityHandle, entityScene);
 		}
 
 		return component;
@@ -53,7 +59,7 @@ public:
 
 	template<typename T>
 	T& GetComponent() {
-		if (!HasComponent<T>())
+		if (!HasComponent<T>() && USE_WARNING_DEBUGGING)
 			std::cout << "Debug: Trying to Get Component that does not exist";
 
 		return entityScene->registry.get<T>(entityHandle);
@@ -61,13 +67,14 @@ public:
 
 	template<typename T>
 	bool HasComponent() {
-		return entityScene->registry.all_of<T>(entityHandle);
+		bool hasComponent = entityScene->registry.all_of<T>(entityHandle);
+		return hasComponent;
 	}
 
 	template<typename T>
 	bool RemoveComponent() {
-		if (!HasComponent<T>())
-			std::cout << "Debug: Trying to Remove Component that does not exist";
+		if (!HasComponent<T>() && USE_WARNING_DEBUGGING)
+			std::cout << "Trying to Remove Component that does not exist";
 		entityScene->registry.remove<T>(entityHandle);
 	}
 	entt::entity entityHandle = entt::null;

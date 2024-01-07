@@ -20,7 +20,10 @@ void MainGame::initSystems() {
 
 void MainGame::gameLoop()
 {
-	/* While game is running */
+	/* While game is running 
+	*  Scene Update and Scene Rendering are different stages, this is intended to decouple
+	*  the Game Logic and Rendering.
+	*/
 	while (gameState != GameState::EXIT)
 	{
 		/* Time Update */
@@ -36,6 +39,7 @@ void MainGame::drawGame()
 {	
 	display.bindFBO();
 
+	/* Render Scene*/
 	SceneManager::getInstance().getActiveScene().get()->draw();
 
 	display.unbindFBO();

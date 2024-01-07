@@ -7,7 +7,7 @@
 #include <rapidjson/document.h>
 #include <rapidjson/writer.h>
 #include <rapidjson/stringbuffer.h>
-
+#include "Other/GlobalVariables.h"
 namespace fs = std::filesystem;
 
 void ModelManager::loadModel(MeshType& meshType) {
@@ -24,21 +24,20 @@ void ModelManager::loadModel(MeshType& meshType) {
 
 	// If model binaries exist
     if (std::filesystem::exists(binariesPath)) {
-        std::cout << "\n__________________________________________________" << "\n";
-        std::cout << "Binaries for model to load exists, LOADING: " << fileName << "\n";
-        std::cout << "________________________________" << "\n";
+        if (USE_INFO_DEBUGGING) 
+            std::cout << "Binaries for model to load exists, LOADING: " << fileName << "\n";
         // Get Mesh
         Model newModel = RecreateModelFromJson(LoadJsonFromFile(binariesPath));
         // Send data to buffer
         modelLoader.loadModel(newModel);
         // Add new mesh to list
         loadedModels.emplace(meshType, newModel);
-        std::cout << "\n________________________________" << "\n";
     }
 	// Load model
 	else {
-        std::cout << "Binaries do not exist for model" << "\n";
-        std::cout << "________________________________" << "\n";
+        if (USE_INFO_DEBUGGING) 
+            std::cout << "Binaries do not exist for model" << "\n";
+
         // Load new mesh
 		Model model = modelLoader.loadModel(meshPath.c_str());
 
@@ -49,10 +48,10 @@ void ModelManager::loadModel(MeshType& meshType) {
         // Write mesh to file.
         std::string json = SerializeMeshToJson(model);
         SaveJsonToFile(json, binariesPath);
-        std::cout << "\n________________________________" << "\n";
         std::chrono::steady_clock::time_point end = std::chrono::steady_clock::now();
 
-        std::cout << "New time from serializing model = " << std::chrono::duration_cast<std::chrono::milliseconds>(end - begin).count() << "[ms]" << std::endl;
+        if (USE_INFO_DEBUGGING)
+            std::cout << "New time from serializing model = " << std::chrono::duration_cast<std::chrono::milliseconds>(end - begin).count() << "[ms]" << std::endl;
 	}
 }
 
@@ -83,8 +82,8 @@ void ModelManager::draw(MeshType& meshTypeToDraw) {
 std::string ModelManager::SerializeMeshToJson(const Model& model) {
     rapidjson::Document doc;
     doc.SetArray();
-
-    std::cout << "\nSerializing Mesh struct to JSON..." << "\n\n";
+    if (USE_INFO_DEBUGGING)
+        std::cout << "\nSerializing Mesh struct to JSON..." << "\n\n";
 
     // Create rapidjson allocator
     rapidjson::Document::AllocatorType& allocator = doc.GetAllocator();
@@ -92,7 +91,8 @@ std::string ModelManager::SerializeMeshToJson(const Model& model) {
     int count = 0;
     for (const auto& mesh : model.meshList) {
         count++;
-        std::cout << "Loading mesh data for mesh: " << count << "\n";
+        if (USE_INFO_DEBUGGING)
+            std::cout << "Loading mesh data for mesh: " << count << "\n";
         rapidjson::Value meshObj(rapidjson::kObjectType);
 
 
@@ -146,7 +146,8 @@ std::string ModelManager::SerializeMeshToJson(const Model& model) {
     rapidjson::Writer<rapidjson::StringBuffer> writer(buffer);
     doc.Accept(writer);
 
-    std::cout << "Serialization to JSON completed." << "\n\n";
+    if (USE_INFO_DEBUGGING)
+        std::cout << "Serialization to JSON completed." << "\n\n";
 
     // Return the serialized JSON as a string
     return buffer.GetString();
@@ -156,20 +157,23 @@ std::string ModelManager::SerializeMeshToJson(const Model& model) {
 bool ModelManager::SaveJsonToFile(const std::string& json, const std::string& filename) {
     std::ofstream file(filename);
     if (!file.is_open()) {
-        std::cerr << "Failed to open file: " << filename << std::endl;
+        if (USE_ERROR_DEBUGGING)
+            std::cerr << "Failed to open file: " << filename << std::endl;
         return false;
     }
 
     file << json;
     file.close();
-    std::cout << "Saved JSON data to file: " << filename << std::endl;
+    if (USE_INFO_DEBUGGING)
+        std::cout << "Saved JSON data to file: " << filename << std::endl;
     return true;
 }
 
 std::string ModelManager::LoadJsonFromFile(const std::string& filename) {
     FILE* file = std::fopen(filename.c_str(), "r");
     if (file == nullptr) {
-        std::cerr << "Failed to open file: " << filename << std::endl;
+        if (USE_ERROR_DEBUGGING)
+            std::cerr << "Failed to open file: " << filename << std::endl;
         return ""; // Return an empty string if file opening fails
     }
 
@@ -184,7 +188,8 @@ std::string ModelManager::LoadJsonFromFile(const std::string& filename) {
     buffer[fileSize] = '\0'; // Null-terminate the string
 
     std::fclose(file);
-    std::cout << "Loaded JSON data from file: " << filename << std::endl;
+    if (USE_INFO_DEBUGGING)
+        std::cout << "Loaded JSON data from file: " << filename << std::endl;
 
     std::string fileContent(buffer);
     delete[] buffer;

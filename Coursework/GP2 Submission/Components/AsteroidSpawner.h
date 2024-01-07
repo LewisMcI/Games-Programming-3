@@ -5,7 +5,6 @@
 #include "../Scene/Entity.h"
 #include "../Scene/SceneManager.h"
 #include "../Base Scripts/Time.h"
-#include "AsteroidMovement.h"
 
 class AsteroidSpawner : public Component {
 public:

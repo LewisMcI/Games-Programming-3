@@ -6,3 +6,4 @@
 *.vsidx
 \Resources\ModelBinaries
 *\Debug
+Coursework/GP2 Submission/x64/Debug/*.obj

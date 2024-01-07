@@ -4,7 +4,6 @@
 #include "../Scene/SceneManager.h"
 #include "Entity.h"
 #include "../Components/Player.h"
-#include "../Components/AsteroidSpawner.h"
 
 class GameScene {
 public:

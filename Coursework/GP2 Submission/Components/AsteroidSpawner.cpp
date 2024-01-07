@@ -9,7 +9,6 @@ void AsteroidSpawner::onUpdate() {
 }
 
 void AsteroidSpawner::SpawnAsteroid() {
-	std::cout << "Spawning Asteroid" << std::endl;
 	// Find random position around player
 	glm::vec3& asteroidPosition = glm::vec3(10.0f, 0.0f, 0.0f);
 
@@ -25,6 +24,4 @@ void AsteroidSpawner::SpawnAsteroid() {
 	newEntity->AddComponent<MaterialComponent>(defaultShaderType, defaultTextureType);
 
 	newEntity->AddComponent<MeshComponent>(defaultMeshType);
-
-	newEntity->AddComponent<AsteroidMovement>();
 }

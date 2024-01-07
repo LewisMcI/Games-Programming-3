@@ -36,7 +36,4 @@ void GameScene::createAsteroidSpawner()
 	auto& activeScene = SceneManager::getInstance().getActiveScene();
 
 	Entity& entAsteroidSpawner = activeScene.get()->CreateEntity();
-
-	std::cout << "adding asteroid component" << std::endl;
-	entAsteroidSpawner.AddComponent<AsteroidSpawner>();
 }

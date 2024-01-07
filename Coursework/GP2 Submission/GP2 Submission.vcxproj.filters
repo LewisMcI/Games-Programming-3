@@ -21,43 +21,7 @@
     <ClCompile Include="MainGame.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Display.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Shader.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="stb_image.c">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="TextureLoader.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Audio.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Time.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="SkyBox.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="GameObject.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="PlayerController.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Player.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Scene\Scene.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Scene\Entity.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Components\MaterialComponent.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="ModelManager.cpp">
@@ -66,75 +30,54 @@
     <ClCompile Include="Scene\GameScene.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Base Scripts\Audio.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Base Scripts\Display.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Base Scripts\Shader.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Base Scripts\SkyBox.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Base Scripts\stb_image.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Base Scripts\TextureLoader.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Base Scripts\Time.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Components\AsteroidSpawner.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Components\MaterialComponent.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Components\Player.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Components\PlayerController.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="WIP\QuatCamera.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="MainGame.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Display.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="stb_image.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Shader.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="TextureLoader.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Components\TransformComponent.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Camera.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Audio.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="ModelLoader.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Time.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="SkyBox.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="GameObject.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Quaternion.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="PlayerController.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Player.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Scene\Scene.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Components\MaterialComponent.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Scene\Entity.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Components\TagComponent.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Components\MeshComponent.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="ModelManager.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Components\AsteroidSpawner.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Components\Component.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Other\EventSystem.h">
@@ -149,53 +92,59 @@
     <ClInclude Include="Other\GlobalVariables.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="..\Resources\Shaders\FogFragmentShader.frag" />
-    <None Include="..\Resources\Shaders\FogVertexShader.vert" />
-    <None Include="..\Resources\Shaders\ToonFragmentShader.frag" />
-    <None Include="..\Resources\Shaders\ToonVertexShader.vert" />
-    <None Include="..\Resources\Shaders\DefaultShader.frag" />
-    <None Include="..\Resources\Shaders\DefaultShader.vert" />
-    <None Include="..\Resources\Shaders\RimLightingFragment.frag" />
-    <None Include="..\Resources\Shaders\RimLightingVertex.vert" />
-    <None Include="..\Resources\Shaders\TRimLightingFragment.frag" />
-    <None Include="..\Resources\Shaders\TRimLightingVertex.vert" />
-    <None Include="..\Resources\Shaders\ToffeeFragment.frag" />
-    <None Include="..\Resources\Shaders\ToffeeVertex.vert" />
-    <None Include="..\Resources\Shaders\Strips.frag" />
-    <None Include="..\Resources\Shaders\Strips.vert" />
-    <None Include="..\Resources\Shaders\BumpFragmentShader.frag" />
-    <None Include="..\Resources\Shaders\BumpVertexShader.vert" />
-    <None Include="..\Resources\Shaders\shaderGeoText.frag" />
-    <None Include="..\Resources\Shaders\shaderGeoText.geom" />
-    <None Include="..\Resources\Shaders\shaderGeoText.vert" />
-    <None Include="..\Resources\Shaders\RimAndToonAndExplodeShaders\TRimLightingExplode.frag" />
-    <None Include="..\Resources\Shaders\RimAndToonAndExplodeShaders\TRimLightingExplode.geom" />
-    <None Include="..\Resources\Shaders\RimAndToonAndExplodeShaders\TRimLightingExplode.vert" />
-    <None Include="..\Resources\Shaders\SpecularLighting.frag" />
-    <None Include="..\Resources\Shaders\SpecularLighting.vert" />
-    <None Include="..\Resources\Shaders\ToonSpecularLighting.frag" />
-    <None Include="..\Resources\Shaders\ToonSpecularLighting.vert" />
-    <None Include="..\Resources\Shaders\CubeMaps.frag" />
-    <None Include="..\Resources\Shaders\CubeMaps.vert" />
-    <None Include="..\Resources\Shaders\Kuwahara.frag" />
-    <None Include="..\Resources\Shaders\Kuwahara.vert" />
-    <None Include="..\Resources\Shaders\EnvironmentMapping.frag" />
-    <None Include="..\Resources\Shaders\EnvironmentMapping.vert" />
-    <None Include="..\Resources\Shaders\BoxBlur.frag" />
-    <None Include="..\Resources\Shaders\BoxBlur.vert" />
-    <None Include="..\Resources\Shaders\GaussianBlur.frag" />
-    <None Include="..\Resources\Shaders\GaussianBlur.vert" />
-    <None Include="..\Resources\Shaders\ChromaticAbberation.frag" />
-    <None Include="..\Resources\Shaders\ChromaticAbberation.vert" />
-    <None Include="..\Resources\Shaders\FBOShader.frag" />
-    <None Include="..\Resources\Shaders\FBOShader.vert" />
-    <None Include="..\Resources\Shaders\InversionShader.frag" />
-    <None Include="..\Resources\Shaders\InversionShader.vert" />
-    <None Include="..\Resources\Shaders\GreyscaleShader.frag" />
-    <None Include="..\Resources\Shaders\GreyscaleShader.vert" />
-    <None Include="..\Resources\Shaders\CameraShakeShader.frag" />
-    <None Include="..\Resources\Shaders\CameraShakeShader.vert" />
+    <ClInclude Include="Base Scripts\Audio.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Base Scripts\Camera.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Base Scripts\Display.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Base Scripts\ModelLoader.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Base Scripts\Shader.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Base Scripts\SkyBox.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Base Scripts\stb_image.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Base Scripts\TextureLoader.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Base Scripts\Time.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Components\AsteroidSpawner.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Components\Component.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Components\MaterialComponent.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Components\MeshComponent.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Components\Player.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Components\PlayerController.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Components\TagComponent.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Components\TransformComponent.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="WIP\Quaternion.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

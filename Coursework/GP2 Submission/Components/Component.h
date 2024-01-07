@@ -4,7 +4,8 @@
 
 class Component {
 public:
-	Entity* entity = nullptr;
+	std::shared_ptr<Entity> entity = nullptr;
+	//std::shared_ptr<Entity> entity;
 protected:
 private:
 };

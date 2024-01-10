@@ -2,7 +2,7 @@
 #include <corecrt_math.h>
 #include <glm/glm.hpp>
 
-struct Quaternion {
+class Quaternion {
     double w; // Real Part
     double x; // I Component
     double y; // J Component

@@ -1,10 +1,14 @@
 #include "AsteroidSpawner.h"
+#include "AsteroidMovement.h"
+#include "../Other/GlobalVariables.h"
 
 void AsteroidSpawner::onUpdate() {
 	double currTime = Time::getInstance().getCurrentTime();
 	if (currTime > nextTime) {
 		nextTime = currTime + cooldownTime;
 		SpawnAsteroid();
+		if (USE_INFO_DEBUGGING)
+			std::cout << "Asteroid has been spawned" << std::endl;
 	}
 }
 
@@ -24,4 +28,6 @@ void AsteroidSpawner::SpawnAsteroid() {
 	newEntity->AddComponent<MaterialComponent>(defaultShaderType, defaultTextureType);
 
 	newEntity->AddComponent<MeshComponent>(defaultMeshType);
+
+	//newEntity->AddComponent<AsteroidMovement>(player);
 }

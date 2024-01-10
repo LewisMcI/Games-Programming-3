@@ -29,7 +29,7 @@ private:
 	std::map<MeshType, std::string> meshPaths = {
 			{MeshType::Cube, "..\\Resources\\Models\\Cube.obj"},
 			{MeshType::Sphere, "..\\Resources\\Models\\Sphere.obj"},
-			{MeshType::Ship, "..\\Resources\\Models\\Ship.obj"},
+			{MeshType::Ship, "..\\Resources\\Models\\Player Ship.fbx"},
 			{MeshType::Asteroid, "..\\Resources\\Models\\Asteroid.obj"},
 			{MeshType::R33, "..\\Resources\\Models\\R33.obj"}
 	};

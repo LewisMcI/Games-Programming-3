@@ -162,6 +162,6 @@ void Display::initDisplay()
 	glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
 
 	// Hide Cursor and keep within SDL window
-	SDL_SetRelativeMouseMode(SDL_TRUE);
+	//SDL_SetRelativeMouseMode(SDL_TRUE);
 	initFBO();
 }

@@ -148,6 +148,7 @@
     <ClCompile Include="Base Scripts\stb_image.c" />
     <ClCompile Include="Base Scripts\TextureLoader.cpp" />
     <ClCompile Include="Base Scripts\Time.cpp" />
+    <ClCompile Include="Components\AsteroidMovement.cpp" />
     <ClCompile Include="Components\AsteroidSpawner.cpp" />
     <ClCompile Include="Components\MaterialComponent.cpp" />
     <ClCompile Include="Components\Player.cpp" />
@@ -164,11 +165,13 @@
     <ClInclude Include="Base Scripts\Camera.h" />
     <ClInclude Include="Base Scripts\Display.h" />
     <ClInclude Include="Base Scripts\ModelLoader.h" />
+    <ClInclude Include="Base Scripts\Mouse.h" />
     <ClInclude Include="Base Scripts\Shader.h" />
     <ClInclude Include="Base Scripts\SkyBox.h" />
     <ClInclude Include="Base Scripts\stb_image.h" />
     <ClInclude Include="Base Scripts\TextureLoader.h" />
     <ClInclude Include="Base Scripts\Time.h" />
+    <ClInclude Include="Components\AsteroidMovement.h" />
     <ClInclude Include="Components\AsteroidSpawner.h" />
     <ClInclude Include="Components\Component.h" />
     <ClInclude Include="Components\MaterialComponent.h" />

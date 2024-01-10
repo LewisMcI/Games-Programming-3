@@ -2,11 +2,9 @@
 #include "PlayerController.h"
 #include "../Base Scripts/Display.h"
 
-class Player {
+class Player : public Component {
 public:
-	Player(TransformComponent& transform) : transform(transform) {
-
-	}
+	Player() = default;
 
 	void init();
 
@@ -19,5 +17,5 @@ protected:
 private:
 	Camera playerCamera;
 	PlayerController playerController;
-	TransformComponent& transform;
+	TransformComponent* playerTransform;
 };

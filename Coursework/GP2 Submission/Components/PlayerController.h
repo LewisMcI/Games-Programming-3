@@ -17,13 +17,14 @@ public:
 
 	void processKeyboardInput(const Uint8* keys);
 
-	void processMouseInput(SDL_MouseMotionEvent* event);
+	void processMouseInput();
 
 protected:
 private:
-
 	TransformComponent* playerTransform;
 
 	Camera* playerCamera;
+
+	bool gameInFocus = true;
 };
 

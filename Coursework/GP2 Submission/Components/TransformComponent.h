@@ -34,43 +34,13 @@ public:
 	inline void setRot(glm::vec3& rot) { this->rot = rot; }
 	inline void setScale(glm::vec3& scale) { this->scale = scale; }
 
-	void moveX(float distance){
-		pos.x += distance;
+	void move(glm::vec3 value){
+		pos += value;
 	}
 
-	void moveY(float distance){
-		pos.y += distance;
-	}
-
-	void moveZ(float distance){
-		pos.z += distance;
-	}
-
-	float toRadians(float degrees) { return degrees * (PI / 180); }
-
-
-	// Takes angle in degrees
-	void rotateX(float angle) {
-		// Convert degrees to radians
-		angle = toRadians(angle);
-		// Add rotation
-		rot.x += angle;
-	}
-
-	// Takes angle in degrees
-	void rotateY(float angle) {
-		// Convert degrees to radians
-		angle = toRadians(angle);
-		// Add rotation
-		rot.y += angle;
-	}
-
-	// Takes angle in degrees
-	void rotateZ(float angle) {
-		// Convert degrees to radians
-		angle = toRadians(angle);
-		// Add rotation
-		rot.z += angle;
+	// Takes angle in radians
+	void rotate(glm::vec3 value) {
+		rot += value;
 	}
 protected:
 private:

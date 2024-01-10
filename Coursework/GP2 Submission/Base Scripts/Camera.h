@@ -21,12 +21,38 @@ public:
 	{
 		return this->cameraPos;
 	}
-	
+
+	glm::vec3 getForward() {
+		return this->forward;
+	}
+
+	glm::vec3 getUp() {
+		return up;
+	}
+
+	glm::vec3 getRight() {
+		return glm::cross(forward, up);
+	}
+
 	void setPos(glm::vec3& newPos) {
 		this->cameraPos = newPos;
 	}
+	void setRot(glm::vec3& newRot) {
+		// Create a rotation matrix based on the new rotation angles
+		glm::mat4 rotationMatrix = glm::rotate(glm::mat4(1.0f), newRot.x, glm::vec3(1.0f, 0.0f, 0.0f))
+			* glm::rotate(glm::mat4(1.0f), newRot.y, glm::vec3(0.0f, 1.0f, 0.0f))
+			* glm::rotate(glm::mat4(1.0f), newRot.z, glm::vec3(0.0f, 0.0f, 1.0f));
 
-	void followRot(TransformComponent& targetTransform, float distance) {
+		// Update the forward and up vectors by multiplying them with the rotation matrix
+		forward = glm::vec3(rotationMatrix * glm::vec4(0.0f, 0.0f, 1.0f, 0.0f));
+		up = glm::vec3(rotationMatrix * glm::vec4(0.0f, 1.0f, 0.0f, 0.0f));
+
+		// Optionally, you may want to normalize the vectors if needed
+		forward = glm::normalize(forward);
+		up = glm::normalize(up);
+	}
+
+	void lookAtTransform(TransformComponent& targetTransform, float distance) {
 		// Get the target's position and forward direction
 		glm::vec3 targetPos = *(targetTransform.getPos());
 		glm::vec3 targetForward = glm::normalize(targetTransform.getModel() * glm::vec4(0.0f, 0.0f, 1.0f, 0.0f));
@@ -38,7 +64,20 @@ public:
 		setPos(targetPos + offset);
 		LookAt(targetPos);
 	}
+	void followTransform(TransformComponent& transform) {
+		setPos(*transform.getPos());
+		setRot(*transform.getRot());
+	}
 
+	void MoveForward(float amt)
+	{
+		cameraPos += forward * amt;
+	}
+
+	void MoveLeft(float amt)
+	{
+		cameraPos += glm::cross(up, forward) * amt;
+	}
 
 	inline glm::mat4 getProjection() const
 	{

@@ -50,7 +50,6 @@ public:
 
 		// If component is, or extends Component
 		if constexpr (std::is_base_of_v<Component, T>) {
-			std::cout << "addentity";
 			component.entity = std::make_shared<Entity>(entityHandle, entityScene);
 		}
 

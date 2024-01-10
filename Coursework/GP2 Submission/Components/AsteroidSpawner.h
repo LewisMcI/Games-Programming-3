@@ -8,7 +8,7 @@
 
 class AsteroidSpawner : public Component {
 public:
-	AsteroidSpawner() {
+	AsteroidSpawner(Entity& player) : player(player) {
 		std::cout << "Asteroid Spawner Created" << std::endl;
 	}
 
@@ -20,11 +20,13 @@ public:
 
 protected:
 private:
+	void SpawnAsteroid();
 
 	float cooldownTime = 5.0f;
 	double nextTime = 0.0f;
 
 	int asteroidCount = 0;
 	std::vector<Entity*> listOfAsteroids;
-	void SpawnAsteroid();
+
+	Entity& player;
 };

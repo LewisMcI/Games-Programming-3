@@ -3,7 +3,7 @@
 #include "../Components/MeshComponent.h"
 #include "../Scene/SceneManager.h"
 #include "Entity.h"
-#include "../Components/Player.h"
+
 
 class GameScene {
 public:
@@ -15,4 +15,6 @@ protected:
 private:
 	void createPlayer(ShaderType shaderType, TextureType textureType, MeshType meshType);
 	void createAsteroidSpawner();
+
+	std::unique_ptr<Entity> player;
 };

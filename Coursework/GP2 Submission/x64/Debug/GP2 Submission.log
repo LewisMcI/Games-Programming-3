@@ -1,4 +1,6 @@
-﻿  PlayerController.cpp
-C:\Users\lewis\Documents\GitHub\Games-Programming-3\Coursework\GP2 Submission\Components\PlayerController.cpp(66,21): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
-C:\Users\lewis\Documents\GitHub\Games-Programming-3\Coursework\GP2 Submission\Components\PlayerController.cpp(67,22): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+﻿  AudioManager.cpp
+  PlayerController.cpp
+C:\Users\lewis\Documents\GitHub\Games-Programming-3\Coursework\GP2 Submission\Components\PlayerController.cpp(67,21): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+C:\Users\lewis\Documents\GitHub\Games-Programming-3\Coursework\GP2 Submission\Components\PlayerController.cpp(68,22): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+  Generating Code...
   GP2 Submission.vcxproj -> C:\Users\lewis\Documents\GitHub\Games-Programming-3\Coursework\x64\Debug\GP2 Submission.exe

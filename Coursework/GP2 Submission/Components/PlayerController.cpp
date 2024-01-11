@@ -1,5 +1,6 @@
 #pragma once
 #include "PlayerController.h"
+#include "../AudioManager.h"
 
 
 PlayerController::PlayerController() {
@@ -79,6 +80,10 @@ void PlayerController::processKeyboardInput(const Uint8* keys)
 	}
 	if (keys[SDL_SCANCODE_A]) { // Move right
 		playerTransform->rotate(-forward * rotationSpeed);
+	}
+	if (keys[SDL_SCANCODE_E]){
+		AudioType audioType = AudioType::Fire;
+		AudioManager::getInstance().playSFX(audioType);
 	}
 }
 

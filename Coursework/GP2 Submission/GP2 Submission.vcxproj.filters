@@ -30,7 +30,7 @@
     <ClCompile Include="Scene\GameScene.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Base Scripts\Audio.cpp">
+    <ClCompile Include="AudioManager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Base Scripts\Display.cpp">
@@ -95,7 +95,7 @@
     <ClInclude Include="Other\GlobalVariables.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Base Scripts\Audio.h">
+    <ClInclude Include="AudioManager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Base Scripts\Camera.h">

@@ -1,33 +1,46 @@
 #include "AsteroidSpawner.h"
 #include "AsteroidMovement.h"
 #include "../Other/GlobalVariables.h"
+#include "Collider.h"
 
+bool flag = false;
 void AsteroidSpawner::onUpdate() {
+	if (!flag) {
+		for (size_t i = 0; i < 110; i++)
+		{
+			spawnAsteroid();
+		}
+		flag = true;
+	}
 	double currTime = Time::getInstance().getCurrentTime();
 	if (currTime > nextTime) {
 		nextTime = currTime + cooldownTime;
-		SpawnAsteroid();
+		spawnAsteroid();
 		if (USE_INFO_DEBUGGING)
 			std::cout << "Asteroid has been spawned" << std::endl;
 	}
 }
 
-void AsteroidSpawner::SpawnAsteroid() {
+void AsteroidSpawner::spawnAsteroid() {
 	// Find random position around player
-	glm::vec3& asteroidPosition = glm::vec3(10.0f, 0.0f, 0.0f);
+	glm::vec3& asteroidPosition = *player.GetComponent<TransformComponent>().getPos() + glm::vec3(0.0f, 0.0f, 50.0f);
 
 	// Spawn Entity
 	auto& activeScene = SceneManager::getInstance().getActiveScene();
 
-	Entity* newEntity = new Entity(activeScene.get()->CreateEntity());
+	Entity* asteroid = new Entity(activeScene.get()->CreateEntity("Asteroid", asteroidPosition));
 
-	listOfAsteroids.push_back(newEntity);
+	addAstroidToArray(asteroid);
 
 	asteroidCount++;
 
-	newEntity->AddComponent<MaterialComponent>(defaultShaderType, defaultTextureType);
+	asteroid->AddComponent<MaterialComponent>(defaultShaderType, defaultTextureType);
 
-	newEntity->AddComponent<MeshComponent>(defaultMeshType);
+	asteroid->AddComponent<MeshComponent>(defaultMeshType);
 
-	//newEntity->AddComponent<AsteroidMovement>(player);
+	asteroid->AddComponent<Collider>(glm::vec3(20.0f));
+
+	asteroid->GetComponent<TagComponent>().Tag = "Asteroid";
+
+	asteroid->AddComponent<AsteroidMovement>();
 }

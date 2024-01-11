@@ -14,7 +14,7 @@ void Scene::onUpdate() {
 void Scene::checkCollisions() {
 	// Get all Colliders
 	auto view = registry.view<Collider, TransformComponent>();
-	
+
 	for (const auto& entity : view) {
 		Collider& collider = view.get<Collider>(entity);
 		TransformComponent& transform = view.get<TransformComponent>(entity);
@@ -24,38 +24,42 @@ void Scene::checkCollisions() {
 			Collider& collider2 = view.get<Collider>(entity2);
 			TransformComponent& transform2 = view.get<TransformComponent>(entity2);
 
-			float maxX = transform.getPos()->x + collider.size.x;
-			float maxY = transform.getPos()->y + collider.size.y;
-			float maxZ = transform.getPos()->z + collider.size.z;
-
-			float maxX2 = transform2.getPos()->x + collider2.size.x;
-			float maxY2 = transform2.getPos()->y + collider2.size.y;
-			float maxZ2 = transform2.getPos()->z + collider2.size.z;
-
 			float minX = transform.getPos()->x - collider.size.x;
-			float minY = transform.getPos()->y - collider.size.y;
-			float minZ = transform.getPos()->z - collider.size.z;
-
+			float maxX = transform.getPos()->x + collider.size.x;
 			float minX2 = transform2.getPos()->x - collider2.size.x;
-			float minY2 = transform2.getPos()->y - collider2.size.y;
-			float minZ2 = transform2.getPos()->z - collider2.size.z;
+			float maxX2 = transform2.getPos()->x + collider2.size.x;
 
 			bool collisionX = minX <= maxX2 && maxX >= minX2;
+			if (!collisionX)
+				continue;
+
+			float minY = transform.getPos()->y - collider.size.y;
+			float maxY = transform.getPos()->y + collider.size.y;
+			float minY2 = transform2.getPos()->y - collider2.size.y;
+			float maxY2 = transform2.getPos()->y + collider2.size.y;
 
 			bool collisionY = minY <= maxY2 && maxY >= minY2;
+			if (!collisionY)
+				continue;
+
+			float minZ = transform.getPos()->z - collider.size.z;
+			float maxZ = transform.getPos()->z + collider.size.z;
+			float minZ2 = transform2.getPos()->z - collider2.size.z;
+			float maxZ2 = transform2.getPos()->z + collider2.size.z;
 
 			bool collisionZ = minZ <= maxZ2 && maxZ >= minZ2;
+			if (!collisionZ)
+				continue;
 
 			// Collided
-			if (collisionX && collisionY && collisionZ)
-			{
-				if (transform.entity.get()->GetComponent<TagComponent>().Tag == "Player") {
 
-				}
-				else if (transform.entity.get()->GetComponent<TagComponent>().Tag == "Asteroid") {
-					transform.entity.get()->~Entity();
-					std::cout << "destructed" << std::endl;
-				}
+			// If is player
+			if (transform.entity.get()->GetComponent<TagComponent>().Tag == "Player") {
+
+			}
+			else if (transform.entity.get()->GetComponent<TagComponent>().Tag == "Asteroid") {
+				transform.entity.get()->~Entity();
+				//std::cout << "destructed" << std::endl;
 			}
 
 		}

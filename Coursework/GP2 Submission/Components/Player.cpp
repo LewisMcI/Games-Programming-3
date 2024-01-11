@@ -5,7 +5,7 @@
 void Player::init()
 {
 	// Initialize Camera
-	playerCamera.initCamera(glm::vec3(0, 0, 0), 70.0f, DISPLAY_WIDTH / DISPLAY_HEIGHT, 0.01f, 1000.0f);
+	playerCamera.initCamera(glm::vec3(0, 0, 0), 70.0f, DISPLAY_WIDTH / DISPLAY_HEIGHT, NEAR_PLANE, FAR_PLANE);
 
 	playerTransform = &entity.get()->GetComponent<TransformComponent>();
 

@@ -26,12 +26,20 @@ void MainGame::gameLoop()
 	*/
 	while (gameState != GameState::EXIT)
 	{
+		std::chrono::steady_clock::time_point begin, end;
+
+		begin = std::chrono::steady_clock::now();
+
 		/* Time Update */
 		Time::getInstance().onUpdate();
 		/* Call onUpdate on all components within scene*/
 		SceneManager::getInstance().getActiveScene().get()->onUpdate();
 		/* Rendering */
 		drawGame();
+
+		end = std::chrono::steady_clock::now();
+
+		//std::cout << "FPS" << " = " << (double)1000.0f / std::chrono::duration_cast<std::chrono::milliseconds>(end - begin).count() << "" << std::endl;
 	}
 }
 

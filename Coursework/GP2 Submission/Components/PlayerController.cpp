@@ -24,6 +24,7 @@ void PlayerController::init(Camera* camera, TransformComponent* transform)
 {
 	playerCamera = camera;
 	playerTransform = transform;
+	SDL_WarpMouseInWindow(SDL_GL_GetCurrentWindow(), static_cast<int>(centerOfScreen.x), static_cast<int>(centerOfScreen.y));
 }
 
 void PlayerController::processInput()
@@ -88,10 +89,6 @@ void PlayerController::processKeyboardInput(const Uint8* keys)
 }
 
 void PlayerController::processMouseInput() {
-
-	// Center Point
-	glm::vec2 centerOfScreen = glm::vec2(DISPLAY_WIDTH / 2, DISPLAY_HEIGHT / 2);
-
 	// Current Point
 	int mouseX, mouseY;
 	SDL_GetMouseState(&mouseX, &mouseY);
@@ -101,8 +98,8 @@ void PlayerController::processMouseInput() {
 	glm::vec2 distanceToCenter = centerOfScreen - currentPoint;
 
 	// Calculate Speed
-	float speedX = distanceToCenter.x * 0.000001f;
-	float speedY = distanceToCenter.y * 0.000001f;
+	float speedX = distanceToCenter.x * 0.01f * Time::getInstance().getDeltaTime();
+	float speedY = distanceToCenter.y * 0.01f * Time::getInstance().getDeltaTime();
 
 	glm::vec3 right = playerCamera->getRight();
 	glm::vec3 up = playerCamera->getUp();

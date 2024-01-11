@@ -8,23 +8,10 @@ void GameScene::Load() {
 	createPlayer(ShaderType::Default, TextureType::Default, MeshType::Ship);
 	if (USE_INFO_DEBUGGING)
 		std::cout << "Player Created" << std::endl;
-	//createAsteroidSpawner();
+	createAsteroidSpawner();
 	if (USE_INFO_DEBUGGING)
 		std::cout << "Asteroid Spawner Created" << std::endl;
-	
-	/* Create new Entity*/
-	auto& activeScene = SceneManager::getInstance().getActiveScene();
 
-	Entity& asteroid = activeScene.get()->CreateEntity();
-
-	asteroid.GetComponent<TransformComponent>().setPos(glm::vec3(0.0f, 0.0f, 500.0f));
-	asteroid.GetComponent<TransformComponent>().setScale(glm::vec3(20.0f));
-
-	asteroid.AddComponent<MaterialComponent>(ShaderType::Default, TextureType::Default);
-
-	asteroid.AddComponent<MeshComponent>(MeshType::Cube);
-	asteroid.AddComponent<Collider>(glm::vec3(20.0f));
-	asteroid.GetComponent<TagComponent>().Tag = "Asteroid";
 }
 
 void GameScene::createPlayer(ShaderType shaderType, TextureType textureType, MeshType meshType)

@@ -26,5 +26,7 @@ private:
 	Camera* playerCamera;
 
 	bool gameInFocus = true;
+
+	glm::vec2 centerOfScreen = glm::vec2(DISPLAY_WIDTH / 2, DISPLAY_HEIGHT / 2);
 };
 

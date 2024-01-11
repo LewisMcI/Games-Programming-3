@@ -7,6 +7,7 @@ C:\Users\lewis\Documents\GitHub\Games-Programming-3\Coursework\GP2 Submission\Ba
 C:\Users\lewis\Documents\GitHub\Games-Programming-3\Coursework\GP2 Submission\Base Scripts\Time.cpp;C:\Users\lewis\Documents\GitHub\Games-Programming-3\Coursework\GP2 Submission\x64\Debug\Time.obj
 C:\Users\lewis\Documents\GitHub\Games-Programming-3\Coursework\GP2 Submission\Components\AsteroidMovement.cpp;C:\Users\lewis\Documents\GitHub\Games-Programming-3\Coursework\GP2 Submission\x64\Debug\AsteroidMovement.obj
 C:\Users\lewis\Documents\GitHub\Games-Programming-3\Coursework\GP2 Submission\Components\AsteroidSpawner.cpp;C:\Users\lewis\Documents\GitHub\Games-Programming-3\Coursework\GP2 Submission\x64\Debug\AsteroidSpawner.obj
+C:\Users\lewis\Documents\GitHub\Games-Programming-3\Coursework\GP2 Submission\Components\Collider.cpp;C:\Users\lewis\Documents\GitHub\Games-Programming-3\Coursework\GP2 Submission\x64\Debug\Collider.obj
 C:\Users\lewis\Documents\GitHub\Games-Programming-3\Coursework\GP2 Submission\Components\MaterialComponent.cpp;C:\Users\lewis\Documents\GitHub\Games-Programming-3\Coursework\GP2 Submission\x64\Debug\MaterialComponent.obj
 C:\Users\lewis\Documents\GitHub\Games-Programming-3\Coursework\GP2 Submission\Components\Player.cpp;C:\Users\lewis\Documents\GitHub\Games-Programming-3\Coursework\GP2 Submission\x64\Debug\Player.obj
 C:\Users\lewis\Documents\GitHub\Games-Programming-3\Coursework\GP2 Submission\Components\PlayerController.cpp;C:\Users\lewis\Documents\GitHub\Games-Programming-3\Coursework\GP2 Submission\x64\Debug\PlayerController.obj

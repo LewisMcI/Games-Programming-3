@@ -150,6 +150,7 @@
     <ClCompile Include="Base Scripts\Time.cpp" />
     <ClCompile Include="Components\AsteroidMovement.cpp" />
     <ClCompile Include="Components\AsteroidSpawner.cpp" />
+    <ClCompile Include="Components\Collider.cpp" />
     <ClCompile Include="Components\MaterialComponent.cpp" />
     <ClCompile Include="Components\Player.cpp" />
     <ClCompile Include="Components\PlayerController.cpp" />
@@ -173,6 +174,7 @@
     <ClInclude Include="Base Scripts\Time.h" />
     <ClInclude Include="Components\AsteroidMovement.h" />
     <ClInclude Include="Components\AsteroidSpawner.h" />
+    <ClInclude Include="Components\Collider.h" />
     <ClInclude Include="Components\Component.h" />
     <ClInclude Include="Components\MaterialComponent.h" />
     <ClInclude Include="Components\MeshComponent.h" />

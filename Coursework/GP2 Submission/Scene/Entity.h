@@ -5,17 +5,20 @@
 /*Forward Declaration to prevent Circular Includes*/
 class Scene;
 
-// Check if a type has a member function called onUpdate
+// Check if a type has a method onUpdate
 template <typename T>
 struct has_onUpdate {
-	// SFINAE test
+	// Substitution Failure is Not An Error (SFINAE) test
 	template <typename C>
+	// Attempt to call the onUpdate method on an instance of type C
 	static constexpr auto test(int) -> decltype(std::declval<C>().onUpdate(), std::true_type{});
 
 	// Fallback
 	template <typename>
+	// This is a fallback for when the SFINAE test fails (Substitution Failure)
 	static constexpr std::false_type test(...);
 
+	// The result of the test is stored in the 'value' member
 	static constexpr bool value = decltype(test<T>(0))::value;
 };
 
@@ -27,6 +30,10 @@ public:
 	/* Copy Constructor*/
 	Entity(const Entity& other) : entityHandle(other.entityHandle), entityScene(other.entityScene){
 
+	}
+
+	~Entity() {
+		
 	}
 
 	/* Variatic Template
@@ -77,8 +84,8 @@ public:
 		entityScene->registry.remove<T>(entityHandle);
 	}
 	entt::entity entityHandle = entt::null;
-
 protected:
 private:
 	Scene* entityScene = nullptr;
+
 };

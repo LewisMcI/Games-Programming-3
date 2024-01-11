@@ -34,6 +34,8 @@ public:
 
 private:
 	void drawAllMeshComponents();
+	
+	void checkCollisions();
 
 	entt::registry registry;
 

@@ -2,6 +2,7 @@
 #include "GameScene.h"
 #include "../Components/Player.h"
 #include "../Components/AsteroidSpawner.h"
+#include "../Components/Collider.h"
 
 void GameScene::Load() {
 	createPlayer(ShaderType::Default, TextureType::Default, MeshType::Ship);
@@ -16,12 +17,14 @@ void GameScene::Load() {
 
 	Entity& asteroid = activeScene.get()->CreateEntity();
 
-	asteroid.GetComponent<TransformComponent>().setPos(glm::vec3(0.0f, 0.0f, 100.0f));
+	asteroid.GetComponent<TransformComponent>().setPos(glm::vec3(0.0f, 0.0f, 500.0f));
 	asteroid.GetComponent<TransformComponent>().setScale(glm::vec3(20.0f));
 
 	asteroid.AddComponent<MaterialComponent>(ShaderType::Default, TextureType::Default);
 
 	asteroid.AddComponent<MeshComponent>(MeshType::Cube);
+	asteroid.AddComponent<Collider>(glm::vec3(20.0f));
+	asteroid.GetComponent<TagComponent>().Tag = "Asteroid";
 }
 
 void GameScene::createPlayer(ShaderType shaderType, TextureType textureType, MeshType meshType)
@@ -42,6 +45,8 @@ void GameScene::createPlayer(ShaderType shaderType, TextureType textureType, Mes
 
 	Player& playerComponent = player.get()->AddComponent<Player>();
 	playerComponent.init();
+
+	player.get()->AddComponent<Collider>(glm::vec3(3.0f));
 }
 
 void GameScene::createAsteroidSpawner()

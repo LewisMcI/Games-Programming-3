@@ -6,7 +6,7 @@
 bool flag = false;
 void AsteroidSpawner::onUpdate() {
 	if (!flag) {
-		for (size_t i = 0; i < MAX_ASTEROIDS; i++)
+		for (size_t i = 0; i < MAX_ASTEROIDS * 2; i++)
 		{
 			spawnAsteroid();
 		}
@@ -22,6 +22,8 @@ void AsteroidSpawner::onUpdate() {
 }
 
 void AsteroidSpawner::spawnAsteroid() {
+	if (!canSpawnAsteroid())
+		return;
 	// Find random position around player
 	float min = -100.0f; float max = 100.0f;
 	glm::vec3& asteroidPosition = *player.GetComponent<TransformComponent>().getPos() + 

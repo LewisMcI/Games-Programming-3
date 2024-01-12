@@ -4,6 +4,8 @@
 
 void AsteroidMovement::onUpdate()
 {
+    if (objectDestroyed)
+        return;
     TransformComponent& transform = entity.get()->GetComponent<TransformComponent>();
 
     float movementSpeed = 10.0f * Time::getInstance().getDeltaTime(); // Adjust this value to control the speed of movement

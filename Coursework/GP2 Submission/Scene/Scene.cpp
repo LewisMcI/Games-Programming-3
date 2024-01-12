@@ -15,7 +15,6 @@ void Scene::onUpdate() {
 void Scene::checkCollisions() {
 	// Get all Colliders
 	auto view = registry.view<Collider, TransformComponent>();
-
 	for (const auto& entity : view) {
 		Collider& collider = view.get<Collider>(entity);
 		TransformComponent& transform = view.get<TransformComponent>(entity);
@@ -91,7 +90,8 @@ void Scene::resolveCollision(Entity* entity)
 		if (entity->HasComponent<Collider>())
 			entity->RemoveComponent<Collider>();
 		if (entity->HasComponent<MeshComponent>())
-			entity->RemoveComponent<MeshComponent>();;
+			entity->RemoveComponent<MeshComponent>();
+
 		AudioManager::getInstance().playSFX(AudioType::Explosion);
 	}
 	// Laser onCollision
@@ -100,6 +100,8 @@ void Scene::resolveCollision(Entity* entity)
 			entity->RemoveComponent<Collider>();
 		if (entity->HasComponent<MeshComponent>())
 			entity->RemoveComponent<MeshComponent>();
+		if (entity->HasComponent<AsteroidMovement>())
+			entity->GetComponent<AsteroidMovement>().objectDestroyed = true;
 	}
 	// Default onCollision
 	else {

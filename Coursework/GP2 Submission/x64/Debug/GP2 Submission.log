@@ -1,4 +1,14 @@
-﻿  Display.cpp
+﻿  AudioManager.cpp
+  Display.cpp
+  Shader.cpp
+C:\Users\lewis\Documents\GitHub\Games-Programming-3\Coursework\GP2 Submission\Base Scripts\Shader.cpp(108,26): warning C4267: '=': conversion from 'size_t' to 'GLint', possible loss of data
+  SkyBox.cpp
+  Time.cpp
+  AsteroidMovement.cpp
+C:\Users\lewis\Documents\GitHub\Games-Programming-3\Coursework\GP2 Submission\Base Scripts\TextureLoader.h(23,10): warning C4101: 'textureId': unreferenced local variable
+  (compiling source file 'Components/AsteroidMovement.cpp')
+  
+C:\Users\lewis\Documents\GitHub\Games-Programming-3\Coursework\GP2 Submission\Components\AsteroidMovement.cpp(11,25): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
   AsteroidSpawner.cpp
 C:\Users\lewis\Documents\GitHub\Games-Programming-3\Coursework\GP2 Submission\Base Scripts\TextureLoader.h(23,10): warning C4101: 'textureId': unreferenced local variable
   (compiling source file 'Components/AsteroidSpawner.cpp')
@@ -47,6 +57,8 @@ C:\Users\lewis\Documents\GitHub\Games-Programming-3\Coursework\GP2 Submission\Ma
 C:\Users\lewis\Documents\GitHub\Games-Programming-3\Coursework\GP2 Submission\Base Scripts\TextureLoader.h(23,10): warning C4101: 'textureId': unreferenced local variable
   (compiling source file 'MainGame.cpp')
   
+  ModelManager.cpp
+C:\Users\lewis\Documents\GitHub\Games-Programming-3\Coursework\GP2 Submission\ModelManager.cpp(90,36): warning C4267: 'argument': conversion from 'size_t' to 'rapidjson::SizeType', possible loss of data
   GameScene.cpp
 C:\Users\lewis\Documents\GitHub\Games-Programming-3\Coursework\GP2 Submission\Base Scripts\TextureLoader.h(23,10): warning C4101: 'textureId': unreferenced local variable
   (compiling source file 'Scene/GameScene.cpp')

@@ -9,7 +9,7 @@ constexpr int MAX_ASTEROIDS = 50; // Over 100 will cause serious laz
 
 /* Other*/
 constexpr float NEAR_PLANE = 0.1f;
-constexpr float FAR_PLANE = 1000.0f;
+constexpr float FAR_PLANE = 200.0f;
 constexpr bool USE_INFO_DEBUGGING = false;
 constexpr bool USE_WARNING_DEBUGGING = true;
 constexpr bool USE_ERROR_DEBUGGING = true;

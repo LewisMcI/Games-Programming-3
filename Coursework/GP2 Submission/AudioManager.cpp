@@ -35,7 +35,8 @@ void AudioManager::playSFX(AudioType audioType)
         loadedSFX.emplace(audioType, SFX);
     }
 
-    Mix_PlayChannel(-1, loadedSFX[audioType], 0);
+    Mix_Volume(1, 2);
+    Mix_PlayChannel(1, loadedSFX[audioType], 0);
 }
 
 void AudioManager::playTrack(TrackType trackType)
@@ -60,6 +61,7 @@ void AudioManager::playTrack(TrackType trackType)
     // If not playing
     if (Mix_PlayingMusic() == 0)
     {
+        Mix_VolumeMusic(2);
         // Play Music
         Mix_PlayMusic(loadedTracks[trackType], 1);
     }

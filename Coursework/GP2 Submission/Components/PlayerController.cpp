@@ -232,7 +232,7 @@ void PlayerController::processFreecamMouseInput() {
 	// Current Point
 	int mouseX, mouseY;
 	SDL_GetRelativeMouseState(&mouseX, &mouseY);
-	float rotationSpeed =.5f * Time::getInstance().getDeltaTime();
+	float rotationSpeed =.1f * Time::getInstance().getDeltaTime();
 
 	// Rotates X by the relative X value given through the cursor. (Must be inverted)
 	playerCamera->RotateX(-mouseX * rotationSpeed);

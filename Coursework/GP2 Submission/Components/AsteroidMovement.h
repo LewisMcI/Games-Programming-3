@@ -13,7 +13,7 @@ public:
 	~AsteroidMovement() = default;
 
 	void onUpdate();
-
+	bool objectDestroyed = false;
 protected:
 private:
 	float getRandomFloat(float high, float low) {

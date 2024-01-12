@@ -42,6 +42,7 @@ public:
 	void rotate(glm::vec3 value) {
 		rot += value;
 	}
+
 protected:
 private:
 	glm::vec3 pos;

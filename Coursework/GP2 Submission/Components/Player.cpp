@@ -17,5 +17,8 @@ void Player::init()
 void Player::onUpdate()
 {
 	playerController.processInput();
-	playerCamera.followTransform(*playerTransform);
+	if (cameraState == FirstPerson)
+		playerCamera.followTransform(*playerTransform);
+	else if (cameraState == ThirdPerson)
+		playerCamera.lookAtTransform(*playerTransform, 5.0f);
 }

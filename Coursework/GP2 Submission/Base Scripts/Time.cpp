@@ -1,4 +1,6 @@
 #include "Time.h"
+#include "../Other/GlobalVariables.h"
+#include <iostream>
 
 Time::Time() {
 	// Initialize
@@ -29,4 +31,24 @@ void Time::onUpdate() {
 
 	// Calculate time since last frame.
 	deltaTime = (double)((currentTime - lastTime) / (double)SDL_GetPerformanceFrequency());
+	//std::cout << deltaTime * 1000.0f << std::endl;
+	if (DEBUG_FPS) {
+		fpsCounts.emplace_back(deltaTime * 1000.0f);
+		fpsCountNum++;
+		double currTime = getCurrentTime();
+		if (nextFPSUpdateTime < currTime) {
+			nextFPSUpdateTime = currTime + fpsUpdateTime;
+			// Average
+			double average = 0;
+			for (size_t i = 0; i < fpsCountNum; i++)
+			{
+				average += fpsCounts[i];
+			}
+			average /= fpsCountNum - 1;
+			std::cout << "Average FPS for past " << fpsUpdateTime << "[s] is: " << (double)1000.0f / average << " FPS" << std::endl;
+
+			fpsCounts.clear();
+			fpsCountNum = 0;
+		}
+	}
 }

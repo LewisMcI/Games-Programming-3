@@ -16,7 +16,6 @@ public:
 
 protected:
 private:
-
 	float getRandomFloat(float high, float low) {
 		return low + static_cast <float> (rand()) / (static_cast <float> (RAND_MAX / (high - low)));
 	}

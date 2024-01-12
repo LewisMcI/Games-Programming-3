@@ -41,8 +41,8 @@ void Display::initFBO()
 	glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_STENCIL_ATTACHMENT, GL_RENDERBUFFER, RBO); // now actually attach it
 
 	// now that we actually created the framebuffer and added all attachments we want to check if it is actually complete now
-	/*if (glCheckFramebufferStatus(GL_FRAMEBUFFER) == GL_FRAMEBUFFER_COMPLETE)
-		std::cout << "FRAMEBUFFER:: Framebuffer is complete!" << std::endl;*/
+	if (glCheckFramebufferStatus(GL_FRAMEBUFFER) == GL_FRAMEBUFFER_COMPLETE && USE_INFO_DEBUGGING)
+		std::cout << "FRAMEBUFFER:: Framebuffer is complete!" << std::endl;
 	glBindFramebuffer(GL_FRAMEBUFFER, 0);
 
 	FBOShader.initShader("..\\Resources\\Shaders\\FBOShader.vert", "..\\Resources\\Shaders\\FBOShader.frag");

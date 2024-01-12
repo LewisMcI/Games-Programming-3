@@ -1,13 +1,2 @@
-﻿  AsteroidSpawner.cpp
-C:\Users\lewis\Documents\GitHub\Games-Programming-3\Coursework\GP2 Submission\Base Scripts\TextureLoader.h(23,10): warning C4101: 'textureId': unreferenced local variable
-  (compiling source file 'Components/AsteroidSpawner.cpp')
-  
-  GameScene.cpp
-C:\Users\lewis\Documents\GitHub\Games-Programming-3\Coursework\GP2 Submission\Base Scripts\TextureLoader.h(23,10): warning C4101: 'textureId': unreferenced local variable
-  (compiling source file 'Scene/GameScene.cpp')
-  
-C:\Users\lewis\Documents\GitHub\Games-Programming-3\Coursework\GP2 Submission\Components\Player.h(13,8): warning C4227: anachronism used: qualifiers on reference are ignored
-  (compiling source file 'Scene/GameScene.cpp')
-  
-  Generating Code...
+﻿  Time.cpp
   GP2 Submission.vcxproj -> C:\Users\lewis\Documents\GitHub\Games-Programming-3\Coursework\x64\Debug\GP2 Submission.exe

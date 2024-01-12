@@ -3,14 +3,18 @@
 #include "../Components/Player.h"
 #include "../Components/AsteroidSpawner.h"
 #include "../Components/Collider.h"
+#include "../AudioManager.h"
 
 void GameScene::Load() {
-	createPlayer(ShaderType::Default, TextureType::Default, MeshType::Ship);
+	createPlayer(ShaderType::Default, TextureType::Metal, MeshType::Ship);
 	if (USE_INFO_DEBUGGING)
 		std::cout << "Player Created" << std::endl;
 	createAsteroidSpawner();
 	if (USE_INFO_DEBUGGING)
 		std::cout << "Asteroid Spawner Created" << std::endl;
+
+	// Start background track
+	AudioManager::getInstance().playTrack(TrackType::Background);
 
 }
 
@@ -19,8 +23,8 @@ void GameScene::createPlayer(ShaderType shaderType, TextureType textureType, Mes
 	/* Create new Entity*/
 	auto& activeScene = SceneManager::getInstance().getActiveScene();
 
-	player = std::make_unique<Entity>(activeScene.get()->CreateEntity());
-
+	player = std::make_unique<Entity>(activeScene.get()->CreateEntity("Player"));
+	player.get()->GetComponent<TagComponent>().Tag = "Player";
 	player.get()->GetComponent<TransformComponent>();
 
 	/* Set Transform*/

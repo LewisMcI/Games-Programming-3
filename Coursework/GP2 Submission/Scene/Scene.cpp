@@ -1,6 +1,7 @@
 #include "Scene.h"
 #include "../Components/Collider.h"
-
+#include "../Components/AsteroidMovement.h"
+#include "../AudioManager.h"
 Scene::Scene(){
 	sceneSkybox = std::make_unique<Skybox>();
 	Entity& obj = CreateEntity();
@@ -21,9 +22,26 @@ void Scene::checkCollisions() {
 		for (const auto& entity2 : view) {
 			if (entity == entity2)
 				continue;
+
 			Collider& collider2 = view.get<Collider>(entity2);
 			TransformComponent& transform2 = view.get<TransformComponent>(entity2);
 
+			// Ignore Laser Collisions with Player
+			Entity* entity = transform.entity.get();
+			std::string tag = entity->GetComponent<TagComponent>().Tag;
+
+			Entity* entity2 = transform2.entity.get();
+			std::string tag2 = entity2->GetComponent<TagComponent>().Tag;
+
+			if ((tag == "Player" || tag2 == "Player") && (tag == "Laser" || tag2 == "Laser")) {
+				continue;
+			}
+			// Ignore Laser collision
+			if (tag == "Laser" && tag2 == "Laser") {
+				continue;
+			}
+
+			// AABB Collision Detection
 			float minX = transform.getPos()->x - collider.size.x;
 			float maxX = transform.getPos()->x + collider.size.x;
 			float minX2 = transform2.getPos()->x - collider2.size.x;
@@ -51,18 +69,38 @@ void Scene::checkCollisions() {
 			if (!collisionZ)
 				continue;
 
+			
+
 			// Collided
-
-			// If is player
-			if (transform.entity.get()->GetComponent<TagComponent>().Tag == "Player") {
-
-			}
-			else if (transform.entity.get()->GetComponent<TagComponent>().Tag == "Asteroid") {
-				transform.entity.get()->~Entity();
-				//std::cout << "destructed" << std::endl;
-			}
-
+			resolveCollision(transform.entity.get());
+			resolveCollision(transform2.entity.get());
 		}
+	}
+}
+
+void Scene::resolveCollision(Entity* entity)
+{
+	std::string tag = entity->GetComponent<TagComponent>().Tag;
+
+	// Player onCollision
+	if (tag == "Player") {
+		
+	}
+	// Asteroid onCollision
+	else if (tag == "Asteroid") {
+		entity->RemoveComponent<Collider>();
+		entity->RemoveComponent<MeshComponent>();
+		AudioManager::getInstance().playSFX(AudioType::Explosion);
+	}
+	// Laser onCollision
+	else if (tag == "Laser") {
+		entity->RemoveComponent<Collider>();
+		entity->RemoveComponent<MeshComponent>();
+	}
+	// Default onCollision
+	else {
+		if (USE_WARNING_DEBUGGING)
+			std::cout << "Warning: Object collided without defined tag, its tag was: " << tag << std::endl;
 	}
 }
 
@@ -84,14 +122,16 @@ void Scene::drawAllMeshComponents() {
 		// If transform does not exist, add default transform component
 		if (!registry.all_of<TransformComponent>(entity)) {
 			TransformComponent& transform = registry.emplace<TransformComponent>(entity);
-			std::cout << "DEBUG: Replaced missing transform with default.";
+			if (USE_WARNING_DEBUGGING)
+				std::cout << "DEBUG: Replaced missing transform with default.";
 		}
 		TransformComponent& transform = registry.get<TransformComponent>(entity);
 
 		// If material does not exist, add default material component
 		if (!registry.all_of<MaterialComponent>(entity)) {
 			MaterialComponent& material = registry.emplace<MaterialComponent>(entity);
-			std::cout << "DEBUG: Replaced missing material with default.";
+			if (USE_WARNING_DEBUGGING)
+				std::cout << "DEBUG: Replaced missing material with default.";
 		}
 		MaterialComponent& material = registry.get<MaterialComponent>(entity);
 

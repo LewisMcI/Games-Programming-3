@@ -17,7 +17,7 @@ AudioManager::AudioManager()
     }
 }
 
-void AudioManager::playSFX(AudioType& audioType)
+void AudioManager::playSFX(AudioType audioType)
 {
     // If SFX not loaded
     if (!loadedSFX.count(audioType)) {
@@ -38,7 +38,7 @@ void AudioManager::playSFX(AudioType& audioType)
     Mix_PlayChannel(1, loadedSFX[audioType], 0);
 }
 
-void AudioManager::playTrack(TrackType& trackType)
+void AudioManager::playTrack(TrackType trackType)
 {
     // If Track not loaded
     if (!loadedTracks.count(trackType)) {

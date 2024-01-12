@@ -37,6 +37,8 @@ private:
 	
 	void checkCollisions();
 
+	void resolveCollision(Entity* entity);
+
 	entt::registry registry;
 
 	std::unique_ptr<Skybox> sceneSkybox;

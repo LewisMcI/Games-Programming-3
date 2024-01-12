@@ -15,7 +15,6 @@ public:
 
 	void LoadMaterial();
 
-
 	void Bind(TransformComponent& transform, Camera& camera);
 
 	void LinkShader(TransformComponent& transform, Camera& camera);

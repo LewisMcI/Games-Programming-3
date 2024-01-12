@@ -38,8 +38,6 @@ void MainGame::gameLoop()
 		drawGame();
 
 		end = std::chrono::steady_clock::now();
-
-		//std::cout << "FPS" << " = " << (double)1000.0f / std::chrono::duration_cast<std::chrono::milliseconds>(end - begin).count() << "" << std::endl;
 	}
 }
 

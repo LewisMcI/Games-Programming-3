@@ -1,6 +1,7 @@
 #pragma once
 #define SDL_MAIN_HANDLED 
 #include <SDL2/SDL.h>
+#include <vector>
 
 class Time
 {
@@ -23,5 +24,10 @@ private:
 	Uint64 lastTime;
 	Uint64 startTime;
 	double deltaTime;
+
+	double fpsUpdateTime = 10.0f;
+	double nextFPSUpdateTime = 0.0f;
+	std::vector<double> fpsCounts;
+	int fpsCountNum = 0;
 };
 

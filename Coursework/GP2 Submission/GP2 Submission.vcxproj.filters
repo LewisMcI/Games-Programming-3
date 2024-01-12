@@ -161,5 +161,8 @@
     <ClInclude Include="Components\Collider.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Components\Bullet.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

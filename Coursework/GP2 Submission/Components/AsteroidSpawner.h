@@ -9,7 +9,8 @@ const int MAX_ASTEROIDS = 100;
 class AsteroidSpawner : public Component {
 public:
 	AsteroidSpawner(Entity& player) : player(player) {
-		std::cout << "Asteroid Spawner Created" << std::endl;
+		if (USE_INFO_DEBUGGING)
+			std::cout << "Asteroid Spawner Created" << std::endl;
 	}
 
 	ShaderType defaultShaderType = ShaderType::Default;
@@ -20,16 +21,19 @@ public:
 
 protected:
 private:
+	float getRandomFloat(float high, float low) {
+		return low + static_cast <float> (rand()) / (static_cast <float> (RAND_MAX / (high - low)));
+	}
+
 	void spawnAsteroid();
 
 	void addAstroidToArray(Entity* asteroid) {
 		// If we haven't hit max limit
 		if (asteroidCount < MAX_ASTEROIDS)
 			asteroids[asteroidCount] = asteroid;
+
 		// If we have hit max limit
 		else {
-			// Try to pick empty spot
-
 			// Try pick asteroid out of sight
 			for (size_t i = 0; i < MAX_ASTEROIDS; i++)
 			{
@@ -37,16 +41,18 @@ private:
 				float distToAsteroid = glm::distance(*asteroids[i]->GetComponent<TransformComponent>().getPos(), *player.GetComponent<TransformComponent>().getPos());
 				if (distToAsteroid > FAR_PLANE) {
 					asteroids[i] = asteroid;
-					std::cout << "Hit Max Limit: Found out of render distance, using " << i << std::endl;
+					if (USE_INFO_DEBUGGING)
+						std::cout << "Hit Max Limit: Found out of render distance, using " << i << std::endl;
 					return;
 				}
 			}
 
-			// Couldn't find valid 
-			if (secondaryCount > MAX_ASTEROIDS)
+			// Couldn't find valid - Use first made
+			if (secondaryCount > MAX_ASTEROIDS - 1)
 				secondaryCount = 0;
 			asteroids[secondaryCount] = asteroid;
-			std::cout << "Hit Max Limit, taken first created, using " << secondaryCount << std::endl;
+			if (USE_INFO_DEBUGGING)
+				std::cout << "Hit Max Limit, taken first created, using " << secondaryCount << std::endl;
 			secondaryCount++;
 
 		}

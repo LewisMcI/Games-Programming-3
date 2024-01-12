@@ -23,7 +23,9 @@ void AsteroidSpawner::onUpdate() {
 
 void AsteroidSpawner::spawnAsteroid() {
 	// Find random position around player
-	glm::vec3& asteroidPosition = *player.GetComponent<TransformComponent>().getPos() + glm::vec3(0.0f, 0.0f, 50.0f);
+	float min = -100.0f; float max = 100.0f;
+	glm::vec3& asteroidPosition = *player.GetComponent<TransformComponent>().getPos() + 
+		glm::vec3(getRandomFloat(min, max), getRandomFloat(min, max), getRandomFloat(min, max));
 
 	// Spawn Entity
 	auto& activeScene = SceneManager::getInstance().getActiveScene();

@@ -53,17 +53,16 @@ public:
 	}
 
 	void lookAtTransform(TransformComponent& targetTransform, float distance) {
-		// Get the target's position and forward direction
-		glm::vec3 targetPos = *(targetTransform.getPos());
-		glm::vec3 targetForward = glm::normalize(targetTransform.getModel() * glm::vec4(0.0f, 0.0f, 1.0f, 0.0f));
+		setPos(*targetTransform.getPos());
+		setRot(*targetTransform.getRot());
 
 		// Set the desired offset from the target
-		glm::vec3 offset = -targetForward * distance;
+		glm::vec3 offset = -forward * distance;
 
 		// Set the camera's position and make it look at the target
-		setPos(targetPos + offset);
-		LookAt(targetPos);
+		setPos(cameraPos + offset);
 	}
+
 	void followTransform(TransformComponent& transform) {
 		setPos(*transform.getPos());
 		setRot(*transform.getRot());
@@ -97,6 +96,13 @@ public:
 	void LookAt(glm::vec3 target) {
 		glm::vec3 dir = target - cameraPos;
 		forward = glm::normalize(dir);
+
+		// Assuming you have initial up vector (0, 1, 0)
+		glm::vec3 worldUp = glm::vec3(0.0f, 1.0f, 0.0f);
+
+		// Calculate new right and up vectors
+		glm::vec3 right = glm::normalize(glm::cross(worldUp, forward));
+		up = glm::normalize(glm::cross(forward, right));
 	}
 protected:
 private:

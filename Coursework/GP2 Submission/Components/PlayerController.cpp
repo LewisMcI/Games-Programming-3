@@ -1,7 +1,11 @@
 #pragma once
 #include "PlayerController.h"
 #include "../AudioManager.h"
-
+#include "Player.h"
+#include "../Scene/Scene.h"
+#include "../Scene/SceneManager.h"
+#include "Collider.h"
+#include "Bullet.h"
 
 PlayerController::PlayerController() {
 	// Create a white cursor
@@ -44,6 +48,19 @@ void PlayerController::processInput()
 		case SDL_QUIT:
 		//gameState = GameState::EXIT;
 			break;
+		case SDL_KEYDOWN:
+			if (event.key.keysym.sym == SDL_KeyCode::SDLK_c) { // Move right
+				Player& playerComp = playerTransform->entity.get()->GetComponent<Player>();
+				switch (playerComp.cameraState) {
+				case CameraState::FirstPerson:
+					playerComp.cameraState = CameraState::ThirdPerson;
+					break;
+				case CameraState::ThirdPerson:
+					playerComp.cameraState = CameraState::FirstPerson;
+					break;
+				}
+			}
+			break;
 		case SDL_WINDOWEVENT:
 			if (event.window.event == SDL_WINDOWEVENT_FOCUS_LOST) {
 				gameInFocus = false;
@@ -51,7 +68,10 @@ void PlayerController::processInput()
 			else if (event.window.event == SDL_WINDOWEVENT_FOCUS_GAINED) {
 				gameInFocus = true;
 			}
+			break;
 			// OnMouseMove - Handles mouse movement to control camera.
+		case SDL_MOUSEBUTTONDOWN:
+			break;
 		default:
 			break;
 		}
@@ -79,13 +99,61 @@ void PlayerController::processKeyboardInput(const Uint8* keys)
 	if (keys[SDL_SCANCODE_D]) { // Rotate left
 		playerTransform->rotate(forward * rotationSpeed);
 	}
-	if (keys[SDL_SCANCODE_A]) { // Move right
+	if (keys[SDL_SCANCODE_D]) { // Rotate left
 		playerTransform->rotate(-forward * rotationSpeed);
 	}
-	if (keys[SDL_SCANCODE_E]){
-		AudioType audioType = AudioType::Fire;
-		AudioManager::getInstance().playSFX(audioType);
+
+	int mouseX, mouseY;
+	Uint32 mouseState = SDL_GetMouseState(&mouseX, &mouseY);
+	if (keys[SDL_SCANCODE_SPACE] || (mouseState && SDL_BUTTON(SDL_BUTTON_LEFT) != 0)){ // Fire
+		if (nextFireTime > Time::getInstance().getCurrentTime())
+			return;
+		nextFireTime = Time::getInstance().getCurrentTime() + fireCooldownTime;
+		shootBullet(playerCamera->getPos() - (playerCamera->getRight() * 6.0f));
+		shootBullet(playerCamera->getPos() + (playerCamera->getRight() * 6.0f));
 	}
+
+	// Delete old bullets
+	auto it = bulletList.begin();
+	while (it != bulletList.end()) {
+		Entity* entity = *it;
+		Bullet& bullet = entity->GetComponent<Bullet>();
+
+		if (bullet.shouldDelete) {
+			entity->RemoveComponent<Collider>();
+			entity->RemoveComponent<MeshComponent>();
+			entity->RemoveComponent<Bullet>();
+			bullet.~Bullet();
+
+			// Remove from bulletList
+			it = bulletList.erase(it);
+			delete entity;  // Assuming the entity is allocated with new
+
+		}
+		else {
+			++it;
+		}
+	}
+}
+
+void PlayerController::shootBullet(glm::vec3 pos) {
+	AudioManager::getInstance().playSFX(AudioType::Fire);
+
+	// Spawn Left
+	auto& activeScene = SceneManager::getInstance().getActiveScene();
+
+	Entity* bullet = new Entity(activeScene.get()->CreateEntity("Laser", pos));
+
+	bullet->AddComponent<MaterialComponent>(ShaderType::EnviromentMapping, TextureType::Laser);
+
+	bullet->AddComponent<MeshComponent>(MeshType::Laser);
+
+	bullet->AddComponent<Collider>(glm::vec3(20.0f));
+
+	bullet->GetComponent<TagComponent>().Tag = "Laser";
+
+	bullet->AddComponent<Bullet>(bullet->GetComponent<TransformComponent>(), playerCamera->getForward());
+	bulletList.emplace_back(bullet);
 }
 
 void PlayerController::processMouseInput() {
@@ -98,8 +166,8 @@ void PlayerController::processMouseInput() {
 	glm::vec2 distanceToCenter = centerOfScreen - currentPoint;
 
 	// Calculate Speed
-	float speedX = distanceToCenter.x * 0.01f * Time::getInstance().getDeltaTime();
-	float speedY = distanceToCenter.y * 0.01f * Time::getInstance().getDeltaTime();
+	float speedX = (distanceToCenter.x / DISPLAY_WIDTH * 300.0f) * 0.01f * Time::getInstance().getDeltaTime();
+	float speedY = (distanceToCenter.y / DISPLAY_WIDTH * 300.0f) * 0.01f * Time::getInstance().getDeltaTime();
 
 	glm::vec3 right = playerCamera->getRight();
 	glm::vec3 up = playerCamera->getUp();

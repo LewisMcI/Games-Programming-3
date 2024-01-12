@@ -5,7 +5,7 @@
 #include <vector>
 #include <map>
 
-enum class AudioType { Fire };
+enum class AudioType { Fire, Explosion };
 enum class TrackType { Background };
 class AudioManager
 {
@@ -20,15 +20,16 @@ public:
 		return instance;
 	}
 
-	void playSFX(AudioType& audioType);
+	void playSFX(AudioType audioType);
 
-	void playTrack(TrackType& trackType);
+	void playTrack(TrackType trackType);
 
 private:
 	/* SFX*/
 	// Map of Audio Type and Audio Paths
 	std::map<AudioType, std::string> sfxPaths = {
-			{AudioType::Fire, "..\\Resources\\Audio\\fire.wav"}
+			{AudioType::Fire, "..\\Resources\\Audio\\fire.wav"},
+			{AudioType::Explosion, "..\\Resources\\Audio\\explosion.wav"}
 	};
 
 	// Map of AudioType and Loaded Audio

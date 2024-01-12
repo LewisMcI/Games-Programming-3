@@ -43,7 +43,7 @@ public:
 	T& AddComponent(Args&&... args) {
 		// Check if Entity already has Component (Debugging purposes)
 		if (HasComponent<T>() && USE_WARNING_DEBUGGING)
-			std::cout << "Debug: Trying to Add Component that already exists";
+			std::cout << "Debug: Trying to Add Component that already exists" << std::endl;
 
 		// Create and Add Component
 		auto& component = entityScene->registry.emplace<T>(entityHandle, std::forward<Args>(args)...);
@@ -66,7 +66,7 @@ public:
 	template<typename T>
 	T& GetComponent() {
 		if (!HasComponent<T>() && USE_WARNING_DEBUGGING)
-			std::cout << "Debug: Trying to Get Component that does not exist";
+			std::cout << "Debug: Trying to Get Component that does not exist" << std::endl;
 
 		return entityScene->registry.get<T>(entityHandle);
 	}
@@ -81,11 +81,10 @@ public:
 	bool RemoveComponent() {
 		if (!HasComponent<T>() && USE_WARNING_DEBUGGING)
 			std::cout << "Trying to Remove Component that does not exist";
-		entityScene->registry.remove<T>(entityHandle);
+		return entityScene->registry.remove<T>(entityHandle);
 	}
 	entt::entity entityHandle = entt::null;
 protected:
 private:
 	Scene* entityScene = nullptr;
-
 };

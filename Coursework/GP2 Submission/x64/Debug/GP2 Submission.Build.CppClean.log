@@ -9,6 +9,7 @@ c:\users\lewis\documents\github\games-programming-3\coursework\gp2 submission\x6
 c:\users\lewis\documents\github\games-programming-3\coursework\gp2 submission\x64\debug\playercontroller.obj
 c:\users\lewis\documents\github\games-programming-3\coursework\gp2 submission\x64\debug\player.obj
 c:\users\lewis\documents\github\games-programming-3\coursework\gp2 submission\x64\debug\materialcomponent.obj
+c:\users\lewis\documents\github\games-programming-3\coursework\gp2 submission\x64\debug\collider.obj
 c:\users\lewis\documents\github\games-programming-3\coursework\gp2 submission\x64\debug\asteroidspawner.obj
 c:\users\lewis\documents\github\games-programming-3\coursework\gp2 submission\x64\debug\asteroidmovement.obj
 c:\users\lewis\documents\github\games-programming-3\coursework\gp2 submission\x64\debug\time.obj
@@ -16,7 +17,7 @@ c:\users\lewis\documents\github\games-programming-3\coursework\gp2 submission\x6
 c:\users\lewis\documents\github\games-programming-3\coursework\gp2 submission\x64\debug\skybox.obj
 c:\users\lewis\documents\github\games-programming-3\coursework\gp2 submission\x64\debug\shader.obj
 c:\users\lewis\documents\github\games-programming-3\coursework\gp2 submission\x64\debug\display.obj
-c:\users\lewis\documents\github\games-programming-3\coursework\gp2 submission\x64\debug\audio.obj
+c:\users\lewis\documents\github\games-programming-3\coursework\gp2 submission\x64\debug\audiomanager.obj
 c:\users\lewis\documents\github\games-programming-3\coursework\gp2 submission\x64\debug\stb_image.obj
 c:\users\lewis\documents\github\games-programming-3\coursework\x64\debug\gp2 submission.exe
 c:\users\lewis\documents\github\games-programming-3\coursework\gp2 submission\x64\debug\gp2 submission.ilk

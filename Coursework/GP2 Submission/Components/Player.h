@@ -2,6 +2,8 @@
 #include "PlayerController.h"
 #include "../Base Scripts/Display.h"
 
+enum CameraState { FirstPerson, ThirdPerson };
+
 class Player : public Component {
 public:
 	Player() = default;
@@ -13,6 +15,9 @@ public:
 	Camera& const getCamera() {
 		return playerCamera;
 	}
+
+	CameraState cameraState = CameraState::FirstPerson;
+
 protected:
 private:
 	Camera playerCamera;

@@ -1,7 +1,7 @@
 #pragma once
 #include "Base Scripts/ModelLoader.h"
 
-enum class MeshType { Cube, Sphere, Ship, Asteroid, R33 };
+enum class MeshType { Cube, Sphere, Ship, Asteroid, R33, Laser };
 class ModelManager {
 public:
 	ModelManager() = default;
@@ -31,7 +31,8 @@ private:
 			{MeshType::Sphere, "..\\Resources\\Models\\Sphere.obj"},
 			{MeshType::Ship, "..\\Resources\\Models\\Player Ship.fbx"},
 			{MeshType::Asteroid, "..\\Resources\\Models\\Asteroid.obj"},
-			{MeshType::R33, "..\\Resources\\Models\\R33.obj"}
+			{MeshType::R33, "..\\Resources\\Models\\R33.obj"},
+			{MeshType::Laser, "..\\Resources\\Models\\laser.fbx"}
 	};
 
 	// Map of MeshType and Loaded Meshes

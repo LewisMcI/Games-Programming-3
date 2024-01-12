@@ -9,6 +9,6 @@ C:\Users\lewis\Documents\GitHub\Games-Programming-3\Coursework\GP2 Submission\Co
 C:\Users\lewis\Documents\GitHub\Games-Programming-3\Coursework\GP2 Submission\Components\PlayerController.cpp(123,22): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
 C:\Users\lewis\Documents\GitHub\Games-Programming-3\Coursework\GP2 Submission\Components\PlayerController.cpp(205,15): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
 C:\Users\lewis\Documents\GitHub\Games-Programming-3\Coursework\GP2 Submission\Components\PlayerController.cpp(206,15): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
-C:\Users\lewis\Documents\GitHub\Games-Programming-3\Coursework\GP2 Submission\Components\PlayerController.cpp(223,21): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
-C:\Users\lewis\Documents\GitHub\Games-Programming-3\Coursework\GP2 Submission\Components\PlayerController.cpp(224,22): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+C:\Users\lewis\Documents\GitHub\Games-Programming-3\Coursework\GP2 Submission\Components\PlayerController.cpp(227,21): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+C:\Users\lewis\Documents\GitHub\Games-Programming-3\Coursework\GP2 Submission\Components\PlayerController.cpp(246,22): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
   GP2 Submission.vcxproj -> C:\Users\lewis\Documents\GitHub\Games-Programming-3\Coursework\x64\Debug\GP2 Submission.exe

@@ -184,7 +184,7 @@ void PlayerController::shootBullet(glm::vec3 pos) {
 
 	bullet->AddComponent<MeshComponent>(MeshType::Laser);
 
-	bullet->AddComponent<Collider>(glm::vec3(20.0f));
+	bullet->AddComponent<Collider>(glm::vec3(1.0f));
 
 	bullet->GetComponent<TagComponent>().Tag = "Laser";
 
@@ -203,13 +203,17 @@ void PlayerController::processMouseInput() {
 
 	// Calculate Speed
 	float speedX = (distanceToCenter.x / DISPLAY_WIDTH * 300.0f) * 0.01f * Time::getInstance().getDeltaTime();
-	float speedY = (distanceToCenter.y / DISPLAY_WIDTH * 300.0f) * 0.01f * Time::getInstance().getDeltaTime();
+	float speedY = (distanceToCenter.y / DISPLAY_HEIGHT * 300.0f) * 0.01f * Time::getInstance().getDeltaTime();
 
-	glm::vec3 right = playerCamera->getRight();
-	glm::vec3 up = playerCamera->getUp();
+	glm::vec3 right = glm::vec3(-1, 0, 0);
+	glm::vec3 up = glm::vec3(0,1,0);
+	
+	std::cout << playerTransform->getRight().x << " " << playerTransform->getRight().y << playerTransform->getRight().z << std::endl;
 
-	playerTransform->rotate(right * speedY);
 	playerTransform->rotate(up * speedX);
+	playerTransform->rotate(right * speedY);
+	//playerTransform->rotate(forward * speedX);
+
 }
 
 void PlayerController::processFreecamInput() {
@@ -221,9 +225,6 @@ void PlayerController::processFreecamInput() {
 void PlayerController::processFreecamKeyboardInput(const Uint8* keys)
 {
 	float moveDistance = 200.0f * Time::getInstance().getDeltaTime();
-	float rotationSpeed = 2.0f * Time::getInstance().getDeltaTime();
-	// Calculate Forward
-	glm::vec3 forward = playerCamera->getForward();
 
 	if (keys[SDL_SCANCODE_W]) { // Move Forward
 		playerCamera->MoveForward(moveDistance);
@@ -242,9 +243,10 @@ void PlayerController::processFreecamMouseInput() {
 	// Current Point
 	int mouseX, mouseY;
 	SDL_GetRelativeMouseState(&mouseX, &mouseY);
-	
+	float rotationSpeed = 2.0f * Time::getInstance().getDeltaTime();
+
 	// Rotates X by the relative X value given through the cursor. (Must be inverted)
-	playerCamera->RotateX(-mouseX * 0.001f);
+	playerCamera->RotateX(-mouseX * rotationSpeed);
 	// Rotates Y by the relative Y value given through the cursor.
-	playerCamera->RotateY(mouseY * 0.001f);
+	playerCamera->RotateY(mouseY * rotationSpeed);
 }

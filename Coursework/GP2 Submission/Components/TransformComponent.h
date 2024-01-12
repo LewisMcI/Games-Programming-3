@@ -34,6 +34,25 @@ public:
 	inline void setRot(glm::vec3& rot) { this->rot = rot; }
 	inline void setScale(glm::vec3& scale) { this->scale = scale; }
 
+
+	glm::vec3 getUp() {
+		glm::mat4 rotX = glm::rotate(rot.x, glm::vec3(1.0, 0.0, 0.0));
+		glm::mat4 rotY = glm::rotate(rot.y, glm::vec3(0.0, 1.0, 0.0));
+		glm::mat4 rotZ = glm::rotate(rot.z, glm::vec3(0.0, 0.0, 1.0));
+		glm::mat4 rotMat = rotX * rotY * rotZ;
+
+		return glm::vec3(rotMat[1][0], rotMat[1][1], rotMat[1][2]);
+	}
+
+	glm::vec3 getRight() {
+		glm::mat4 rotX = glm::rotate(rot.x, glm::vec3(1.0, 0.0, 0.0));
+		glm::mat4 rotY = glm::rotate(rot.y, glm::vec3(0.0, 1.0, 0.0));
+		glm::mat4 rotZ = glm::rotate(rot.z, glm::vec3(0.0, 0.0, 1.0));
+		glm::mat4 rotMat = rotX * rotY * rotZ;
+
+		return glm::vec3(-rotMat[0][0], rotMat[0][1], rotMat[0][2]);
+	}
+
 	void move(glm::vec3 value){
 		pos += value;
 	}

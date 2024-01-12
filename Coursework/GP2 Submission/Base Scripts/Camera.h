@@ -27,16 +27,17 @@ public:
 	}
 
 	glm::vec3 getUp() {
-		return up;
+		return this->up;
 	}
 
 	glm::vec3 getRight() {
-		return glm::cross(forward, up);
+		return glm::normalize(glm::cross(this->forward, this->up));
 	}
 
 	void setPos(glm::vec3& newPos) {
 		this->cameraPos = newPos;
 	}
+
 	void setRot(glm::vec3& newRot) {
 		// Create a rotation matrix based on the new rotation angles
 		glm::mat4 rotationMatrix = glm::rotate(glm::mat4(1.0f), newRot.x, glm::vec3(1.0f, 0.0f, 0.0f))
@@ -93,30 +94,18 @@ public:
 		return projection * glm::lookAt(cameraPos, cameraPos + forward, up);
 	}
 
-	void LookAt(glm::vec3 target) {
-		glm::vec3 dir = target - cameraPos;
-		forward = glm::normalize(dir);
-
-		// Assuming you have initial up vector (0, 1, 0)
-		glm::vec3 worldUp = glm::vec3(0.0f, 1.0f, 0.0f);
-
-		// Calculate new right and up vectors
-		glm::vec3 right = glm::normalize(glm::cross(worldUp, forward));
-		up = glm::normalize(glm::cross(forward, right));
-	}
-
 	void RotateX(float angle)
 	{
 		glm::mat4 rotation = glm::rotate(angle, up);
 
-		forward = glm::vec3(glm::normalize(rotation * glm::vec4(forward, 0.0)));
+		forward = glm::normalize(glm::vec3(glm::normalize(rotation * glm::vec4(forward, 0.0))));
 	}
 
 	void RotateY(float angle)
 	{
 		glm::vec3 right = glm::normalize(glm::cross(up, forward));
 
-		forward = glm::vec3(glm::normalize(glm::rotate(angle, right) * glm::vec4(forward, 0.0)));
+		forward = glm::normalize(glm::vec3(glm::normalize(glm::rotate(angle, right) * glm::vec4(forward, 0.0))));
 	}
 
 protected:

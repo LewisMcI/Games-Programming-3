@@ -37,7 +37,7 @@ void GameScene::createPlayer(ShaderType shaderType, TextureType textureType, Mes
 	Player& playerComponent = player.get()->AddComponent<Player>();
 	playerComponent.init();
 
-	player.get()->AddComponent<Collider>(glm::vec3(3.0f));
+	player.get()->AddComponent<Collider>(glm::vec3(1.0f));
 }
 
 void GameScene::createAsteroidSpawner()

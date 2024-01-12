@@ -105,9 +105,14 @@ void PlayerController::processInput()
 	const Uint8* keys = SDL_GetKeyboardState(NULL);
 	Player& playerComp = playerTransform->entity.get()->GetComponent<Player>();
 	switch (playerComp.cameraState) {
-	case CameraState::ThirdPerson:
 	case CameraState::FirstPerson:
 		processKeyboardInput(keys);
+		playerTransform->followCamera(playerCamera);
+		processMouseInput();
+		break;
+	case CameraState::ThirdPerson:
+		processKeyboardInput(keys);
+		playerTransform->followCamera(playerCamera, 10.0f);
 		processMouseInput();
 		break;
 	case CameraState::FreeCam:
@@ -129,14 +134,7 @@ void PlayerController::processKeyboardInput(const Uint8* keys)
 	}
 	if (keys[SDL_SCANCODE_S]) { // Move Backward
 		playerCamera->MoveForward(-moveDistance);
-
 	}
-	//if (keys[SDL_SCANCODE_A]) { // Rotate left
-	//	playerTransform->rotate(forward * rotationSpeed);
-	//}
-	//if (keys[SDL_SCANCODE_D]) { // Rotate left
-	//	playerTransform->rotate(-forward * rotationSpeed);
-	//}
 
 	int mouseX, mouseY;
 	Uint32 mouseState = SDL_GetMouseState(&mouseX, &mouseY);
@@ -206,18 +204,8 @@ void PlayerController::processMouseInput() {
 	float speedX = (distanceToCenter.x / DISPLAY_WIDTH * 30.0f) * 0.1f * Time::getInstance().getDeltaTime();
 	float speedY = -(distanceToCenter.y / DISPLAY_HEIGHT * 30.0f) * 0.1f * Time::getInstance().getDeltaTime();
 
-	//glm::vec3 right = playerTransform->getRight();
-	//glm::vec3 up = playerTransform->getUp();
-	//
-	//std::cout << playerTransform->getUp().x << " " << playerTransform->getUp().y << playerTransform->getUp().z << std::endl;
-
-	//playerTransform->rotate(speedX, up);
-	//playerTransform->rotate(speedY, right);
 	playerCamera->RotateX(speedX);
 	playerCamera->RotateY(speedY);
-
-	playerTransform->followCamera(playerCamera);
-
 }
 
 void PlayerController::processFreecamInput() {
@@ -228,7 +216,7 @@ void PlayerController::processFreecamInput() {
 
 void PlayerController::processFreecamKeyboardInput(const Uint8* keys)
 {
-	float moveDistance = 200.0f * Time::getInstance().getDeltaTime();
+	float moveDistance = 20.0f * Time::getInstance().getDeltaTime();
 
 	if (keys[SDL_SCANCODE_W]) { // Move Forward
 		playerCamera->MoveForward(moveDistance);
@@ -247,7 +235,7 @@ void PlayerController::processFreecamMouseInput() {
 	// Current Point
 	int mouseX, mouseY;
 	SDL_GetRelativeMouseState(&mouseX, &mouseY);
-	float rotationSpeed = 2.0f * Time::getInstance().getDeltaTime();
+	float rotationSpeed =.5f * Time::getInstance().getDeltaTime();
 
 	// Rotates X by the relative X value given through the cursor. (Must be inverted)
 	playerCamera->RotateX(-mouseX * rotationSpeed);

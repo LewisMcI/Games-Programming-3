@@ -4,7 +4,7 @@
 #include <GL\glew.h>
 #include <unordered_map>
 
-enum class TextureType { Default, Brick, Metal, Laser };
+enum class TextureType { Default, Brick, Metal, Laser, Asteroid, Player };
 class TextureLoader
 {
 public:
@@ -36,7 +36,10 @@ private:
 		{ TextureType::Default, "..\\Resources\\Textures\\DefaultTexture.jpg" },
 		{ TextureType::Brick, "..\\Resources\\Textures\\Bricks\\BrickAlbedo.png" },
 		{ TextureType::Metal, "..\\Resources\\Textures\\metal.jpg"},
-		{ TextureType::Laser, "..\\Resources\\Textures\\laser.png"}
+		{ TextureType::Laser, "..\\Resources\\Textures\\laser.png"},
+		{ TextureType::Asteroid, "..\\Resources\\Textures\\asteroid.jpg"},
+		{ TextureType::Player, "..\\Resources\\Textures\\player.png"}
+
 	};
 };
 

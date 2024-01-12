@@ -6,7 +6,7 @@
 bool flag = false;
 void AsteroidSpawner::onUpdate() {
 	if (!flag) {
-		for (size_t i = 0; i < 110; i++)
+		for (size_t i = 0; i < MAX_ASTEROIDS; i++)
 		{
 			spawnAsteroid();
 		}
@@ -38,9 +38,14 @@ void AsteroidSpawner::spawnAsteroid() {
 
 	asteroid->AddComponent<MaterialComponent>(defaultShaderType, defaultTextureType);
 
-	asteroid->AddComponent<MeshComponent>(defaultMeshType);
+	// Give asteroid random size
+	float randomSize = getRandomFloat(0.25f, 1.75f);
 
-	asteroid->AddComponent<Collider>(glm::vec3(20.0f));
+	asteroid->GetComponent<TransformComponent>().setScale(glm::vec3(randomSize));
+
+	asteroid->AddComponent<MeshComponent>(defaultMeshTypes[getRandomInt(0, 2)]);
+
+	asteroid->AddComponent<Collider>(glm::vec3((5.0f)*randomSize));
 
 	asteroid->GetComponent<TagComponent>().Tag = "Asteroid";
 

@@ -16,7 +16,7 @@ public:
 		return playerCamera;
 	}
 
-	CameraState cameraState = CameraState::FreeCam;
+	CameraState cameraState = CameraState::FirstPerson;
 
 protected:
 private:

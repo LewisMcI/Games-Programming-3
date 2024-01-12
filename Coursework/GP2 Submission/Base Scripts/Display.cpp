@@ -45,7 +45,8 @@ void Display::initFBO()
 		std::cout << "FRAMEBUFFER:: Framebuffer is complete!" << std::endl;
 	glBindFramebuffer(GL_FRAMEBUFFER, 0);
 
-	FBOShader.initShader("..\\Resources\\Shaders\\FBOShader.vert", "..\\Resources\\Shaders\\FBOShader.frag");
+	//FBOShader.initShader("..\\Resources\\Shaders\\FBO\\FBOShader.vert", "..\\Resources\\Shaders\\FBO\\FBOShader.frag");
+	FBOShader.initShader("..\\Resources\\Shaders\\Kuwahara.vert", "..\\Resources\\Shaders\\Kuwahara.frag");
 }
 
 void Display::bindFBO()

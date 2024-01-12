@@ -2,7 +2,7 @@
 #include "../Base Scripts/Shader.h"
 #include "../Base Scripts/TextureLoader.h"
 
-enum class ShaderType { Default, EnviromentMapping };
+enum class ShaderType { Default, EnviromentMapping};
 
 class MaterialComponent : public Component {
 public:

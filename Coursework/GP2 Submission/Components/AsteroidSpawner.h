@@ -5,7 +5,7 @@
 #include "../Scene/Entity.h"
 #include "../Scene/SceneManager.h"
 #include "../Base Scripts/Time.h"
-const int MAX_ASTEROIDS = 100;
+const int MAX_ASTEROIDS = 50;
 class AsteroidSpawner : public Component {
 public:
 	AsteroidSpawner(Entity& player) : player(player) {
@@ -14,8 +14,12 @@ public:
 	}
 
 	ShaderType defaultShaderType = ShaderType::Default;
-	TextureType defaultTextureType = TextureType::Brick;
-	MeshType defaultMeshType = MeshType::Asteroid;
+	TextureType defaultTextureType = TextureType::Asteroid;
+	MeshType defaultMeshTypes[3] = {
+		MeshType::Asteroid1,
+		MeshType::Asteroid2,
+		MeshType::Asteroid3
+	};
 
 	void onUpdate();
 
@@ -25,6 +29,9 @@ private:
 		return low + static_cast <float> (rand()) / (static_cast <float> (RAND_MAX / (high - low)));
 	}
 
+	int getRandomInt(int low, int high) {
+		return rand() % (high - low + 1) + low;
+	}
 	void spawnAsteroid();
 
 	void addAstroidToArray(Entity* asteroid) {
@@ -48,12 +55,13 @@ private:
 			}
 
 			// Couldn't find valid - Use first made
-			if (secondaryCount > MAX_ASTEROIDS - 1)
+			/*if (secondaryCount > MAX_ASTEROIDS - 1)
 				secondaryCount = 0;
 			asteroids[secondaryCount] = asteroid;
 			if (USE_INFO_DEBUGGING)
 				std::cout << "Asteroid Spawner: Hit Max Limit, taken first created, using " << secondaryCount << std::endl;
 			secondaryCount++;
+			std::cout << secondaryCount;*/
 
 		}
 	}

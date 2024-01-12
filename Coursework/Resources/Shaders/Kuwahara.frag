@@ -1,6 +1,6 @@
 #version 420 core
 uniform sampler2D diffuse;
-int blurFactor = 7;
+int blurFactor = 6;
 in vec2 tC;
 
 vec4 CalculateKuwaharaFilter(){

@@ -108,6 +108,14 @@ public:
 		forward = glm::normalize(glm::vec3(glm::normalize(glm::rotate(angle, right) * glm::vec4(forward, 0.0))));
 	}
 
+	void RotateZ(float angle)
+	{
+		glm::mat4 rotation = glm::rotate(angle, glm::vec3(0.0f, 0.0f, 1.0f));
+
+		forward = glm::normalize(glm::vec3(glm::normalize(rotation * glm::vec4(forward, 0.0))));
+		up = glm::normalize(glm::vec3(glm::normalize(rotation * glm::vec4(up, 0.0))));
+	}
+
 protected:
 private:
 	glm::mat4 projection;

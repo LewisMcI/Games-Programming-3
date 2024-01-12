@@ -39,7 +39,7 @@ private:
 	/* Tracks*/
 	// Map of Track Type and Track Paths
 	std::map<TrackType, std::string> trackPaths = {
-			{TrackType::Background, "..\\Resources\\Audio\\background.wav"}
+			{TrackType::Background, "..\\Resources\\Audio\\background.mp3"}
 	};
 
 	// Map of TrackType and Loaded Meshes

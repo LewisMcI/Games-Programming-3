@@ -60,19 +60,50 @@ public:
 		glm::vec3 forward = camera->getForward();
 		glm::vec3 up = camera->getUp();
 		glm::vec3 right = glm::cross(up, forward);
-;
+		
 		// Extract the rotation angles (in radians) from the rotation matrix
 		// Calculate pitch (rotation around x-axis)
-		float pitch = std::asin(-forward.y) * 1.05f;
+		float pitch = std::asin(-forward.y);
 
 		// Calculate yaw (rotation around y-axis)
-		float yaw = std::atan2(forward.x, forward.z) *1.05f;
+		float yaw = std::atan2(forward.x, forward.z);
 
 		// Calculate roll (rotation around z-axis)
-		float roll = std::atan2(up.x, up.y) * 1.05f;
+		float roll = std::atan2(up.x, up.y);
 
 		glm::quat newQuat = glm::vec3(pitch, yaw, roll);
 		setRot(newQuat);
+	}
+
+	void followCamera(Camera* camera, float distance) {
+		// Get the camera position and forward direction
+		glm::vec3 cameraPos = camera->getPos();
+		glm::vec3 cameraForward = camera->getForward();
+
+		// Calculate the new position relative to the camera's forward direction
+		glm::vec3 newPos = cameraPos + distance * cameraForward;
+
+		// Set the new position
+		setPos(newPos);
+
+		// Calculate the rotation to face the camera
+		glm::quat newQuat = quatLookAt(glm::normalize(cameraPos - newPos), camera->getUp());
+
+		// Set the new rotation
+		setRot(newQuat);
+	}
+	glm::quat quatLookAt(const glm::vec3& direction, const glm::vec3& up) {
+		glm::mat3 rotationMatrix;
+
+		// Create a rotation matrix using the LookAt direction and up vector
+		rotationMatrix[2] = -glm::normalize(direction); // Negate the direction because GLM uses a right-handed coordinate system
+		rotationMatrix[0] = glm::normalize(glm::cross(up, rotationMatrix[2]));
+		rotationMatrix[1] = glm::cross(rotationMatrix[2], rotationMatrix[0]);
+
+		// Convert the rotation matrix to a quaternion
+		glm::quat rotationQuat(rotationMatrix);
+
+		return rotationQuat;
 	}
 
 	glm::vec3 rotateVector(const glm::vec3& axis, float angle, const glm::vec3& vectorToRotate) {

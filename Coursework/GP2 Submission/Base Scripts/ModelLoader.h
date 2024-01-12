@@ -30,7 +30,6 @@ struct Mesh {
 	std::vector<glm::vec3> vertNormals;
 	std::vector<glm::vec2> textCoords;
 	std::vector<unsigned int> vertIndices;
-	unsigned int textureHandle;
 };
 
 struct Model {
@@ -41,6 +40,7 @@ class ModelLoader
 {
 public:
 	ModelLoader() = default;
+
 	Model loadModel(const char* modelPath) {
 		Model newModel;
 		// Load Model
@@ -115,7 +115,6 @@ public:
 		for (size_t i = 0; i < model.meshList.size(); i++)
 		{
 			setBufferData(model.meshList[i]);
-
 		}
 	}
 private:

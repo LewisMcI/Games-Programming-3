@@ -1,10 +1,8 @@
 #pragma once
-#include <GL\glew.h>
+#include <GL/glew.h>
 #include <iostream>
-#include <fstream>
-#include "Camera.h"
-#include "../Components/TransformComponent.h"
 #include <string>
+#include "../Components/TransformComponent.h"
 
 class Shader
 {
@@ -50,12 +48,6 @@ public:
 	void setFloat(const std::string& name, float value) const
 	{
 		glUniform1f(glGetUniformLocation(shaderID, name.c_str()), value);
-
-		//if ((glGetUniformLocation(shaderID, name.c_str()) == -1))
-		//{
-		//	std::cerr << "Unable to load shader: " << name.c_str() << std::endl;
-		//	__debugbreak();
-		//}
 	}
 	// ------------------------------------------------------------------------
 	void setVec2(const std::string& name, const glm::vec2& value) const

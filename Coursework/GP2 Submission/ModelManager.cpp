@@ -135,8 +135,6 @@ std::string ModelManager::SerializeMeshToJson(const Model& model) {
         meshObj.AddMember("vertNormals", vertNormals, allocator);
         meshObj.AddMember("textCoords", textCoords, allocator);
         meshObj.AddMember("vertIndices", vertIndices, allocator);
-        // Serialize textureHandle
-        meshObj.AddMember("textureHandle", mesh.textureHandle, allocator);
 
         doc.PushBack(meshObj, allocator);
     }
@@ -259,11 +257,6 @@ Model ModelManager::RecreateModelFromJson(const std::string& json) {
                         mesh.vertIndices.emplace_back(vertIndices[i].GetUint());
                     }
                 }
-            }
-
-            // Extract and deserialize textureHandle
-            if (meshData.HasMember("textureHandle") && meshData["textureHandle"].IsUint()) {
-                mesh.textureHandle = meshData["textureHandle"].GetUint();
             }
 
             model.meshList.emplace_back(std::move(mesh));

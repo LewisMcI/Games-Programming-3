@@ -15,7 +15,6 @@ void GameScene::Load() {
 
 	// Start background track
 	AudioManager::getInstance().playTrack(TrackType::Background);
-
 }
 
 void GameScene::createPlayer(ShaderType shaderType, TextureType textureType, MeshType meshType)

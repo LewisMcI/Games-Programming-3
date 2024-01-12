@@ -166,7 +166,6 @@
     <ClInclude Include="Base Scripts\Camera.h" />
     <ClInclude Include="Base Scripts\Display.h" />
     <ClInclude Include="Base Scripts\ModelLoader.h" />
-    <ClInclude Include="Base Scripts\Mouse.h" />
     <ClInclude Include="Base Scripts\Shader.h" />
     <ClInclude Include="Base Scripts\SkyBox.h" />
     <ClInclude Include="Base Scripts\stb_image.h" />
@@ -192,6 +191,14 @@
     <ClInclude Include="Scene\Scene.h" />
     <ClInclude Include="Scene\SceneManager.h" />
     <ClInclude Include="WIP\Quaternion.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\Resources\Shaders\FBO\FBOShader.frag" />
+    <None Include="..\Resources\Shaders\FBO\FBOShader.vert" />
+    <None Include="..\Resources\Shaders\FBO\GreyscaleShader.frag" />
+    <None Include="..\Resources\Shaders\FBO\GreyscaleShader.vert" />
+    <None Include="..\Resources\Shaders\FBO\InversionShader.frag" />
+    <None Include="..\Resources\Shaders\FBO\InversionShader.vert" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

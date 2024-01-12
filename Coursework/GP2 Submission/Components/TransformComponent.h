@@ -29,12 +29,12 @@ public:
 
 		return translationMatrix * rotationMatrix * scaleMatrix;
 	}
-	inline glm::vec3* getPos() { return &pos; } //getters
-	inline glm::quat* getRot() { return &rot; }
-	inline glm::vec3* getScale() { return &scale; }
-	inline void setPos(glm::vec3& pos) { this->pos = pos; } // setters
-	inline void setRot(glm::quat& rot) { this->rot = rot; }
-	inline void setScale(glm::vec3& scale) { this->scale = scale; }
+	inline const glm::vec3* getPos() const { return &pos; } //getters
+	inline const glm::quat* getRot() const { return &rot; }
+	inline const glm::vec3* getScale() const { return &scale; }
+	inline void setPos(const glm::vec3& pos) { this->pos = pos; } // setters
+	inline void setRot(const glm::quat& rot) { this->rot = rot; }
+	inline void setScale(const glm::vec3& scale) { this->scale = scale; }
 
 
 	// Get the transformed "up" vector
@@ -47,7 +47,6 @@ public:
 		glm::vec3 rotatedUpVector = glm::mat3(rotationMatrix) * upVector;
 
 		return glm::normalize(rotatedUpVector);
-
 	}
 	
 	glm::vec3 getRight() const {
@@ -56,7 +55,8 @@ public:
 	}
 
 	void followCamera(Camera* camera) {
-		setPos(camera->getPos());
+		glm::vec3 pos = camera->getPos();
+		setPos(pos);
 		glm::vec3 forward = camera->getForward();
 		glm::vec3 up = camera->getUp();
 		glm::vec3 right = glm::cross(up, forward);
@@ -117,7 +117,7 @@ public:
 		return glm::vec3(rotatedVector);
 	}
 
-	void move(glm::vec3 value){
+	void move(const glm::vec3 value){
 		pos += value;
 	}
 

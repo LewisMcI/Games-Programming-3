@@ -20,9 +20,6 @@ PlayerController::PlayerController() {
 		SDL_FreeSurface(cursorSurface);
 	}
 }
-PlayerController::~PlayerController()
-{
-}
 
 void PlayerController::init(Camera* camera, TransformComponent* transform)
 {

@@ -5,12 +5,21 @@
 #include "../Scene/Entity.h"
 #include "../Scene/SceneManager.h"
 #include "../Base Scripts/Time.h"
-const int MAX_ASTEROIDS = 50;
+
 class AsteroidSpawner : public Component {
 public:
 	AsteroidSpawner(Entity& player) : player(player) {
 		if (USE_INFO_DEBUGGING)
 			std::cout << "Asteroid Spawner Created" << std::endl;
+	}
+
+	~AsteroidSpawner() {
+		for (int i = 0; i < MAX_ASTEROIDS; ++i) {
+			if (asteroids[i] != nullptr) {
+				delete asteroids[i];
+				asteroids[i] = nullptr;
+			}
+		}
 	}
 
 	ShaderType defaultShaderType = ShaderType::Default;
@@ -53,15 +62,6 @@ private:
 					return;
 				}
 			}
-
-			// Couldn't find valid - Use first made
-			/*if (secondaryCount > MAX_ASTEROIDS - 1)
-				secondaryCount = 0;
-			asteroids[secondaryCount] = asteroid;
-			if (USE_INFO_DEBUGGING)
-				std::cout << "Asteroid Spawner: Hit Max Limit, taken first created, using " << secondaryCount << std::endl;
-			secondaryCount++;
-			std::cout << secondaryCount;*/
 
 		}
 	}

@@ -1,25 +1,11 @@
 #include "Display.h"
 
-
 Display::Display()
 {
 	// We will initialize the window as null	
 	sdlWindow = nullptr;
 }
 
-Display::~Display()
-{
-	// Delete the context
-	SDL_GL_DeleteContext(glContext);
-	// Delete the window
-	SDL_DestroyWindow(sdlWindow);
-	// Quit SDL
-	SDL_Quit();
-}
-
-float Display::getHeight() {
-	return DISPLAY_HEIGHT;
-}
 void Display::initFBO()
 {
 	glGenFramebuffers(1, &FBO);
@@ -45,8 +31,11 @@ void Display::initFBO()
 		std::cout << "FRAMEBUFFER:: Framebuffer is complete!" << std::endl;
 	glBindFramebuffer(GL_FRAMEBUFFER, 0);
 
-	//FBOShader.initShader("..\\Resources\\Shaders\\FBO\\FBOShader.vert", "..\\Resources\\Shaders\\FBO\\FBOShader.frag");
-	FBOShader.initShader("..\\Resources\\Shaders\\Kuwahara.vert", "..\\Resources\\Shaders\\Kuwahara.frag");
+	// Load FBO shader
+	const std::string vertexShaderPath = "../Resources/Shaders/Kuwahara.vert";
+	const std::string fragmentShaderPath = "../Resources/Shaders/Kuwahara.frag";
+	FBOShader.initShader(vertexShaderPath.c_str(), fragmentShaderPath.c_str());
+
 }
 
 void Display::bindFBO()
@@ -87,18 +76,15 @@ void Display::renderFBO()
 	glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 4 * sizeof(float), (void*)(2 * sizeof(float)));
 
 	glDisable(GL_DEPTH_TEST);
-	glClearColor(1.0f, 1.0f, 1.0f, 1.0f); // set clear color to white (not really necessary actually, since we won't be able to see behind the quad anyways)
+	glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
 	glClear(GL_COLOR_BUFFER_BIT);
 
 	FBOShader.Bind();
 	counter += .7f;
-	//FBOShader.setFloat("random", counter);
+	
 	glBindVertexArray(quadVAO);
-	glBindTexture(GL_TEXTURE_2D, CBO);	// use the color attachment texture as the texture of the quad plane
+	glBindTexture(GL_TEXTURE_2D, CBO);
 	glDrawArrays(GL_TRIANGLES, 0, 6);
-}
-float Display::getWidth() {
-	return DISPLAY_WIDTH;
 }
 
 void Display::clearDisplay(float r, float g, float b, float a)
@@ -112,10 +98,10 @@ void Display::clearDisplay(float r, float g, float b, float a)
 void Display::returnError(std::string errorString)
 {
 	// Output string.
-	cout << errorString;
+	std::cout << errorString;
 	// Get user input
 	char x;
-	cin >> x;
+	std::cin >> x;
 	SDL_Quit();
 }
 void Display::swapBuffer()

@@ -6,7 +6,8 @@ enum CameraState { FirstPerson, ThirdPerson, FreeCam };
 
 class Player : public Component {
 public:
-	Player() = default;
+	Player() : playerCamera(Camera(glm::vec3(0, 0, 0), 70.0f, DISPLAY_WIDTH / DISPLAY_HEIGHT, NEAR_PLANE, FAR_PLANE)){
+	}
 
 	void init();
 

@@ -155,14 +155,19 @@
     <ClInclude Include="Components\AsteroidMovement.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Base Scripts\Mouse.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Components\Collider.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Components\Bullet.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\Resources\Shaders\FBO\FBOShader.frag" />
+    <None Include="..\Resources\Shaders\FBO\FBOShader.vert" />
+    <None Include="..\Resources\Shaders\FBO\GreyscaleShader.frag" />
+    <None Include="..\Resources\Shaders\FBO\GreyscaleShader.vert" />
+    <None Include="..\Resources\Shaders\FBO\InversionShader.frag" />
+    <None Include="..\Resources\Shaders\FBO\InversionShader.vert" />
   </ItemGroup>
 </Project>

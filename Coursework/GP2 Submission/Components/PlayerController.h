@@ -10,7 +10,12 @@ class PlayerController
 {
 public:
 	PlayerController();
-	~PlayerController();
+	~PlayerController() {
+		for (Entity* bullet : bulletList) {
+			delete bullet;
+			bullet = nullptr;
+		}
+	}
 
 	void init(Camera* camera, TransformComponent* transform);
 

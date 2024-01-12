@@ -2,7 +2,7 @@
 
 #include <glm/glm.hpp>
 #include <glm/gtx/transform.hpp>
-#include "../Components/TransformComponent.h"
+#include <iostream>
 
 struct Camera
 {
@@ -50,24 +50,24 @@ public:
 
 		// Optionally, you may want to normalize the vectors if needed
 		forward = glm::normalize(forward);
-		up = glm::normalize(up);
+		up = glm::normalize(up);	
 	}
 
-	void lookAtTransform(TransformComponent& targetTransform, float distance) {
-		setPos(*targetTransform.getPos());
-		setRot(*targetTransform.getRot());
+	//void lookAtTransform(TransformComponent& targetTransform, float distance) {
+	//	setPos(*targetTransform.getPos());
+	//	setRot(*targetTransform.getRot());
 
-		// Set the desired offset from the target
-		glm::vec3 offset = -forward * distance;
+	//	// Set the desired offset from the target
+	//	glm::vec3 offset = -forward * distance;
 
-		// Set the camera's position and make it look at the target
-		setPos(cameraPos + offset);
-	}
+	//	// Set the camera's position and make it look at the target
+	//	setPos(cameraPos + offset);
+	//}
 
-	void followTransform(TransformComponent& transform) {
-		setPos(*transform.getPos());
-		setRot(*transform.getRot());
-	}
+	//void followTransform(TransformComponent& transform) {
+	//	setPos(*transform.getPos());
+	//	setRot(transform.GetEulerAngles());
+	//}
 
 	void MoveForward(float amt)
 	{

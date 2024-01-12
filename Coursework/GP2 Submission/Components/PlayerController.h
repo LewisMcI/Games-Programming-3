@@ -4,6 +4,7 @@
 #include <SDL2/SDL_events.h>
 #include <iostream>
 #include "../Base Scripts/Time.h"
+#include "TransformComponent.h"
 
 class PlayerController
 {

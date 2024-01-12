@@ -125,17 +125,18 @@ void PlayerController::processKeyboardInput(const Uint8* keys)
 	glm::vec3 forward = playerCamera->getForward();	
 	
 	if (keys[SDL_SCANCODE_W]) { // Move Forward
-		playerTransform->move(forward * moveDistance);
+		playerCamera->MoveForward(moveDistance);
 	}
 	if (keys[SDL_SCANCODE_S]) { // Move Backward
-		playerTransform->move(-forward * moveDistance);
+		playerCamera->MoveForward(-moveDistance);
+
 	}
-	if (keys[SDL_SCANCODE_A]) { // Rotate left
-		playerTransform->rotate(forward * rotationSpeed);
-	}
-	if (keys[SDL_SCANCODE_D]) { // Rotate left
-		playerTransform->rotate(-forward * rotationSpeed);
-	}
+	//if (keys[SDL_SCANCODE_A]) { // Rotate left
+	//	playerTransform->rotate(forward * rotationSpeed);
+	//}
+	//if (keys[SDL_SCANCODE_D]) { // Rotate left
+	//	playerTransform->rotate(-forward * rotationSpeed);
+	//}
 
 	int mouseX, mouseY;
 	Uint32 mouseState = SDL_GetMouseState(&mouseX, &mouseY);
@@ -202,17 +203,20 @@ void PlayerController::processMouseInput() {
 	glm::vec2 distanceToCenter = centerOfScreen - currentPoint;
 
 	// Calculate Speed
-	float speedX = (distanceToCenter.x / DISPLAY_WIDTH * 300.0f) * 0.01f * Time::getInstance().getDeltaTime();
-	float speedY = (distanceToCenter.y / DISPLAY_HEIGHT * 300.0f) * 0.01f * Time::getInstance().getDeltaTime();
+	float speedX = (distanceToCenter.x / DISPLAY_WIDTH * 30.0f) * 0.1f * Time::getInstance().getDeltaTime();
+	float speedY = -(distanceToCenter.y / DISPLAY_HEIGHT * 30.0f) * 0.1f * Time::getInstance().getDeltaTime();
 
-	glm::vec3 right = glm::vec3(-1, 0, 0);
-	glm::vec3 up = glm::vec3(0,1,0);
-	
-	std::cout << playerTransform->getRight().x << " " << playerTransform->getRight().y << playerTransform->getRight().z << std::endl;
+	//glm::vec3 right = playerTransform->getRight();
+	//glm::vec3 up = playerTransform->getUp();
+	//
+	//std::cout << playerTransform->getUp().x << " " << playerTransform->getUp().y << playerTransform->getUp().z << std::endl;
 
-	playerTransform->rotate(up * speedX);
-	playerTransform->rotate(right * speedY);
-	//playerTransform->rotate(forward * speedX);
+	//playerTransform->rotate(speedX, up);
+	//playerTransform->rotate(speedY, right);
+	playerCamera->RotateX(speedX);
+	playerCamera->RotateY(speedY);
+
+	playerTransform->followCamera(playerCamera);
 
 }
 

@@ -3,13 +3,17 @@
 #include <glm/gtx/transform.hpp>
 #include <iostream>
 #include "Component.h"
+#include <glm/gtc/quaternion.hpp>
+#include <glm/gtc/matrix_transform.hpp>
+#include <glm/gtx/euler_angles.hpp>
+#include "../Base Scripts/Camera.h"
 
 #define PI 3.141592
 
 struct TransformComponent : public Component
 {
 public:
-	TransformComponent(const glm::vec3& pos = glm::vec3(), const glm::vec3& rot = glm::vec3(), const
+	TransformComponent(const glm::vec3& pos = glm::vec3(), const glm::quat& rot = glm::quat(1.0f, 0.0f, 0.0f, 0.0f), const
 		glm::vec3& scale = glm::vec3(1.0f, 1.0f, 1.0f))
 	{
 		this->pos = pos;
@@ -19,52 +23,82 @@ public:
 
 	inline glm::mat4 getModel() const //runs as compile time
 	{
-		glm::mat4 posMat = glm::translate(pos);
-		glm::mat4 scaleMat = glm::scale(scale);
-		glm::mat4 rotX = glm::rotate(rot.x, glm::vec3(1.0, 0.0, 0.0));
-		glm::mat4 rotY = glm::rotate(rot.y, glm::vec3(0.0, 1.0, 0.0));
-		glm::mat4 rotZ = glm::rotate(rot.z, glm::vec3(0.0, 0.0, 1.0));
-		glm::mat4 rotMat = rotX * rotY * rotZ;
-		return posMat * rotMat * scaleMat;
+		glm::mat4 translationMatrix = glm::translate(glm::mat4(1.0f), pos);
+		glm::mat4 rotationMatrix = glm::mat4_cast(rot);
+		glm::mat4 scaleMatrix = glm::scale(glm::mat4(1.0f), scale);
+
+		return translationMatrix * rotationMatrix * scaleMatrix;
 	}
 	inline glm::vec3* getPos() { return &pos; } //getters
-	inline glm::vec3* getRot() { return &rot; }
+	inline glm::quat* getRot() { return &rot; }
 	inline glm::vec3* getScale() { return &scale; }
 	inline void setPos(glm::vec3& pos) { this->pos = pos; } // setters
-	inline void setRot(glm::vec3& rot) { this->rot = rot; }
+	inline void setRot(glm::quat& rot) { this->rot = rot; }
 	inline void setScale(glm::vec3& scale) { this->scale = scale; }
 
 
-	glm::vec3 getUp() {
-		glm::mat4 rotX = glm::rotate(rot.x, glm::vec3(1.0, 0.0, 0.0));
-		glm::mat4 rotY = glm::rotate(rot.y, glm::vec3(0.0, 1.0, 0.0));
-		glm::mat4 rotZ = glm::rotate(rot.z, glm::vec3(0.0, 0.0, 1.0));
-		glm::mat4 rotMat = rotX * rotY * rotZ;
+	// Get the transformed "up" vector
+	glm::vec3 getUp() const {
+		// Assuming 'rotation' is a quaternion
+		glm::mat4 rotationMatrix = glm::mat4_cast(rot);
+		glm::vec3 upVector = glm::vec3(0.0f, 1.0f, 0.0f);
 
-		return glm::vec3(rotMat[1][0], rotMat[1][1], rotMat[1][2]);
+		// Rotate the up vector using the rotation matrix
+		glm::vec3 rotatedUpVector = glm::mat3(rotationMatrix) * upVector;
+
+		return glm::normalize(rotatedUpVector);
+
+	}
+	
+	glm::vec3 getRight() const {
+		glm::vec3 fixedRightVector = glm::vec3(1.0f, 0.0f, 0.0f);
+		return glm::normalize(rot * fixedRightVector);
 	}
 
-	glm::vec3 getRight() {
-		glm::mat4 rotX = glm::rotate(rot.x, glm::vec3(1.0, 0.0, 0.0));
-		glm::mat4 rotY = glm::rotate(rot.y, glm::vec3(0.0, 1.0, 0.0));
-		glm::mat4 rotZ = glm::rotate(rot.z, glm::vec3(0.0, 0.0, 1.0));
-		glm::mat4 rotMat = rotX * rotY * rotZ;
+	void followCamera(Camera* camera) {
+		setPos(camera->getPos());
+		glm::vec3 forward = camera->getForward();
+		glm::vec3 up = camera->getUp();
+		glm::vec3 right = glm::cross(up, forward);
+;
+		// Extract the rotation angles (in radians) from the rotation matrix
+		// Calculate pitch (rotation around x-axis)
+		float pitch = std::asin(-forward.y) * 1.05f;
 
-		return glm::vec3(-rotMat[0][0], rotMat[0][1], rotMat[0][2]);
+		// Calculate yaw (rotation around y-axis)
+		float yaw = std::atan2(forward.x, forward.z) *1.05f;
+
+		// Calculate roll (rotation around z-axis)
+		float roll = std::atan2(up.x, up.y) * 1.05f;
+
+		glm::quat newQuat = glm::vec3(pitch, yaw, roll);
+		setRot(newQuat);
+	}
+
+	glm::vec3 rotateVector(const glm::vec3& axis, float angle, const glm::vec3& vectorToRotate) {
+		// Create a rotation matrix
+		glm::mat4 rotationMatrix = glm::rotate(glm::mat4(1.0f), angle, axis);
+
+		// Transform the vector using the rotation matrix
+		glm::vec4 rotatedVector = rotationMatrix * glm::vec4(vectorToRotate, 1.0f);
+
+		// Return the rotated vector
+		return glm::vec3(rotatedVector);
 	}
 
 	void move(glm::vec3 value){
 		pos += value;
 	}
 
-	// Takes angle in radians
-	void rotate(glm::vec3 value) {
-		rot += value;
+	// Takes angles in degrees
+	void rotate(float angleDegrees, const glm::vec3& axis) {
+		glm::quat rotationDelta = glm::angleAxis(glm::radians(angleDegrees), axis);
+		rot = rot * rotationDelta;
 	}
 
 protected:
 private:
 	glm::vec3 pos;
-	glm::vec3 rot;
+	glm::quat rot;
 	glm::vec3 scale;
 };

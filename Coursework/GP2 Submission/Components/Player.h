@@ -2,7 +2,7 @@
 #include "PlayerController.h"
 #include "../Base Scripts/Display.h"
 
-enum CameraState { FirstPerson, ThirdPerson };
+enum CameraState { FirstPerson, ThirdPerson, FreeCam };
 
 class Player : public Component {
 public:
@@ -16,7 +16,7 @@ public:
 		return playerCamera;
 	}
 
-	CameraState cameraState = CameraState::FirstPerson;
+	CameraState cameraState = CameraState::FreeCam;
 
 protected:
 private:

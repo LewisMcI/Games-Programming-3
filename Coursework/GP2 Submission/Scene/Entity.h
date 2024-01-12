@@ -80,7 +80,7 @@ public:
 	template<typename T>
 	bool RemoveComponent() {
 		if (!HasComponent<T>() && USE_WARNING_DEBUGGING)
-			std::cout << "Trying to Remove Component that does not exist";
+			std::cout << "Trying to Remove Component that does not exist" << std::endl;
 		return entityScene->registry.remove<T>(entityHandle);
 	}
 	entt::entity entityHandle = entt::null;

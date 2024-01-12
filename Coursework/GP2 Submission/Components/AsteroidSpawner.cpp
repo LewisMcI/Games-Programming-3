@@ -14,7 +14,7 @@ void AsteroidSpawner::onUpdate() {
 	}
 	double currTime = Time::getInstance().getCurrentTime();
 	if (currTime > nextTime) {
-		nextTime = currTime + cooldownTime;
+		nextTime = currTime + (cooldownTime / TIME_STEP);
 		spawnAsteroid();
 		if (USE_INFO_DEBUGGING)
 			std::cout << "Asteroid has been spawned" << std::endl;

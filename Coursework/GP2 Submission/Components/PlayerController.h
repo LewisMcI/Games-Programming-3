@@ -14,15 +14,20 @@ public:
 	void init(Camera* camera, TransformComponent* transform);
 
 	void processInput();
-
+	
 	void processKeyboardInput(const Uint8* keys);
 
 	void processMouseInput();
 
+	void processFreecamInput();
+
+	void processFreecamKeyboardInput(const Uint8* keys);
+
+	void processFreecamMouseInput();
 protected:
 private:
-
 	void shootBullet(glm::vec3 pos);
+
 	TransformComponent* playerTransform;
 
 	Camera* playerCamera;

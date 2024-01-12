@@ -104,6 +104,21 @@ public:
 		glm::vec3 right = glm::normalize(glm::cross(worldUp, forward));
 		up = glm::normalize(glm::cross(forward, right));
 	}
+
+	void RotateX(float angle)
+	{
+		glm::mat4 rotation = glm::rotate(angle, up);
+
+		forward = glm::vec3(glm::normalize(rotation * glm::vec4(forward, 0.0)));
+	}
+
+	void RotateY(float angle)
+	{
+		glm::vec3 right = glm::normalize(glm::cross(up, forward));
+
+		forward = glm::vec3(glm::normalize(glm::rotate(angle, right) * glm::vec4(forward, 0.0)));
+	}
+
 protected:
 private:
 	glm::mat4 projection;

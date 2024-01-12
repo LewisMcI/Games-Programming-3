@@ -17,7 +17,6 @@ double Time::getDeltaTime()
 
 double Time::getCurrentTime() {
 	// Gets currentTime
-	currentTime = SDL_GetPerformanceCounter();
 	return (double)((currentTime - startTime) / (double)SDL_GetPerformanceFrequency());
 }
 
@@ -28,9 +27,9 @@ void Time::onUpdate() {
 
 	// Gets currentTime
 	currentTime = SDL_GetPerformanceCounter();
-
+	
 	// Calculate time since last frame.
-	deltaTime = (double)((currentTime - lastTime) / (double)SDL_GetPerformanceFrequency());
+	deltaTime = (double)((currentTime - lastTime) / (double)SDL_GetPerformanceFrequency()) * TIME_STEP;
 	//std::cout << deltaTime * 1000.0f << std::endl;
 	if (DEBUG_FPS) {
 		fpsCounts.emplace_back(deltaTime * 1000.0f);

@@ -9,7 +9,7 @@
 
 PlayerController::PlayerController() {
 	// Create a white cursor
-	SDL_Surface* cursorSurface = SDL_CreateRGBSurface(0, 3, 3, 32, 0, 0, 0, 0);
+	SDL_Surface* cursorSurface = SDL_CreateRGBSurface(0, 2, 2, 32, 0, 0, 0, 0);
 	if (cursorSurface) {
 		Uint32 white = SDL_MapRGB(cursorSurface->format, 255, 255, 255);
 		SDL_FillRect(cursorSurface, NULL, white);
@@ -29,6 +29,21 @@ void PlayerController::init(Camera* camera, TransformComponent* transform)
 	playerCamera = camera;
 	playerTransform = transform;
 	SDL_WarpMouseInWindow(SDL_GL_GetCurrentWindow(), static_cast<int>(centerOfScreen.x), static_cast<int>(centerOfScreen.y));
+	Player& playerComp = playerTransform->entity.get()->GetComponent<Player>();
+	switch (playerComp.cameraState) {
+	case CameraState::FirstPerson:
+		SDL_ShowCursor(SDL_ENABLE);
+		SDL_SetRelativeMouseMode(SDL_FALSE);
+		break;
+	case CameraState::ThirdPerson:
+		SDL_ShowCursor(SDL_ENABLE);
+		SDL_SetRelativeMouseMode(SDL_FALSE);
+		break;
+	case CameraState::FreeCam:
+		SDL_ShowCursor(SDL_DISABLE);
+		SDL_SetRelativeMouseMode(SDL_TRUE);
+		break;
+	}
 }
 
 void PlayerController::processInput()
@@ -53,9 +68,19 @@ void PlayerController::processInput()
 				Player& playerComp = playerTransform->entity.get()->GetComponent<Player>();
 				switch (playerComp.cameraState) {
 				case CameraState::FirstPerson:
+					SDL_WarpMouseInWindow(SDL_GL_GetCurrentWindow(), static_cast<int>(centerOfScreen.x), static_cast<int>(centerOfScreen.y));
 					playerComp.cameraState = CameraState::ThirdPerson;
 					break;
 				case CameraState::ThirdPerson:
+					SDL_ShowCursor(SDL_DISABLE);
+					SDL_SetRelativeMouseMode(SDL_TRUE); // Confine the cursor to the window
+					SDL_WarpMouseInWindow(SDL_GL_GetCurrentWindow(), static_cast<int>(centerOfScreen.x), static_cast<int>(centerOfScreen.y));
+					playerComp.cameraState = CameraState::FreeCam;
+					break;
+				case CameraState::FreeCam:
+					SDL_ShowCursor(SDL_ENABLE);
+					SDL_SetRelativeMouseMode(SDL_FALSE); // Confine the cursor to the window
+					SDL_WarpMouseInWindow(SDL_GL_GetCurrentWindow(), static_cast<int>(centerOfScreen.x), static_cast<int>(centerOfScreen.y));
 					playerComp.cameraState = CameraState::FirstPerson;
 					break;
 				}
@@ -78,9 +103,18 @@ void PlayerController::processInput()
 	}
 
 	const Uint8* keys = SDL_GetKeyboardState(NULL);
-	processKeyboardInput(keys);
-	processMouseInput();
-
+	Player& playerComp = playerTransform->entity.get()->GetComponent<Player>();
+	switch (playerComp.cameraState) {
+	case CameraState::ThirdPerson:
+	case CameraState::FirstPerson:
+		processKeyboardInput(keys);
+		processMouseInput();
+		break;
+	case CameraState::FreeCam:
+		processFreecamKeyboardInput(keys);
+		processFreecamMouseInput();
+		break;
+	}
 }
 
 void PlayerController::processKeyboardInput(const Uint8* keys)
@@ -96,7 +130,7 @@ void PlayerController::processKeyboardInput(const Uint8* keys)
 	if (keys[SDL_SCANCODE_S]) { // Move Backward
 		playerTransform->move(-forward * moveDistance);
 	}
-	if (keys[SDL_SCANCODE_D]) { // Rotate left
+	if (keys[SDL_SCANCODE_A]) { // Rotate left
 		playerTransform->rotate(forward * rotationSpeed);
 	}
 	if (keys[SDL_SCANCODE_D]) { // Rotate left
@@ -108,7 +142,7 @@ void PlayerController::processKeyboardInput(const Uint8* keys)
 	if (keys[SDL_SCANCODE_SPACE] || (mouseState && SDL_BUTTON(SDL_BUTTON_LEFT) != 0)){ // Fire
 		if (nextFireTime > Time::getInstance().getCurrentTime())
 			return;
-		nextFireTime = Time::getInstance().getCurrentTime() + fireCooldownTime;
+		nextFireTime = Time::getInstance().getCurrentTime() + (fireCooldownTime / TIME_STEP);
 		shootBullet(playerCamera->getPos() - (playerCamera->getRight() * 6.0f));
 		shootBullet(playerCamera->getPos() + (playerCamera->getRight() * 6.0f));
 	}
@@ -120,15 +154,17 @@ void PlayerController::processKeyboardInput(const Uint8* keys)
 		Bullet& bullet = entity->GetComponent<Bullet>();
 
 		if (bullet.shouldDelete) {
-			entity->RemoveComponent<Collider>();
-			entity->RemoveComponent<MeshComponent>();
-			entity->RemoveComponent<Bullet>();
+			if (entity->HasComponent<Collider>())
+				entity->RemoveComponent<Collider>();
+			if (entity->HasComponent<MeshComponent>())
+				entity->RemoveComponent<MeshComponent>();
+			if (entity->HasComponent<Bullet>())
+				entity->RemoveComponent<Bullet>();
 			bullet.~Bullet();
 
 			// Remove from bulletList
 			it = bulletList.erase(it);
 			delete entity;  // Assuming the entity is allocated with new
-
 		}
 		else {
 			++it;
@@ -174,4 +210,41 @@ void PlayerController::processMouseInput() {
 
 	playerTransform->rotate(right * speedY);
 	playerTransform->rotate(up * speedX);
+}
+
+void PlayerController::processFreecamInput() {
+
+	const Uint8* keys = SDL_GetKeyboardState(NULL);
+	processFreecamKeyboardInput(keys);
+}
+
+void PlayerController::processFreecamKeyboardInput(const Uint8* keys)
+{
+	float moveDistance = 200.0f * Time::getInstance().getDeltaTime();
+	float rotationSpeed = 2.0f * Time::getInstance().getDeltaTime();
+	// Calculate Forward
+	glm::vec3 forward = playerCamera->getForward();
+
+	if (keys[SDL_SCANCODE_W]) { // Move Forward
+		playerCamera->MoveForward(moveDistance);
+	}
+	if (keys[SDL_SCANCODE_S]) { // Move Backward
+		playerCamera->MoveForward(-moveDistance);
+	}
+	if (keys[SDL_SCANCODE_A]) { // Rotate left
+		playerCamera->MoveLeft(moveDistance);
+	}
+	if (keys[SDL_SCANCODE_D]) { // Rotate left
+		playerCamera->MoveLeft(-moveDistance);
+	}
+}
+void PlayerController::processFreecamMouseInput() {
+	// Current Point
+	int mouseX, mouseY;
+	SDL_GetRelativeMouseState(&mouseX, &mouseY);
+	
+	// Rotates X by the relative X value given through the cursor. (Must be inverted)
+	playerCamera->RotateX(-mouseX * 0.001f);
+	// Rotates Y by the relative Y value given through the cursor.
+	playerCamera->RotateY(mouseY * 0.001f);
 }

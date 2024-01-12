@@ -42,7 +42,7 @@ private:
 				if (distToAsteroid > FAR_PLANE) {
 					asteroids[i] = asteroid;
 					if (USE_INFO_DEBUGGING)
-						std::cout << "Hit Max Limit: Found out of render distance, using " << i << std::endl;
+						std::cout << "Asteroid Spawner: Hit Max Limit: Found out of render distance, using " << i << std::endl;
 					return;
 				}
 			}
@@ -52,7 +52,7 @@ private:
 				secondaryCount = 0;
 			asteroids[secondaryCount] = asteroid;
 			if (USE_INFO_DEBUGGING)
-				std::cout << "Hit Max Limit, taken first created, using " << secondaryCount << std::endl;
+				std::cout << "Asteroid Spawner: Hit Max Limit, taken first created, using " << secondaryCount << std::endl;
 			secondaryCount++;
 
 		}

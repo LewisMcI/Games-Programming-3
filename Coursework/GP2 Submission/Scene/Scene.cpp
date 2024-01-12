@@ -88,14 +88,18 @@ void Scene::resolveCollision(Entity* entity)
 	}
 	// Asteroid onCollision
 	else if (tag == "Asteroid") {
-		entity->RemoveComponent<Collider>();
-		entity->RemoveComponent<MeshComponent>();
+		if (entity->HasComponent<Collider>())
+			entity->RemoveComponent<Collider>();
+		if (entity->HasComponent<MeshComponent>())
+			entity->RemoveComponent<MeshComponent>();;
 		AudioManager::getInstance().playSFX(AudioType::Explosion);
 	}
 	// Laser onCollision
 	else if (tag == "Laser") {
-		entity->RemoveComponent<Collider>();
-		entity->RemoveComponent<MeshComponent>();
+		if (entity->HasComponent<Collider>())
+			entity->RemoveComponent<Collider>();
+		if (entity->HasComponent<MeshComponent>())
+			entity->RemoveComponent<MeshComponent>();
 	}
 	// Default onCollision
 	else {
